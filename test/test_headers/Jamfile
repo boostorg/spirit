@@ -16,16 +16,14 @@ import print ;
 import sequence ;
 import feature ;
 
-project boost/spirit/test/test_headers 
+project 
     : requirements 
-        <include>$(BOOST_ROOT) 
-        <include>../../../..
         <c++-template-depth>300
     ;
 
 headers = 
 [ 
-    path.glob-tree ../../../../boost/spirit/include : *.hpp : classic* phoenix1* 
+    glob-tree-ex ../../include/boost/spirit/include : *.hpp : classic* phoenix1* 
 ] ;
 
 for local file in $(headers)
@@ -35,7 +33,7 @@ for local file in $(headers)
             <define>BOOST_SPIRIT_HEADER_NAME=$(file)
             <dependency>$(file)
         : # test name
-            [ regex.replace [ path.relative-to ../../../../boost/spirit $(file) ] "/" "_" ] 
+            [ regex.replace [ path.relative-to ../../include/boost/spirit/include $(file) ] "/" "_" ] 
         ;
 }
 
@@ -44,6 +42,8 @@ feature.feature <generate-include-all-order> : forward reverse : incidental ;
 rule generate-include-all ( target : sources * : properties * )
 {
     print.output $(target) ;
+
+    sources = [ MATCH "(.*[.]hpp)" : $(sources) ] ;
 
     if <generate-include-all-order>reverse in $(properties)
     {

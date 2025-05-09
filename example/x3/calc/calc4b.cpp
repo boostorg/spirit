@@ -20,7 +20,6 @@
 # pragma warning(disable: 4345)
 #endif
 
-#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/x3/support/ast/variant.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
@@ -188,27 +187,28 @@ namespace client
         x3::rule<class term, ast::program> const term("term");
         x3::rule<class factor, ast::operand> const factor("factor");
 
-        BOOST_SPIRIT_DEFINE(
-            expression =
+        auto const expression_def =
                 term
                 >> *(   (char_('+') >> term)
                     |   (char_('-') >> term)
                     )
-                ,
+                ;
 
-            term =
+        auto const term_def =
                 factor
                 >> *(   (char_('*') >> factor)
                     |   (char_('/') >> factor)
                     )
-                ,
+                ;
 
-            factor =
+        auto const factor_def =
                     uint_
                 |   '(' >> expression >> ')'
                 |   (char_('-') >> factor)
                 |   (char_('+') >> factor)
-        );
+                ;
+
+        BOOST_SPIRIT_DEFINE(expression, term, factor);
         
         auto calculator = expression;
     }

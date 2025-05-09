@@ -6,18 +6,15 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-// this file intentionally contains non-ascii characters
-// boostinspect:noascii
-
 #define BOOST_SPIRIT_UNICODE
 
-#include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/include/qi_char.hpp>
+#include <boost/spirit/include/qi_char_class.hpp>
+
 #include <boost/spirit/include/qi_action.hpp>
 #include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/support_attributes.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/static_assert.hpp>
 
@@ -112,16 +109,10 @@ main()
         BOOST_TEST(test("f", xdigit));
         BOOST_TEST(!test("g", xdigit));
 
-// needed for VC7.1 only
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("german")
-#endif
-        BOOST_TEST(test("é", alpha));
-        BOOST_TEST(test("é", lower));
-        BOOST_TEST(!test("é", upper));
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
+        // test extended ASCII characters
+        BOOST_TEST(test("\xE9", alpha));
+        BOOST_TEST(test("\xE9", lower));
+        BOOST_TEST(!test("\xE9", upper));
     }
 
     {
@@ -148,6 +139,7 @@ main()
         BOOST_TEST(test("0", xdigit));
         BOOST_TEST(test("f", xdigit));
         BOOST_TEST(!test("g", xdigit));
+        BOOST_TEST(!test("\xF1", print));
     }
 
     {
@@ -200,18 +192,6 @@ main()
         BOOST_TEST(test(L"0", xdigit));
         BOOST_TEST(test(L"f", xdigit));
         BOOST_TEST(!test(L"g", xdigit));
-
-// needed for VC7.1 only
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("german")
-#endif
-        BOOST_TEST(test("é", alpha));
-        BOOST_TEST(test("é", lower));
-        BOOST_TEST(!test("é", upper));
-
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
     }
 
     {   // test attribute extraction

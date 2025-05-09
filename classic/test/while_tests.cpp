@@ -10,12 +10,8 @@
 // Tests for BOOST_SPIRIT_CLASSIC_NS::while_p
 // [28-Dec-2002]
 ////////////////////////////////////////////////////////////////////////////////
-#define qDebug 0
 #include <iostream>
 #include <cstring>
-#if qDebug
-#define BOOST_SPIRIT_DEBUG
-#endif
 
 #include "impl/string_length.hpp"
 #include <boost/spirit/include/classic_core.hpp>

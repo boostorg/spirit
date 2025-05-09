@@ -47,7 +47,7 @@ namespace boost { namespace spirit { namespace x3
             boost::checked_delete(p_);
         }
 
-        forward_ast& operator=(forward_ast const& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_assignable<T>{})
+        forward_ast& operator=(forward_ast const& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_assignable<T>::value)
         {
             assign(rhs.get());
             return *this;
@@ -60,7 +60,7 @@ namespace boost { namespace spirit { namespace x3
             p_ = temp;
         }
 
-        forward_ast& operator=(T const& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_assignable<T>{})
+        forward_ast& operator=(T const& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_assignable<T>::value)
         {
             assign(rhs);
             return *this;
@@ -72,7 +72,7 @@ namespace boost { namespace spirit { namespace x3
             return *this;
         }
 
-        forward_ast& operator=(T&& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_move_assignable<T>{})
+        forward_ast& operator=(T&& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_move_assignable<T>::value)
         {
             get() = std::move(rhs);
             return *this;
@@ -89,7 +89,7 @@ namespace boost { namespace spirit { namespace x3
 
     private:
 
-        void assign(const T& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_assignable<T>{})
+        void assign(const T& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_assignable<T>::value)
         {
             this->get() = rhs;
         }
@@ -118,6 +118,10 @@ namespace boost { namespace spirit { namespace x3
         {};
     }
 
+#if defined(BOOST_MSVC)
+# pragma warning(push)
+# pragma warning(disable: 4521) // multiple copy constructors specified
+#endif
     template <typename ...Types>
     struct variant
     {
@@ -136,46 +140,46 @@ namespace boost { namespace spirit { namespace x3
                                                 ::value)
                               >;
 
-        variant() BOOST_NOEXCEPT_IF(std::is_nothrow_default_constructible<variant_type>{}) : var() {}
+        variant() BOOST_NOEXCEPT_IF(std::is_nothrow_default_constructible<variant_type>::value) : var() {}
 
         template <typename T, class = non_self_t<T>>
-        explicit variant(T const& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, T const&>{}))
+        explicit variant(T const& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, T const&>::value))
             : var(rhs) {}
 
         template <typename T, class = non_self_t<T>>
-        explicit variant(T&& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, T&&>::value))  // `::value` is a workaround for the VS2015 bug
+        explicit variant(T&& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, T&&>::value))
             : var(std::forward<T>(rhs)) {}
 
-        variant(variant const& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_constructible<variant_type>{})
+        variant(variant const& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_constructible<variant_type>::value)
             : var(rhs.var) {}
 
-        variant(variant& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, variant_type&>{}))
+        variant(variant& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, variant_type&>::value))
             : var(rhs.var) {}
 
-        variant(variant&& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_move_constructible<variant_type>{})
+        variant(variant&& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_move_constructible<variant_type>::value)
             : var(std::move(rhs.var)) {}
 
-        variant& operator=(variant const& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_assignable<variant_type>{})
+        variant& operator=(variant const& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_assignable<variant_type>::value)
         {
             var = rhs.get();
             return *this;
         }
 
-        variant& operator=(variant&& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_move_assignable<variant_type>{})
+        variant& operator=(variant&& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_move_assignable<variant_type>::value)
         {
             var = std::move(rhs.get());
             return *this;
         }
 
         template <typename T, class = non_self_t<T>>
-        variant& operator=(T const& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_assignable<variant_type, T const&>{}))
+        variant& operator=(T const& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_assignable<variant_type, T const&>::value))
         {
             var = rhs;
             return *this;
         }
 
         template <typename T, class = non_self_t<T>>
-        variant& operator=(T&& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_assignable<variant_type, T&&>::value))  // `::value` is a workaround for the VS2015 bug
+        variant& operator=(T&& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_assignable<variant_type, T&&>::value))
         {
             var = std::forward<T>(rhs);
             return *this;
@@ -222,6 +226,9 @@ namespace boost { namespace spirit { namespace x3
 
         variant_type var;
     };
+#if defined(BOOST_MSVC)
+# pragma warning(pop)
+#endif
 }}}
 
 namespace boost

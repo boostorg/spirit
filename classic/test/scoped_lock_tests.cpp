@@ -28,7 +28,7 @@ int
 main()
 {
     banner();
-    std::cout << "Test skipped (Boost libaries not available)\n";
+    std::cout << "Test skipped (Boost libraries not available)\n";
     return 0;
 }
 #else
@@ -36,7 +36,7 @@ main()
 #include <boost/thread/mutex.hpp>
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_scoped_lock.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 int
 main()

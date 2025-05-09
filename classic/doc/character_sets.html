@@ -42,7 +42,7 @@
     <td class="note_box"><img src="theme/lens.gif" width="15" height="16"> <b>Sparse 
       bit vectors</b><br>
       <br>
-      To accomodate 16/32 and 64 bit characters, the <tt>chset</tt> class 
+      To accommodate 16/32 and 64 bit characters, the <tt>chset</tt> class 
       statically switches from a <tt>std::bitset</tt> implementation when the 
       character type is not greater than 8 bits, to a sparse bit/boolean set which 
       uses a sorted vector of disjoint ranges (<tt>range_run</tt>). The set is 

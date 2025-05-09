@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2003 2003 Vaclav Vesely
+    Copyright (c) 2003-2003 Vaclav Vesely
     http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
@@ -8,7 +8,8 @@
 =============================================================================*/
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_confix.hpp>
-#include <boost/detail/lightweight_test.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 using namespace boost;
 using namespace BOOST_SPIRIT_CLASSIC_NS;

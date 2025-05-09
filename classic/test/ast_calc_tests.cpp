@@ -17,7 +17,7 @@
 #include <stack>
 #include <functional>
 #include <string>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 
@@ -181,7 +181,7 @@ long eval_expression(iter_t const& i)
                     eval_expression(i->children.begin()+1);
             }
             else
-                BOOST_TEST(0);
+                std::abort();
         }
 
         case calculator::expressionID:
@@ -199,14 +199,16 @@ long eval_expression(iter_t const& i)
                     eval_expression(i->children.begin()+1);
             }
             else
-                BOOST_TEST(0);
+                std::abort();
         }
 
         default:
-            BOOST_TEST(0); // error
+            std::abort(); // error
     }
 
+#if defined(_MSC_VER) && (_MSC_VER < 1700)
     return 0;
+#endif
 }
 
 ////////////////////////////////////////////////////////////////////////////

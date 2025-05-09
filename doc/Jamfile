@@ -50,11 +50,16 @@ boostbook spirit2
         <include>.
         <format>pdf:<xsl:param>img.src.path=$(images_location)/
         <format>pdf:<xsl:param>draft.mode="no"
-        <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/spirit/doc/html
+        <format>pdf:<xsl:param>"boost.url.prefix=http://www.boost.org/doc/libs/release/libs/spirit/doc/html"
     ;
 
 ###############################################################################
 alias boostdoc ;
 explicit boostdoc ;
-alias boostrelease : spirit2 ;
+alias boostrelease
+    :
+        spirit2
+        ../repository/doc//spirit2_repository
+        x3//spirit_x3
+    ;
 explicit boostrelease ;

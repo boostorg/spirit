@@ -21,7 +21,6 @@
 #include <boost/spirit/home/qi/domain.hpp>
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/qi/meta_compiler.hpp>
-#include <boost/mpl/print.hpp>
 
 namespace boost { namespace spirit
 {
@@ -136,6 +135,10 @@ namespace boost { namespace spirit { namespace qi
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
     {
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
         template <typename Iterator>
         struct reset_state_on_exit
         {
@@ -153,11 +156,10 @@ namespace boost { namespace spirit { namespace qi
 
             Iterator& it;
             std::size_t state;
-
-        private:
-            // silence MSVC warning C4512: assignment operator could not be generated
-            reset_state_on_exit& operator= (reset_state_on_exit const&);
         };
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -213,10 +215,6 @@ namespace boost { namespace spirit { namespace qi
 
         Subject subject;
         State state;
-
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        state_switcher_context& operator= (state_switcher_context const&);
     };
 
     ///////////////////////////////////////////////////////////////////////////

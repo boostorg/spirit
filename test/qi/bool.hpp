@@ -8,7 +8,7 @@
 #if !defined(BOOST_SPIRIT_TEST_QI_BOOL)
 #define BOOST_SPIRIT_TEST_QI_BOOL
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/include/qi_bool.hpp>
 
 #include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/qi_char.hpp>

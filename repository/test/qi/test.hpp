@@ -9,14 +9,15 @@
 
 #include <boost/spirit/include/qi_parse.hpp>
 #include <boost/spirit/include/qi_what.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 #include <boost/variant/apply_visitor.hpp>
-#include <boost/foreach.hpp>
 #include <iostream>
 
 namespace spirit_test
 {
     template <typename Char, typename Parser>
-    bool test(Char const* in, Parser const& p, bool full_match = true)
+    inline bool test(Char const* in, Parser const& p, bool full_match = true)
     {
         // we don't care about the result of the "what" function.
         // we only care that all parsers have it:
@@ -30,7 +31,7 @@ namespace spirit_test
     }
 
     template <typename Char, typename Parser, typename Skipper>
-    bool test(Char const* in, Parser const& p
+    inline bool test(Char const* in, Parser const& p
         , Skipper const& s, bool full_match = true)
     {
         // we don't care about the result of the "what" function.
@@ -45,7 +46,7 @@ namespace spirit_test
     }
 
     template <typename Char, typename Parser, typename Attr>
-    bool test_attr(Char const* in, Parser const& p
+    inline bool test_attr(Char const* in, Parser const& p
         , Attr& attr, bool full_match = true)
     {
         // we don't care about the result of the "what" function.
@@ -60,7 +61,7 @@ namespace spirit_test
     }
 
     template <typename Char, typename Parser, typename Attr, typename Skipper>
-    bool test_attr(Char const* in, Parser const& p
+    inline bool test_attr(Char const* in, Parser const& p
         , Attr& attr, Skipper const& s, bool full_match = true)
     {
         // we don't care about the result of the "what" function.
@@ -90,7 +91,7 @@ namespace spirit_test
         }
     };
 
-    void print_info(boost::spirit::info const& what)
+    inline void print_info(boost::spirit::info const& what)
     {
         using boost::spirit::basic_info_walker;
 

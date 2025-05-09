@@ -16,7 +16,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/home/x3.hpp>
 
 #include <iostream>
@@ -37,7 +36,6 @@ namespace client
     {
         using x3::double_;
         using x3::phrase_parse;
-        using x3::_attr;
         using ascii::space;
 
         bool r = phrase_parse(first, last,

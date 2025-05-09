@@ -1,33 +1,53 @@
 #==============================================================================
 #   Copyright (c) 2002 Joel de Guzman
 #   Copyright (c) 2003-2004 Martin Wille
+#   Copyright (c) 2019 Nikita Kniazev
 #   http://spirit.sourceforge.net/
 #
 #   Use, modification and distribution is subject to the Boost Software
 #   License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 #   http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
-#
-#  Spirit regression test boost-jam file
-#  Joel de Guzman [Sept 27, 2002]
-#
 
+import-search /boost/config/checks ;
+import config : requires ;
 
+###############################################################################
 
-# VP, 2005/04/14: Inside boost, we inherit proper <include>
-# from Jamroot.
-# Not sure about standalone Spirit.
-# SPIRIT_HEADER_INCLUDE ?= ../../.. ;
-# spirit-header-include = <include>$(SPIRIT_HEADER_INCLUDE) ;
+project spirit-classic
+    : requirements
+        <include>.
+
+        # Suppress C++03 deprecation warnings from other libraries
+        <define>BOOST_BIND_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_HASH_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_ENDIAN_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_FUNCTION_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_SMART_PTR_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_SYSTEM_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_TYPEOF_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_UNORDERED_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+    ;
+
+###############################################################################
+
+cpp-pch pch : pch.hpp : : : <include>. <force-include>pch.hpp ;
+cpp-pch pch-dbg : pch.hpp : <define>BOOST_SPIRIT_DEBUG :
+                          : <include>. <force-include>pch.hpp ;
+
+explicit pch pch-dbg ;
+
+###############################################################################
 
 rule spirit-run ( sources + : args * : input-files * : requirements * : name ? : default-build * )
 {
     name ?= $(sources[1]:D=:S=) ;
-    return  
-       [ run $(sources) : $(args) : $(input-files) : $(requirements) : $(name)
+    return
+       [ run $(sources) : $(args) : $(input-files) : $(requirements)
+          <pch>on-spirit:<source>pch : $(name)
         : $(default-build) ]
        [ run $(sources) : $(args) : $(input-files) : $(requirements)
-          <define>BOOST_SPIRIT_DEBUG=1 : $(name)_debug
+          <pch>on-spirit:<source>pch-dbg <define>BOOST_SPIRIT_DEBUG : $(name)_debug
         : $(default-build) ]
         ;
 }
@@ -43,8 +63,9 @@ local opt-metrowerks = <toolset>cw:<optimization>speed ;
 
 # VP, 2005/04/14: MT is not available with Como, but this is
 # not handled yet.
-local multi-threading = <library>/boost/thread//boost_thread 
-                        <threading>multi <define>BOOST_ALL_NO_LIB=1 ;
+alias boost_thread : /boost/thread//boost_thread : <warnings>off <warnings-as-errors>off ;
+local multi-threading = <library>boost_thread
+                        <threading>multi <define>BOOST_ALL_NO_LIB ;
 
     test-suite "spirit.classic.core.kernel"
         : [ spirit-run match_tests.cpp ]
@@ -53,7 +74,7 @@ local multi-threading = <library>/boost/thread//boost_thread
 
     test-suite "spirit.classic.core.scanner"
         : [ spirit-run scanner_tests.cpp ]
-          [ spirit-run scanner_value_type_tests.cpp ]
+          [ spirit-run scanner_value_type_tests.cpp : : : <pch>off ]
         ;
 
     test-suite "spirit.classic.core.primitive"
@@ -61,7 +82,7 @@ local multi-threading = <library>/boost/thread//boost_thread
           [ spirit-run char_strings_test.cpp ]
           [ compile-fail char_strings_test_fail.cpp ]
           [ spirit-run numerics_tests.cpp : : : $(opt) ]
-          [ spirit-run custom_real_parser.cpp ]
+          [ spirit-run custom_real_parser.cpp : : : [ requires cxx14_constexpr ] ]
         ;
 
     test-suite "spirit.classic.core.composite"
@@ -73,9 +94,9 @@ local multi-threading = <library>/boost/thread//boost_thread
         ;
 
     test-suite "spirit.classic.core.non_terminal"
-        : [ spirit-run rule_tests.cpp ]
-          [ spirit-run owi_st_tests.cpp ]
-          [ spirit-run grammar_tests.cpp : : : $(opt-metrowerks) ]
+        : [ spirit-run rule_tests.cpp : : : <pch>off ]
+          [ spirit-run owi_st_tests.cpp : : : <undef>BOOST_SPIRIT_THREADSAFE ]
+          [ spirit-run grammar_tests.cpp : : : <pch>off $(opt-metrowerks) ]
           [ spirit-run grammar_multi_instance_tst.cpp : : : $(opt-metrowerks) ]
           [ spirit-run subrule_tests.cpp ]
           [        run owi_mt_tests.cpp : : : $(multi-threading) ]
@@ -87,7 +108,7 @@ local multi-threading = <library>/boost/thread//boost_thread
     test-suite "spirit.classic.meta"
         : [ spirit-run fundamental_tests.cpp ]
           [ spirit-run parser_traits_tests.cpp ]
-          [ spirit-run traverse_tests.cpp : : : <toolset>intel:<debug-symbols>off ]
+          [ spirit-run traverse_tests.cpp : : : <pch>off <toolset>intel:<debug-symbols>off ]
         ;
 
     test-suite "spirit.classic.attribute"
@@ -120,12 +141,12 @@ local multi-threading = <library>/boost/thread//boost_thread
           [ spirit-run for_tests.cpp ]
           [ spirit-run while_tests.cpp ]
           [ spirit-run lazy_tests.cpp ]
-          [ spirit-run switch_tests_eps_default.cpp ]
-          [ spirit-run switch_tests_general_def.cpp ]
-          [ spirit-run switch_tests_wo_default.cpp ]
-          [ spirit-run switch_tests_single.cpp ]
+          [ spirit-run switch_tests_eps_default.cpp : : : <pch>off ]
+          [ spirit-run switch_tests_general_def.cpp : : : <pch>off ]
+          [ spirit-run switch_tests_wo_default.cpp : : : <pch>off ]
+          [ spirit-run switch_tests_single.cpp : : : <pch>off ]
           [ spirit-run switch_problem.cpp ]
-          [ spirit-run select_p_with_rule.cpp ]
+          [ spirit-run select_p_with_rule.cpp : : : <pch>off ]
         ;
 
     test-suite "spirit.classic.utility.parsers"
@@ -133,7 +154,7 @@ local multi-threading = <library>/boost/thread//boost_thread
           [ spirit-run confix_tests.cpp ]
           [ spirit-run loops_tests.cpp ]
           [ spirit-run symbols_tests.cpp ]
-          [ spirit-run symbols_add_null.cpp ]
+          [ spirit-run symbols_add_null.cpp : : : <pch>off ]
           [ spirit-run symbols_find_null.cpp ]
           [ spirit-run escape_char_parser_tests.cpp : : : $(opt) ]
           [ spirit-run distinct_tests.cpp ]
@@ -149,9 +170,9 @@ local multi-threading = <library>/boost/thread//boost_thread
     test-suite "spirit.classic.iterator"
         : [ spirit-run fixed_size_queue_tests.cpp ]
           [ compile-fail fixed_size_queue_fail_tests.cpp ]
-          [ spirit-run file_iterator_tests.cpp : : : <toolset>msvc:<define>_CRT_SECURE_NO_WARNINGS ]
+          [        run file_iterator_tests.cpp : : : <toolset>msvc:<define>_CRT_SECURE_NO_WARNINGS ]
           [ spirit-run multi_pass_tests.cpp : : : $(opt-metrowerks) ]
-          [ spirit-run sf_bug_720917.cpp : : : $(opt-metrowerks) ]
+          [ spirit-run sf_bug_720917.cpp : : : <pch>off $(opt-metrowerks) ]
           [ spirit-run position_iterator_tests.cpp : : : $(opt-metrowerks) ]
           [ compile multi_pass_compile_tests.cpp ]
         ;
@@ -176,7 +197,7 @@ local multi-threading = <library>/boost/thread//boost_thread
         ;
 
     test-suite "spirit.classic.utility.actors"
-        : [ spirit-run actor/$(actor_test_sources).cpp : : : <library>/boost/system//boost_system ]
+        : [ spirit-run actor/$(actor_test_sources).cpp ]
         ;
 
     test-suite "spirit.classic.typeof-support"
@@ -190,6 +211,6 @@ local multi-threading = <library>/boost/thread//boost_thread
           [ compile typeof_support/typeof_symbols.cpp ]
           [ compile typeof_support/typeof_tree.cpp ]
           [ compile typeof_support/typeof_utility.cpp ]
-        ; 
+        ;
 
 

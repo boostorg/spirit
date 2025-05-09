@@ -1,6 +1,6 @@
 /*=============================================================================
     Copyright (c) 2003 Giovanni Bajo
-    Copyrigh (c) 2003 Martin Wille
+    Copyright (c) 2003 Martin Wille
     http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
@@ -10,7 +10,7 @@
 #include <boost/spirit/include/classic_multi_pass.hpp>
 #include <iterator>
 #include "impl/sstream.hpp"
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 using namespace std;
 using namespace BOOST_SPIRIT_CLASSIC_NS;

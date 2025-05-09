@@ -3,17 +3,13 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-// #define BOOST_SPIRIT_LEXERTL_DEBUG
-
-#include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
-
 #include <boost/spirit/include/lex_lexertl.hpp>
 #include <boost/spirit/include/lex_lexertl_position_token.hpp>
-#include <boost/spirit/include/phoenix_object.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
-#include <boost/spirit/include/phoenix_stl.hpp>
+
+#include <boost/core/lightweight_test.hpp>
+#include <boost/phoenix/object.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/stl/container.hpp>
 #include <boost/spirit/include/qi_numeric.hpp>
 
 namespace spirit = boost::spirit;
@@ -105,12 +101,12 @@ template <typename Token>
 inline bool 
 test_token_ids(int const* ids, std::vector<Token> const& tokens)
 {
-    BOOST_FOREACH(Token const& t, tokens)
+    for (std::size_t i = 0, len = tokens.size(); i < len; ++i)
     {
         if (*ids == -1)
             return false;           // reached end of expected data
 
-        if (t.id() != static_cast<std::size_t>(*ids))        // token id must match
+        if (tokens[i].id() != static_cast<std::size_t>(*ids))        // token id must match
             return false;
 
         ++ids;
@@ -124,12 +120,12 @@ template <typename Token>
 inline bool 
 test_token_states(std::size_t const* states, std::vector<Token> const& tokens)
 {
-    BOOST_FOREACH(Token const& t, tokens)
+    for (std::size_t i = 0, len = tokens.size(); i < len; ++i)
     {
         if (*states == std::size_t(-1))
             return false;           // reached end of expected data
 
-        if (t.state() != *states)            // token state must match
+        if (tokens[i].state() != *states)            // token state must match
             return false;
 
         ++states;
@@ -149,7 +145,7 @@ inline bool
 test_token_positions(Iterator begin, position_type const* positions, 
     std::vector<Token> const& tokens)
 {
-    BOOST_FOREACH(Token const& t, tokens)
+    for (std::size_t i = 0, len = tokens.size(); i < len; ++i)
     {
         if (positions->begin == std::size_t(-1) && 
             positions->end == std::size_t(-1))
@@ -157,7 +153,7 @@ test_token_positions(Iterator begin, position_type const* positions,
             return false;           // reached end of expected data
         }
 
-        boost::iterator_range<Iterator> matched = t.matched();
+        boost::iterator_range<Iterator> matched = tokens[i].matched();
         std::size_t start = std::distance(begin, matched.begin());
         std::size_t end = std::distance(begin, matched.end());
 
@@ -173,38 +169,32 @@ test_token_positions(Iterator begin, position_type const* positions,
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename T>
-struct value 
-{
-    bool valid;
-    T val;
-};
-
 template <typename T, typename Token>
 inline bool 
-test_token_values(value<T> const* values, std::vector<Token> const& tokens)
+test_token_values(boost::optional<T> const* values, std::vector<Token> const& tokens)
 {
-    BOOST_FOREACH(Token const& t, tokens)
+    for (std::size_t i = 0, len = tokens.size(); i < len; ++i)
     {
-        if (values->valid && values->val == 0)
+        if (values->is_initialized() && values->get() == 0)
             return false;               // reached end of expected data
 
-        if (values->valid) {
+        if (values->is_initialized()) {
             T val;
-            spirit::traits::assign_to(t, val);
-            if (val != values->val)     // token value must match
+            spirit::traits::assign_to(tokens[i], val);
+            if (val != values->get())   // token value must match
                 return false;
         }
 
         ++values;
     }
 
-    return (values->valid && values->val == 0) ? true : false;
+    return (values->is_initialized() && values->get() == 0) ? true : false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 int main()
 {
+    using boost::none;
     typedef std::string::iterator base_iterator_type;
     std::string input(" 01 1.2 -2 03  2.3e6 -3.4");
     int ids[] = { ID_INT, ID_DOUBLE, ID_INT, ID_INT, ID_DOUBLE, ID_DOUBLE, -1 };
@@ -214,15 +204,15 @@ int main()
         { 1, 3 }, { 4, 7 }, { 8, 10 }, { 11, 13 }, { 15, 20 }, { 21, 25 }, 
         { std::size_t(-1), std::size_t(-1) }
     };
-    value<int> ivalues[] = { 
-        { true, 1 }, { false }, { true, -2 }, 
-        { true, 3 }, { false }, { false }, 
-        { true, 0 }
+    boost::optional<int> ivalues[] = { 
+        1, none, -2, 
+        3, none, none, 
+        0
     };
-    value<double> dvalues[] = { 
-        { false }, { true, 1.2 }, { false }, 
-        { false }, { true, 2.3e6 }, { true, -3.4 }, 
-        { true, 0.0 }
+    boost::optional<double> dvalues[] = { 
+        none, 1.2, none, 
+        none, 2.3e6, -3.4, 
+        0.0
     };
 
     // token type: token id, iterator_pair as token value, no state

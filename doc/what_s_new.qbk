@@ -9,10 +9,188 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_9_boost_1_78 Spirit V2.5.9 (Boost V1.78.0)]
+
+* Improved headers self-sufficiency. [gh 695]
+* Removed unneeded `boost/foreach.hpp` include.
+* Fortified against `min` and `max` macros. [gh_pr 697]
+* Deprecated Phoenix V2 transition headers (`boost/spirit/include/phoenix*.hpp`). [gh_pr 699]
+* Fixed potential UB in `hold_any` (`-Wundefined-reinterpret-cast` warnings).
+* Fixed swapped parameters to `is_substitute`. [gh_pr 702] [gh 701] [gh 679]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_8_boost_1_77 Spirit V2.5.8 (Boost V1.77.0)]
+
+* Fixed keyword list parser with Fusion adapt ADT attribute. [gh 666]
+* Lex: Changed token id storage type to `std::size_t` (lexer engine is hardcoded
+  to `std::size_t`) to always be able to hold `boost::lexer::npos` value.
+* Ceased dependence on Foreach. [gh_pr 691]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_8_boost_1_76 Spirit V2.5.8 (Boost V1.76.0)]
+
+* Fixed assertion in standard parser with an input containing characters from
+  extended charset (on values above 0x7F) [gh_pr 620]
+* Karma real numbers generator produces 10.0e-04 instead of 1.0e-03 [gh 628] [gh_pr 629]
+* Improved `what()` info for `distinct` directive [gh_pr 631]
+* Enhanced debug output to print unicode code points as hex [gh_pr 634]
+* Missing inline keyword in `function_impl_invert::eval<bool>` specialization [gh 638]
+* Replaced Boost.Math with Boost.Core alternatives [gh_pr 648]
+* Removed hardcap on Karma's `RealPolicy::precision()` value [trac 7785] [trac 11056] [gh 585] [gh_pr 586]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_8_boost_1_74 Spirit V2.5.8 (Boost V1.74.0)]
+
+* Ceased dependence on Boost.Iostreams [gh_pr 599]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_8_boost_1_73 Spirit V2.5.8 (Boost V1.73.0)]
+
+* Boost.Endian is now used instead of its bundled prerelease version [gh_pr 550]
+* Narrowed Proto and Phoenix inclusion for a 5-10% inclusion speed-up [gh_pr 558]
+* Ceased dependence on Boost.Algorithm and Boost.LexicalCast [gh_pr 560]
+* Added static assertion for meaningless rule attribute qualifiers [gh_pr 561]
+* String literal was matching everything when `<boost/spirit/include/qi_auto.hpp>`
+  header is included [gh_pr 579]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_8_boost_1_72 Spirit V2.5.8 (Boost V1.72.0)]
+
+* `<cctype>` functions were called with negative values. [gh_pr 543]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_8_boost_1_71 Spirit V2.5.8 (Boost V1.71.0)]
+
+* Explicitly delete all non implemented assignment operators. [gh_pr 489] Romain Geissler
+* Port `hold_any` to Boost.Core typeinfo. [gh_pr 510] Andrey Semashev
+* Lex: Removed variadic `tokenize_and_phrase_parse`. [gh_pr 491]
+* Qi: Floating point parser fixes. [trac 11608] [gh 421] [gh 495] [gh 498] [gh 503]
+* utree: Missing `<cstring>` include in `utree_detail2.hpp`. [gh 502]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_8 Spirit V2.5.8]
+
+[heading What's changed from V2.5.7 (Boost V1.69.0) to V2.5.8 (Boost V1.70.0)]
+
+* Removed use of deprecated `boost/detail/iterator.hpp` header [gh_pr 432]
+* Macro name collisions and namespace conflicts with Boost.Endian were fixed. [gh_pr 349] [gh_pr 482]
+
+[heading Bug Fixes in Qi]
+* Added static asserts for rule skipper type problems. [gh_pr 427]
+* The `check_overflow` trait default implementation now relies on
+  `std::numeric_limits<T>::is_bounded` instead of `boost::integer_traits<T>::is_integral` [gh_pr 429]
+* Integer parsers should now handle user defined types. [gh_pr 429]
+*[/^] [*Note:] The `check_overflow` trait default implementation now relies on
+  `std::numeric_limits<T>::is_bounded` instead of `boost::integer_traits<T>::is_integral`.
+* Removed broken 1.0#INF parser. It was poorly documented and never worked. [gh 415] [gh_pr 458] [trac 8699]
+* The undocumented `make_attribute` trait was merged into `transform_attribute` trait. [gh_pr 471]
+* The `pre_transform`, `post_transform`, and `fail_transform` utility functions
+  were removed in favor of directly using `pre`/`post`/`fail` of the transform trait. [gh_pr 467]
+* The integer value parser now respects `std::numeric_limits<T>::digits10` value. [gh_pr 469]
+* Fixed underflow check for a `(Min % Base) == 0` corner case. [gh_pr 469]
+* Fixed an output value on overflow of IgnoreOverflowDigits=true integer parser. [gh_pr 470]
+* Special handling of references in `transform_attribute` was removed. [gh_pr 480]
+
+[heading Bug Fixes in Lex]
+* Fixed UB in default constructor of lexer with user specified token type. [gh_pr 420]
+
+[heading Bug Fixes in utree]
+* Fixed UB in tag getter due to left shift of negative value. [gh_pr 423]
+* Fixed double-conversion (`spirit::string -> std::string -> spirit::string`). [gh_pr 462]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_7 Spirit V2.5.7]
+
+[heading What's changed from V2.5.6 (Boost V1.68.0) to V2.5.7 (Boost V1.69.0)]
+
+* Drop own FP routines in favor of `boost::math`. [gh_pr 392] [trac 13531]
+* Missing visibility mark on exception types. [gh_pr 409]
+* Fixed transform_attribute ambiguity. [gh_pr 407] [gh 396]
+* to_utf8: Fixed wchar_t handling on Windows. [gh_pr 413] [gh 395]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_6 Spirit V2.5.6]
+
+[heading What's changed from V2.5.5 (Boost V1.67.0) to V2.5.6 (Boost V1.68.0)]
+
+[heading Bug Fixes in Qi]
+* Fixed ADT support by permutation and sequence_or operator. [gh_pr 376]
+* Specialize iterator_source for random access. [gh_pr 383]
+* Removed redundant check in `skip_over`. [gh_pr 373]
+
+[heading Bug Fixes in Karma]
+* Fixed UB in `get_absolute_value` function. [gh_pr 246]
+* Fixed use after scope bug if ADT getter returns by value. [gh_pr 375] [trac 6126]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_5 Spirit V2.5.5]
+
+[heading What's changed from V2.5.4 (Boost V1.66.0) to V2.5.5 (Boost V1.67.0)]
+
+There was no version bump and changelog for Boost V1.61.0-1.66.0 releases.
+
+[heading Bug Fixes in Qi or Karma]
+* Fixed keyword directives compilation on C++11. [gh_pr 256] [trac 11493]
+* Fixed subrules compilation. [gh_pr 279] [gh_pr 259]
+* Fixed subrules use after scope bug. [gh_pr 284] [trac 5270]
+* Fixed undefined behavior in sequential or operator. Underlying parsers
+  order of execution was dependent on compiler. [gh_pr 310]
+* Spirit was accidentally relaying on `types` typedef of `boost::optional`.
+  The typedef was removed in the new optional implementation. [gh_pr 271] [trac 12349]
+* Fixed problems with `BOOST_SPIRIT_NO_PREDEFINED_TERMINALS` (`attr_cast`,
+  `confix`, `distinct`, `keywords`, and `flush_multi_pass`). [gh_pr 314] [trac 13311]
+* Added missing copy assignment operator to `hold_any`. [gh_pr 361] [trac 8268]
+
+[heading Bug Fixes in Qi]
+* Fixed alternate operator. [gh_pr 201] [gh_pr 271] [trac 12349]
+* Fixed signed integer overflow in real parser. [gh_pr 245]
+* Fixed overflow problem in `uint_parser<signed T>`. [gh_pr 297]
+* Fixed `get_current_line`, `get_line_start`, and added `get_line_end`. [gh_pr 304]
+* Permutations parser were always initializing optionals. [gh_pr 319] [trac 12473]
+* Changed iterator concept static assert from `ForwardIterator` to
+  `ReadableIteratorConcept` && `ForwardTraversalConcept`. [gh_pr 320]
+* Added assertations to real parsers to ensure that the `parse_frac_n` from
+  user defined real policy does not return negative values and also to prevent
+  static analyzers false-positives. [gh_pr 358]
+
+[heading Bug Fixes in Karma]
+* Fixed alternate operator. [gh_pr 271]
+* Fixed `no_buffering_policy` missing copy constructor. [gh_pr 261]
+* The `ostream_iterator` was inheriting `std::iterator` which is deprecated
+  in C++17. [gh_pr 345]
+
+[heading Bug Fixes in Lex]
+* Store id as promoted type to allow out-of-enum values. [gh_pr 247]
+* Fixed C2001 'newline in constant' warning in generated lexers. [gh_pr 324] [trac 11540]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_5_4 Spirit V2.5.4]
 
 [heading What's changed from V2.5.3 (Boost V1.50.0) to V2.5.4 (Boost V1.61.0)]
 
+* Phoenix V2 was completely removed in Boost V1.56.
 * Introduced the new expect parser directive (see __qi_expectd__) in addition to 
   the expecation operator (see __qi_expect__).
 
@@ -35,7 +213,7 @@
 
 * Integrated Vitaly Budovski's patch to add binary floating point parsers and
   generators.
-* Fixed #6253: `lex::lexertl::generate_static_dfa` compiler errors if lexer has
+* Fixed [trac 6253]: `lex::lexertl::generate_static_dfa` compiler errors if lexer has
   wchar_t as underlying stream type.
 * Added the possibility to match a token range when parsing with a lexer by
   using `qi::token(min, max)`, or `qi::tokenid(min, max)`. Both parsers match
@@ -46,7 +224,7 @@
 * Fixed `karma::subrule` from the [@../../repository/doc/html/index.html repository]
   (thanks to Lee Clagett for submitting a patch).
 * Fixed __karma__ examples (thanks to Lee Clagett for submitting a patch).
-* Fixed #6368: [multi_pass] clear_queue isn't forwarded to the storage policy.
+* Fixed [trac 6368]: [multi_pass] clear_queue isn't forwarded to the storage policy.
 * Fixed a problem in __karma__ when a variant holding a container was used as
   a generator inside a sequence.
 
@@ -69,7 +247,7 @@
 
 [heading Bug Fixes in Lex]
 
-* Fixed Boost ticket #5701: lexertl token_value_type returns const unused for
+* Fixed [trac 5701]: lexertl token_value_type returns const unused for
   nonconst ref.
 * Fixed a problem in the lexer (position_token) causing problems with enabled
   parser debugging (MSVC2010).
@@ -130,8 +308,8 @@ any of Spirit's include files):
 
 * __qi__ integer literals (like `int_(10)`) do not consume input on failure
   anymore.
-* Fixed Boost ticket #5246: mmap_file_iterator Fails to initialize correctly.
-* Fixed Boost ticket #5246: mmap_file_iterator Fails to initialize correctly.
+* Fixed [trac 5246]: mmap_file_iterator Fails to initialize correctly.
+* Fixed [trac 5246]: mmap_file_iterator Fails to initialize correctly.
 * Fixed a const correctness problem in `karma::real_policies<>` preventing the
   use of const floating point types with the generator. Thanks to Jeroen
   Habraken (a.k.a. VeXocide) for reporting it and for submitting a patch and
@@ -215,7 +393,7 @@ any of Spirit's include files):
   separate version allowing to distinguish 'lit(foo)' from 'foo'. This should
   not change any semantics nor should it break exiting code.
 * Added the __qi__ directive __qi_as__ (and its string specializations
-  __qi_as_string__ and __qi_as_wstring__) enabling asignment of container
+  __qi_as_string__ and __qi_as_wstring__) enabling assignment of container
   attribute types as a whole.
 * Added the __karma__ directive __karma_as__ (and its string specializations
   __karma_as_string__ and __karma_as_wstring__) enabling handling of container
@@ -321,7 +499,7 @@ any of Spirit's include files):
   with `signed char` and `unsigned char` as well.
 * Fixed a problem in the multi_pass fixed_queue policy.
 * Enabled proper modifier handling for the __qi_skip__ directive.
-* Fixed a floating point formating problem in Karma (Trac ticket #4742).
+* Fixed a floating point formating problem in Karma ([trac 4742]).
 * Fixed a problem in [qi_repeat `repeat`]`[]`, which caused the `first`
   iterator not to be reset on certain parsing failures (see
   [@http://stackoverflow.com/questions/4009752/boost-spirit-bug-when-mixing-alternates-with-optionals Stack Overflow]).
@@ -414,7 +592,7 @@ any of Spirit's include files):
   the description of the __customize_transform_attribute__ for more details.
 * Added support for attribute sequences created with `BOOST_FUSION_ADAPT_CLASS`
   and `BOOST_FUSION_ADAPT_CLASS_NAMED`. This support requires to include the
-  new header file: `#include <boost/spirit/inlcude/support_adapt_class_attributes.hpp>`.
+  new header file: `#include <boost/spirit/include/support_adapt_class_attributes.hpp>`.
 * Added `karma::ostream_iterator` as a counterpart to `qi::istream_iterator`
   (see new header file: `#include <boost/spirit/home/support/iterators/ostream_iterator.hpp>`).
 * Added `qi::hold` allowing to make sure the embedded parser does not touch

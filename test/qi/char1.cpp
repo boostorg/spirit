@@ -5,11 +5,11 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/qi_char.hpp>
+
 #include <boost/spirit/include/qi_action.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 
 #include <iostream>
 #include "test.hpp"
@@ -34,6 +34,11 @@ main()
         BOOST_TEST(!test("x", char_('y')));
         BOOST_TEST(test("x", char_('a', 'z')));
         BOOST_TEST(!test("x", char_('0', '9')));
+
+        BOOST_TEST(test("0", char_('0', '9')));
+        BOOST_TEST(test("9", char_('0', '9')));
+        BOOST_TEST(!test("0", ~char_('0', '9')));
+        BOOST_TEST(!test("9", ~char_('0', '9')));
 
         BOOST_TEST(!test("x", ~char_));
         BOOST_TEST(!test("x", ~char_('x')));
@@ -152,6 +157,18 @@ main()
         print_info(what('x'));
         print_info(what(char_('a','z')));
         print_info(what(alpha));
+    }
+
+    {
+        namespace ascii = boost::spirit::qi::ascii;
+        char const* input = "\x80";
+
+        // ascii > 7 bits (this should fail, not assert!)
+        BOOST_TEST(!test(input, ascii::char_));
+        BOOST_TEST(!test(input, ascii::char_('a')));
+        BOOST_TEST(!test(input, ascii::alnum));
+        BOOST_TEST(!test(input, ascii::char_("a-z")));
+        BOOST_TEST(!test(input, ascii::char_('0', '9')));
     }
 
     return boost::report_errors();

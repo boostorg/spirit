@@ -7,7 +7,6 @@
 //////////////////////////////////////////////////////////////////////////////*/
 #include <vector>
 
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3/auxiliary/eoi.hpp>
 #include <boost/spirit/home/x3/core.hpp>
 #include <boost/spirit/home/x3/char.hpp>
@@ -26,6 +25,8 @@ int main()
 {
     using namespace spirit_test;
     namespace x3 = boost::spirit::x3;
+
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(x3::seek['x']);
 
     // test eoi
     {
@@ -90,6 +91,9 @@ int main()
     {
         BOOST_TEST(test_failure("abcdefg", x3::seek[x3::int_]));
     }
+
+    // past the end regression GH#658
+    BOOST_TEST(!test(" ", x3::seek['x'], x3::space));
 
     return boost::report_errors();
 }

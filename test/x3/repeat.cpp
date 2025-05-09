@@ -7,13 +7,17 @@
 #include <string>
 #include <vector>
 
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/utility/enable_if.hpp>
 
+#if defined(__GNUC__) && (__GNUC__ >= 8)
+// https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92539
+# pragma GCC diagnostic ignored "-Warray-bounds"
+#endif
 #include <boost/spirit/home/x3.hpp>
 #include <string>
 #include <iostream>
 #include "test.hpp"
+#include "utils.hpp"
 
 int
 main()
@@ -28,6 +32,12 @@ main()
     using boost::spirit::x3::int_;
     using boost::spirit::x3::lexeme;
     using boost::spirit::x3::char_;
+
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(repeat['x']);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(repeat(3)['x']);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(repeat(3, 5)['x']);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(repeat(3, inf)['x']);
+
     {
         BOOST_TEST(test("aaaaaaaa", repeat[char_])); // kleene synonym
         BOOST_TEST(test("aaaaaaaa", repeat(8)[char_]));
@@ -134,11 +144,18 @@ main()
     }
 
     {
-        std::vector<char> v;
+        std::vector<int> v;
         BOOST_TEST(test_attr("1 2 3", int_ >> repeat(2)[int_], v, space));
         BOOST_TEST(v.size() == 3 && v[0] == 1 && v[1] == 2 && v[2] == 3);
 
         BOOST_TEST(!test("1 2", int_ >> repeat(2)[int_], space));
     }
+
+    { // test move only types
+        std::vector<move_only> v;
+        BOOST_TEST(test_attr("sss", repeat(3)[synth_move_only], v));
+        BOOST_TEST_EQ(v.size(), 3);
+    }
+
     return boost::report_errors();
 }

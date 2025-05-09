@@ -8,7 +8,7 @@
 #if !defined(BOOST_SPIRIT_TEST_MATCH_MANIP_HPP)
 #define BOOST_SPIRIT_TEST_MATCH_MANIP_HPP
 
-#include <boost/config/warning_disable.hpp>
+#include <boost/spirit/include/qi_match.hpp>
 
 #include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/qi_action.hpp>
@@ -17,18 +17,17 @@
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_stream.hpp>
-#include <boost/spirit/include/qi_match.hpp>
 #include <boost/spirit/include/qi_match_auto.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/statement.hpp>
 
 #include <string>
 #include <sstream>
 #include <vector>
 #include <list>
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Char, typename Expr>

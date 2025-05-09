@@ -7,12 +7,14 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <iostream>
-#include <boost/detail/lightweight_test.hpp>
 #include <list>
 
 
 #include <boost/spirit/include/classic_core.hpp>
 #include "impl/string_length.hpp"
+
+#include <boost/core/lightweight_test.hpp>
+
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -23,7 +25,7 @@ using namespace BOOST_SPIRIT_CLASSIC_NS;
 struct to_upper_iter_policy : public iteration_policy {
 
     char filter(char ch) const
-    { return char(toupper(ch)); }
+    { using namespace std; return char(toupper(ch)); }
 };
 
 inline bool test_isspace(char c)

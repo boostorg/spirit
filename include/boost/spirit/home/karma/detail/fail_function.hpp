@@ -4,8 +4,8 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#if !defined(SPIRIT_KARMA_SEQUENCE_FEB_28_2007_0249PM)
-#define SPIRIT_KARMA_SEQUENCE_FEB_28_2007_0249PM
+#ifndef BOOST_SPIRIT_KARMA_DETAIL_FAIL_FUNCTION_HPP
+#define BOOST_SPIRIT_KARMA_DETAIL_FAIL_FUNCTION_HPP
 
 #if defined(_MSC_VER)
 #pragma once
@@ -16,6 +16,10 @@
 
 namespace boost { namespace spirit { namespace karma { namespace detail
 {
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
     template <typename OutputIterator, typename Context, typename Delimiter>
     struct fail_function
     {
@@ -30,7 +34,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         bool operator()(Component const& component, Attribute const& attr) const
         {
 #if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1600))  
-            component; // suppresses warning: C4100: 'component' : unreferenced formal parameter
+            (void)component; // suppresses warning: C4100: 'component' : unreferenced formal parameter
 #endif
             // return true if any of the generators fail
             return !component.generate(sink, ctx, delim, attr);
@@ -40,7 +44,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         bool operator()(Component const& component) const
         {
 #if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1600))  
-            component; // suppresses warning: C4100: 'component' : unreferenced formal parameter
+            (void)component; // suppresses warning: C4100: 'component' : unreferenced formal parameter
 #endif
             // return true if any of the generators fail
             return !component.generate(sink, ctx, delim, unused);
@@ -49,11 +53,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         OutputIterator& sink;
         Context& ctx;
         Delimiter const& delim;
-
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        fail_function& operator= (fail_function const&);
     };
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
 }}}}
 

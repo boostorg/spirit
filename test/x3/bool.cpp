@@ -14,6 +14,8 @@ int main()
     using boost::spirit::x3::bool_;
 
     {
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(bool_);
+
         BOOST_TEST(test("true", bool_));
         BOOST_TEST(test("false", bool_));
         BOOST_TEST(!test("fasle", bool_));
@@ -22,6 +24,9 @@ int main()
     {
         using boost::spirit::x3::true_;
         using boost::spirit::x3::false_;
+
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(true_);
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(false_);
     
         BOOST_TEST(test("true", true_));
         BOOST_TEST(!test("true", false_));
@@ -50,7 +55,9 @@ int main()
     {
         typedef boost::spirit::x3::bool_parser<bool, boost::spirit::char_encoding::standard, backwards_bool_policies>
             backwards_bool_type;
-        backwards_bool_type const backwards_bool = backwards_bool_type();
+        constexpr backwards_bool_type backwards_bool{};
+
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(backwards_bool);
     
         BOOST_TEST(test("true", backwards_bool));
         BOOST_TEST(test("eurt", backwards_bool));
@@ -67,7 +74,9 @@ int main()
     {
         typedef boost::spirit::x3::bool_parser<test_bool_type, boost::spirit::char_encoding::standard>
             bool_test_type;
-        bool_test_type const test_bool = bool_test_type();
+        constexpr bool_test_type test_bool{};
+
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(test_bool);
     
         BOOST_TEST(test("true", test_bool));
         BOOST_TEST(test("false", test_bool));

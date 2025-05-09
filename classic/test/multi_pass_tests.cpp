@@ -10,7 +10,7 @@
 #include <boost/scoped_ptr.hpp>
 #include <iterator>
 #include <string>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include "impl/sstream.hpp"
 
 using namespace std;

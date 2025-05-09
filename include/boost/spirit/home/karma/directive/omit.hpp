@@ -3,8 +3,8 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#if !defined(SPIRIT_KARMA_OMIT_JUL_20_2009_1008AM)
-#define SPIRIT_KARMA_OMIT_JUL_20_2009_1008AM
+#ifndef BOOST_SPIRIT_KARMA_DIRECTIVE_OMIT_HPP
+#define BOOST_SPIRIT_KARMA_DIRECTIVE_OMIT_HPP
 
 #if defined(_MSC_VER)
 #pragma once
@@ -19,6 +19,7 @@
 #include <boost/spirit/home/support/has_semantic_action.hpp>
 #include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/spirit/home/karma/detail/attributes.hpp>
+#include <boost/spirit/home/karma/detail/output_iterator.hpp>
 
 namespace boost { namespace spirit
 {
@@ -73,8 +74,15 @@ namespace boost { namespace spirit { namespace karma
             // have any other means to verify, whether the passed attribute is 
             // compatible with the subject. 
 
+#if defined(_MSC_VER) && _MSC_VER < 1900
+# pragma warning(push)
+# pragma warning(disable: 4127) // conditional expression is constant
+#endif
             // omit[] will execute the code, while skip[] doesn't execute it
             if (Execute) {
+#if defined(_MSC_VER) && _MSC_VER < 1900
+# pragma warning(pop)
+#endif
                 // wrap the given output iterator to avoid output
                 detail::disable_output<OutputIterator> disable(sink);
                 return subject.generate(sink, ctx, d, attr);

@@ -19,9 +19,9 @@
 #define SPIRIT_EXAMPLE_CALC2_AST_APR_30_2008_1011AM
 
 #include <boost/variant.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_function.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/function.hpp>
+#include <boost/phoenix/statement.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/include/support_attributes_fwd.hpp>
 

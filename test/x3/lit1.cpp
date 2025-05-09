@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
+#include <boost/fusion/include/vector.hpp>
 
 #include <string>
 #include "test.hpp"
@@ -17,6 +17,8 @@ main()
     using spirit_test::test;
     using spirit_test::test_attr;
     using boost::spirit::x3::string;
+
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(string("x"));
 
     {
         BOOST_TEST((test("kimpo", "kimpo")));
@@ -67,11 +69,20 @@ main()
         BOOST_TEST((test_attr("kimpo", string("kimpo"), s)));
         BOOST_TEST(s == "kimpo");
         s.clear();
+        BOOST_TEST((test_attr("kimpo", string("kim") >> string("po"), s)));
+        BOOST_TEST(s == "kimpo");
+        s.clear();
         BOOST_TEST((test_attr(L"kimpo", string(L"kimpo"), s)));
         BOOST_TEST(s == "kimpo");
         s.clear();
         BOOST_TEST((test_attr("x", string("x"), s)));
         BOOST_TEST(s == "x");
+    }
+
+    { // single-element fusion vector tests
+        boost::fusion::vector<std::string> s;
+        BOOST_TEST(test_attr("kimpo", string("kimpo"), s));
+        BOOST_TEST(boost::fusion::at_c<0>(s) == "kimpo");
     }
 
     return boost::report_errors();

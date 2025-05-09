@@ -24,6 +24,8 @@ main()
         using boost::spirit::x3::int_;
         int i;
 
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(int_);
+
         BOOST_TEST(test("123456", int_));
         BOOST_TEST(test_attr("123456", int_, i));
         BOOST_TEST(i == 123456);
@@ -71,6 +73,8 @@ main()
         using boost::spirit::x3::long_long;
         boost::long_long_type ll;
 
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(long_long);
+
         BOOST_TEST(test("1234567890123456789", long_long));
         BOOST_TEST(test_attr("1234567890123456789", long_long, ll));
         BOOST_TEST(ll == 1234567890123456789LL);
@@ -101,6 +105,9 @@ main()
         using boost::spirit::x3::long_;
         int i;
 
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(short_);
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(long_);
+
         BOOST_TEST(test("12345", short_));
         BOOST_TEST(test_attr("12345", short_, i));
         BOOST_TEST(i == 12345);
@@ -114,8 +121,10 @@ main()
     // Check overflow is parse error
     ///////////////////////////////////////////////////////////////////////////
     {
-        boost::spirit::x3::int_parser<boost::int8_t> int8_;
+        constexpr boost::spirit::x3::int_parser<boost::int8_t> int8_{};
         char c;
+
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(int8_);
 
         BOOST_TEST(!test_attr("999", int8_, c));
 
@@ -131,7 +140,9 @@ main()
     {
         using boost::spirit::x3::int_parser;
         using boost::spirit::x3::unused_type;
-        int_parser<unused_type> any_int;
+        constexpr int_parser<unused_type> any_int{};
+
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(any_int);
 
         BOOST_TEST(test("123456", any_int));
         BOOST_TEST(test("-123456", any_int));
@@ -145,7 +156,7 @@ main()
         using boost::spirit::x3::_attr;
         using boost::spirit::x3::ascii::space;
         using boost::spirit::x3::int_;
-        int n, m;
+        int n = 0, m = 0;
 
         auto f = [&](auto& ctx){ n = _attr(ctx); };
 

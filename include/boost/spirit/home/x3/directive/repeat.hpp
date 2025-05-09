@@ -2,17 +2,18 @@
     Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
     Copyright (c) 2014 Thomas Bernard
+    Copyright (c) 2017 wanghan02
+    Copyright (c) 2024 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#if !defined(SPIRIT_X3_REPEAT_APRIL_16_2014_0848AM)
-#define SPIRIT_X3_REPEAT_APRIL_16_2014_0848AM
+#ifndef BOOST_SPIRIT_X3_DIRECTIVE_REPEAT_HPP
+#define BOOST_SPIRIT_X3_DIRECTIVE_REPEAT_HPP
 
-#include <boost/function_types/function_type.hpp>
-#include <boost/function_types/parameter_types.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/operator/kleene.hpp>
+#include <boost/spirit/home/x3/support/expectation.hpp>
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
@@ -57,7 +58,7 @@ namespace boost { namespace spirit { namespace x3
         static bool const is_pass_through_unary = true;
         static bool const handles_container = true;
 
-        repeat_directive(Subject const& subject, RepeatCountLimit const& repeat_limit_)
+        constexpr repeat_directive(Subject const& subject, RepeatCountLimit const& repeat_limit_)
           : base_type(subject)
           , repeat_limit(repeat_limit_)
         {}
@@ -85,7 +86,8 @@ namespace boost { namespace spirit { namespace x3
                       this->subject, first, last, context, rcontext, attr))
                     break;
             }
-            return true;
+
+            return !has_expectation_failure(context);
         }
 
         RepeatCountLimit repeat_limit;
@@ -93,12 +95,12 @@ namespace boost { namespace spirit { namespace x3
 
     // Infinite loop tag type
     struct inf_type {};
-    const inf_type inf = inf_type();
+    constexpr inf_type inf = inf_type();
 
     struct repeat_gen
     {
         template<typename Subject>
-        auto operator[](Subject const& subject) const
+        constexpr auto operator[](Subject const& subject) const
         {
             return *as_parser(subject);
         }
@@ -106,12 +108,12 @@ namespace boost { namespace spirit { namespace x3
         template <typename T>
         struct repeat_gen_lvl1
         {
-            repeat_gen_lvl1(T&& repeat_limit_)
+            constexpr repeat_gen_lvl1(T&& repeat_limit_)
               : repeat_limit(repeat_limit_)
             {}
 
             template<typename Subject>
-            repeat_directive< typename extension::as_parser<Subject>::value_type, T>
+            constexpr repeat_directive< typename extension::as_parser<Subject>::value_type, T>
             operator[](Subject const& subject) const
             {
                 return { as_parser(subject),repeat_limit };
@@ -121,28 +123,28 @@ namespace boost { namespace spirit { namespace x3
         };
 
         template <typename T>
-        repeat_gen_lvl1<detail::exact_count<T>>
+        constexpr repeat_gen_lvl1<detail::exact_count<T>>
         operator()(T const exact) const
         {
             return { detail::exact_count<T>{exact} };
         }
 
         template <typename T>
-        repeat_gen_lvl1<detail::finite_count<T>>
+        constexpr repeat_gen_lvl1<detail::finite_count<T>>
         operator()(T const min_val, T const max_val) const
         {
             return { detail::finite_count<T>{min_val,max_val} };
         }
 
         template <typename T>
-        repeat_gen_lvl1<detail::infinite_count<T>>
+        constexpr repeat_gen_lvl1<detail::infinite_count<T>>
         operator()(T const min_val, inf_type const &) const
         {
             return { detail::infinite_count<T>{min_val} };
         }
     };
 
-    auto const repeat = repeat_gen{};
+    constexpr auto repeat = repeat_gen{};
 }}}
 
 namespace boost { namespace spirit { namespace x3 { namespace traits

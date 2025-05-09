@@ -21,6 +21,8 @@ main()
         using boost::spirit::x3::uint_;
         unsigned u;
 
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(uint_);
+
         BOOST_TEST(test("123456", uint_));
         BOOST_TEST(test_attr("123456", uint_, u));
         BOOST_TEST(u == 123456);
@@ -39,6 +41,8 @@ main()
     {
         using boost::spirit::x3::bin;
         unsigned u;
+
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(bin);
 
         BOOST_TEST(test("11111110", bin));
         BOOST_TEST(test_attr("11111110", bin, u));
@@ -59,6 +63,8 @@ main()
         using boost::spirit::x3::oct;
         unsigned u;
 
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(oct);
+
         BOOST_TEST(test("12545674515", oct));
         BOOST_TEST(test_attr("12545674515", oct, u));
         BOOST_TEST(u == 012545674515);
@@ -77,6 +83,8 @@ main()
     {
         using boost::spirit::x3::hex;
         unsigned u;
+
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(hex);
 
         BOOST_TEST(test("95BC8DF", hex));
         BOOST_TEST(test_attr("95BC8DF", hex, u));
@@ -101,19 +109,22 @@ main()
         unsigned u;
         using boost::spirit::x3::uint_parser;
 
-        uint_parser<unsigned, 10, 1, 3> uint3;
+        constexpr uint_parser<unsigned, 10, 1, 3> uint3{};
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(uint3);
         BOOST_TEST(test("123456", uint3, false));
         BOOST_TEST(test_attr("123456", uint3, u, false));
         BOOST_TEST(u == 123);
 
-        uint_parser<unsigned, 10, 2, 4> uint4;
+        constexpr uint_parser<unsigned, 10, 2, 4> uint4{};
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(uint4);
         BOOST_TEST(test("123456", uint4, false));
         BOOST_TEST(test_attr("123456", uint4, u, false));
         BOOST_TEST(u == 1234);
 
         char const * first = "0000000";
         char const * last  = first + std::strlen(first);
-        uint_parser<unsigned, 10, 4, 4> uint_exact4;
+        constexpr uint_parser<unsigned, 10, 4, 4> uint_exact4{};
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(uint_exact4);
         BOOST_TEST(boost::spirit::x3::parse(first, last, uint_exact4, u)
             && first != last && (last-first == 3) && u == 0);
 

@@ -4,6 +4,9 @@
 #   Distributed under the Boost Software License, Version 1.0. (See accompanying
 #   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
+import-search /boost/config/checks ;
+import config : requires ;
+
 project spirit-x3-example
     : requirements
         <include>.
@@ -33,6 +36,7 @@ build-project rexpr/rexpr_full ;
 exe x3_calc1 : calc/calc1.cpp ;
 exe x3_calc2 : calc/calc2.cpp ;
 exe x3_calc4 : calc/calc4.cpp ;
+exe x3_calc4b : calc/calc4b.cpp ;
 exe x3_calc5 : calc/calc5.cpp ;
 exe x3_calc6 : calc/calc6.cpp ;
 
@@ -44,8 +48,7 @@ exe x3_calc7 :
 ;
 
 exe x3_calc8 :
-    /boost//system
-    /boost//filesystem
+    /boost/filesystem//boost_filesystem
     calc/calc8/vm.cpp
     calc/calc8/compiler.cpp
     calc/calc8/expression.cpp
@@ -54,11 +57,12 @@ exe x3_calc8 :
 ;
 
 exe x3_calc9 :
-    /boost//system
-    /boost//filesystem
+    /boost/filesystem//boost_filesystem
     calc/calc9/vm.cpp
     calc/calc9/compiler.cpp
     calc/calc9/expression.cpp
     calc/calc9/statement.cpp
     calc/calc9/main.cpp
 ;
+
+exe x3_tuple : attributes/tuple.cpp : [ requires cxx17_structured_bindings ] ;

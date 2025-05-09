@@ -3,9 +3,6 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
-
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_auxiliary.hpp>
@@ -13,10 +10,8 @@
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_nonterminal.hpp>
 #include <boost/spirit/include/karma_action.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
-#include <boost/spirit/include/phoenix_fusion.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 
 #include "test.hpp"
 
@@ -35,14 +30,14 @@ int main()
     {
         karma::rule<outiter_type, locals<std::string> > start;
 
-        start = string[_1 = "abc", _a = _1] << int_[_1 = 10] << string[_1 = _a];
+        start = string[(_1 = "abc", _a = _1)] << int_[_1 = 10] << string[_1 = _a];
         BOOST_TEST(test("abc10abc", start));
     }
 
     {
         karma::rule<outiter_type, space_type, locals<std::string> > start;
 
-        start = string[_1 = "abc", _a = _1] << int_[_1 = 10] << string[_1 = _a];
+        start = string[(_1 = "abc", _a = _1)] << int_[_1 = 10] << string[_1 = _a];
         BOOST_TEST(test_delimited("abc 10 abc ", start, space));
     }
 

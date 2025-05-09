@@ -7,13 +7,11 @@
 //  and the built in matching capabilities of Karma generators to emit output 
 //  in different formats based on the content of an attribute (not its type).
 
-#include <boost/config/warning_disable.hpp>
-
 #include <string>
 #include <vector>
 
 #include <boost/spirit/include/karma.hpp>
-#include <boost/spirit/include/phoenix_stl.hpp>
+#include <boost/phoenix/stl.hpp>
 
 namespace client
 {

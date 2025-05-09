@@ -3,14 +3,13 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-// #define BOOST_SPIRIT_LEXERTL_DEBUG
-#define BOOST_VARIANT_MINIMIZE_SIZE
+#include <boost/spirit/include/lex_plain_token.hpp>
 
-#include <boost/detail/lightweight_test.hpp>
-#include <boost/config/warning_disable.hpp>
-
-#include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
+#include <boost/spirit/include/qi_parse.hpp>
+#include <boost/spirit/include/qi_operator.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 #include <string>
 

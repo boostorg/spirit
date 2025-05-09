@@ -66,7 +66,7 @@
   the result of the <tt>base</tt> rule. If <tt>base</tt> got a <em>&quot;bin&quot;</em>, 
   then number should parse binary numbers. If <tt>base</tt> got a <em>&quot;dec&quot;</em>, 
   then number should parse decimal numbers. Typically we'll have to rewrite our 
-  grammar to accomodate the different parsing behavior:</p>
+  grammar to accommodate the different parsing behavior:</p>
 <pre><code><font color="#000000"><span class=identifier>    block </span><span class=special>= 
             </span><span class=identifier>&quot;bin&quot;</span> <span class=special>&gt;&gt; </span><span class="literal">'{'</span><span class=special> &gt;&gt; *</span>bin_line<span class=special> &gt;&gt; </span><span class="literal">'}'</span><span class=special>
         |   </span><span class=identifier>&quot;dec&quot;</span> <span class=special>&gt;&gt; </span><span class="literal">'{'</span><span class=special> &gt;&gt; *</span>dec_line<span class=special> &gt;&gt; </span><span class="literal">'}'</span><span class=special>

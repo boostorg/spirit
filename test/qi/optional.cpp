@@ -4,19 +4,25 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/include/qi_optional.hpp>
+
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_numeric.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_action.hpp>
 #include <boost/spirit/include/qi_directive.hpp>
 #include <boost/spirit/include/support_argument.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 #include <boost/fusion/adapted/struct.hpp>
 
 #include <iostream>
 #include "test.hpp"
+
+#ifdef _MSC_VER
+// bogus https://developercommunity.visualstudio.com/t/buggy-warning-c4709/471956
+# pragma warning(disable: 4709) // comma operator within array index expression
+#endif
 
 struct adata
 {
@@ -53,6 +59,18 @@ main()
     {
         BOOST_TEST((test("1234", -int_)));
         BOOST_TEST((test("abcd", -int_, false)));
+
+        boost::optional<int> n;
+        BOOST_TEST(test_attr("", -int_, n))
+            && BOOST_TEST(!n);
+        BOOST_TEST(test_attr("123", -int_, n))
+            && BOOST_TEST(n) && BOOST_TEST_EQ(*n, 123);
+
+        boost::optional<std::string> s;
+        BOOST_TEST(test_attr("", -+char_, s))
+            && BOOST_TEST(!s);
+        BOOST_TEST(test_attr("abc", -+char_, s))
+            && BOOST_TEST(s) && BOOST_TEST_EQ(*s, "abc");
     }
 
     {   // test propagation of unused

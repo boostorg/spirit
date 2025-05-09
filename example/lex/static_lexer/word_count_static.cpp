@@ -14,14 +14,13 @@
 // #define BOOST_SPIRIT_LEXERTL_DEBUG
 #define BOOST_VARIANT_MINIMIZE_SIZE
 
-#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 //[wc_static_include
 #include <boost/spirit/include/lex_static_lexertl.hpp>
 //]
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
-#include <boost/spirit/include/phoenix_container.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/statement.hpp>
+#include <boost/phoenix/stl/container.hpp>
 
 #include <iostream>
 #include <string>
@@ -81,7 +80,7 @@ int main(int argc, char* argv[])
     //
     // This is the only place where the code is different from an equivalent
     // dynamic lexical analyzer. We use the `lexertl::static_lexer<>` instead of
-    // the `lexertl::lexer<>` as the base class for our token defintion type.
+    // the `lexertl::lexer<>` as the base class for our token definition type.
     //
     // As we specified the suffix "wc" while generating the static tables we 
     // need to pass the type lexertl::static_::lexer_wc as the second template

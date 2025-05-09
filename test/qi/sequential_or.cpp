@@ -4,7 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/include/qi_sequential_or.hpp>
+
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_string.hpp>
@@ -13,9 +14,8 @@
 #include <boost/spirit/include/support_argument.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/at.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 #include <boost/optional.hpp>
 
 #include <string>
@@ -101,7 +101,7 @@ main()
         optional<int> i;
         optional<char> c;
 
-        BOOST_TEST((test("123a", (int_ || alpha)[phx::ref(i) = _1, phx::ref(c) = _2])));
+        BOOST_TEST((test("123a", (int_ || alpha)[(phx::ref(i) = _1, phx::ref(c) = _2)])));
         BOOST_TEST((i.get() == 123));
         BOOST_TEST((c.get() == 'a'));
     }

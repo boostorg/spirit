@@ -21,7 +21,6 @@
 # pragma warning(disable: 4345)
 #endif
 
-#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/x3/support/ast/variant.hpp>
 #include <boost/variant/recursive_variant.hpp>

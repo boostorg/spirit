@@ -4,19 +4,16 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/detail/lightweight_test.hpp>
-#include <boost/config/warning_disable.hpp>
-
 #include <cstdlib>
 #include <iostream>
 #include <locale>
 #include <string>
 
 #include <boost/spirit/include/lex_lexertl.hpp>
-#include <boost/spirit/include/phoenix_object.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
-#include <boost/spirit/include/phoenix_container.hpp>
+#include <boost/phoenix/function.hpp>
+#include <boost/phoenix/operator.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 namespace lex = boost::spirit::lex;
 namespace phoenix = boost::phoenix;
@@ -67,7 +64,7 @@ struct test_impl
     void operator()(TokenId const& tokenid, Value const& val) const
     {
         BOOST_TEST(sequence_counter < sizeof(data)/sizeof(data[0]));
-        BOOST_TEST(data[sequence_counter].tokenid == tokenid);
+        BOOST_TEST(data[sequence_counter].tokenid == tokenids(tokenid));
         BOOST_TEST(0 == val.which());
 
         typedef boost::iterator_range<wstring_type::iterator> iterator_range;

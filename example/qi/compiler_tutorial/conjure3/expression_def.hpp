@@ -8,7 +8,7 @@
 #include "expression.hpp"
 #include "error_handler.hpp"
 #include "annotation.hpp"
-#include <boost/spirit/include/phoenix_function.hpp>
+#include <boost/phoenix/function.hpp>
 #include <boost/spirit/include/lex_plain_token.hpp>
 
 namespace client { namespace parser

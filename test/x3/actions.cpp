@@ -4,10 +4,16 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <cstring>
 #include <functional>
+
+#include "test.hpp"
+
+#ifdef _MSC_VER
+// bogus https://developercommunity.visualstudio.com/t/buggy-warning-c4709/471956
+# pragma warning(disable: 4709) // comma operator within array index expression
+#endif
 
 namespace x3 = boost::spirit::x3;
 
@@ -49,9 +55,24 @@ struct setnext
     char& next;
 };
 
+
+struct stationary : boost::noncopyable
+{
+    explicit stationary(int i) : val{i} {}
+    stationary& operator=(int i) { val = i; return *this; }
+
+    int val;
+};
+
+
 int main()
 {
+    using spirit_test::test;
+    using spirit_test::test_attr;
+
     using x3::int_;
+
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(x3::int_type{}[std::true_type{}]);
 
     {
         char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
@@ -78,6 +99,14 @@ int main()
        BOOST_TEST(x3::phrase_parse(input.begin(), input.end(),
           x3::int_[fail] | x3::digit[setnext(next)], x3::space));
        BOOST_TEST(next == '1');
+    }
+
+    { // ensure no unneeded synthesization, copying and moving occurred
+        auto p = '{' >> int_ >> '}';
+
+        stationary st { 0 };
+        BOOST_TEST(test_attr("{42}", p[([]{})], st));
+        BOOST_TEST_EQ(st.val, 42);
     }
 
     return boost::report_errors();

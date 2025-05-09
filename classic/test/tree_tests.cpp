@@ -23,7 +23,7 @@
 #include <string>
 
 #include <fstream>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include "impl/string_length.hpp"
 
 #define DEBUG_DUMP_TREES    (1)

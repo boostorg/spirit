@@ -9,27 +9,26 @@
 #define BOOST_SPIRIT_X3_VARIANT_HAS_SUBSTITUTE_APR_18_2014_925AM
 
 #include <boost/spirit/home/x3/support/traits/is_substitute.hpp>
+#include <boost/mpl/find.hpp>
 
 namespace boost { namespace spirit { namespace x3 { namespace traits
 {
-    template <typename Variant, typename Attribute>
+    template <typename Variant, typename T>
     struct variant_has_substitute_impl
     {
-        // Find a type from the variant that can be a substitute for Attribute.
+        // Find a type from the Variant that can be a substitute for T.
         // return true_ if one is found, else false_
 
         typedef Variant variant_type;
         typedef typename variant_type::types types;
         typedef typename mpl::end<types>::type end;
 
-        typedef typename
-            mpl::find_if<types, is_same<mpl::_1, Attribute>>::type
-        iter_1;
+        typedef typename mpl::find<types, T>::type iter_1;
 
         typedef typename
             mpl::eval_if<
                 is_same<iter_1, end>,
-                mpl::find_if<types, traits::is_substitute<mpl::_1, Attribute>>,
+                mpl::find_if<types, traits::is_substitute<T, mpl::_1>>,
                 mpl::identity<iter_1>
             >::type
         iter;
@@ -37,15 +36,15 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         typedef mpl::not_<is_same<iter, end>> type;
     };
 
-    template <typename Variant, typename Attribute>
+    template <typename Variant, typename T>
     struct variant_has_substitute
-        : variant_has_substitute_impl<Variant, Attribute>::type {};
+        : variant_has_substitute_impl<Variant, T>::type {};
 
-    template <typename Attribute>
-    struct variant_has_substitute<unused_type, Attribute> : mpl::true_ {};
+    template <typename T>
+    struct variant_has_substitute<unused_type, T> : mpl::true_ {};
 
-    template <typename Attribute>
-    struct variant_has_substitute<unused_type const, Attribute> : mpl::true_ {};
+    template <typename T>
+    struct variant_has_substitute<unused_type const, T> : mpl::true_ {};
 
 }}}}
 

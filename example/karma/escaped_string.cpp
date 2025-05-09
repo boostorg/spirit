@@ -6,7 +6,6 @@
 //  The purpose of this example is to show how any character sequence can be
 //  printed while being properly quoted.
 
-#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/karma.hpp>
 
 namespace client

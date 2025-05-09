@@ -3,19 +3,15 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-//#define KARMA_FAIL_COMPILATION
-
-#include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
-
 #include <boost/spirit/include/karma_char.hpp>
+
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_action.hpp>
 #include <boost/spirit/include/karma_phoenix_attributes.hpp>
 
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/statement.hpp>
 
 #include "test.hpp"
 
@@ -125,8 +121,6 @@ main()
         BOOST_TEST(!test("x", char_[_1 = val('y')]));
     }
 
-// we support Phoenix attributes only starting with V2.2
-#if SPIRIT_VERSION >= 0x2020
     // yes, we can use phoenix expressions as attributes as well
     // but only if we include karma_phoenix_attributes.hpp
     {
@@ -139,7 +133,6 @@ main()
         BOOST_TEST(test("x", ascii::char_, phoenix::ref(c)));
         BOOST_TEST(test("y", ascii::char_, ++phoenix::ref(c)));
     }
-#endif
 
     {
         namespace ascii = boost::spirit::ascii;

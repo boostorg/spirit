@@ -12,6 +12,7 @@
 #include <string>
 #include <sstream>
 
+#include <boost/config.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/include/support_line_pos_iterator.hpp>
 
@@ -74,9 +75,9 @@ struct expected_component : std::exception
         msg = oss.str();
     }
 
-    virtual ~expected_component() throw() {}
+    virtual ~expected_component() BOOST_NOEXCEPT_OR_NOTHROW {}
 
-    virtual char const* what() const throw()
+    virtual char const* what() const BOOST_NOEXCEPT_OR_NOTHROW
     {
         return msg.c_str();
     }

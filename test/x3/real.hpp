@@ -10,15 +10,13 @@
 #define BOOST_SPIRIT_TEST_X3_REAL_HPP
 
 #include <climits>
-#include <boost/math/concepts/real_concept.hpp>
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3/char.hpp>
 #include <boost/spirit/home/x3/numeric.hpp>
 #include <boost/spirit/home/x3/operator.hpp>
-#include <boost/math/special_functions/fpclassify.hpp>
-#include <boost/math/special_functions/sign.hpp>
 
 #include "test.hpp"
+
+#include <boost/type_traits/type_identity.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 //  These policies can be used to parse thousand separated
@@ -54,9 +52,9 @@ struct ts_real_policies : boost::spirit::x3::ureal_policies<T>
     }
 
     //  Thousands separated numbers
-    template <typename Iterator, typename Attribute>
+    template <typename Iterator, typename Accumulator>
     static bool
-    parse_n(Iterator& first, Iterator const& last, Attribute& attr)
+    parse_n(Iterator& first, Iterator const& last, Accumulator& result)
     {
         using boost::spirit::x3::uint_parser;
         namespace x3 = boost::spirit::x3;
@@ -64,24 +62,18 @@ struct ts_real_policies : boost::spirit::x3::ureal_policies<T>
         uint_parser<unsigned, 10, 1, 3> uint3;
         uint_parser<unsigned, 10, 3, 3> uint3_3;
 
-        T result = 0;
         if (parse(first, last, uint3, result))
         {
-            bool hit = false;
-            T n;
-            Iterator save = first;
+            Accumulator n;
+            Iterator iter = first;
 
-            while (x3::parse(first, last, ',') && x3::parse(first, last, uint3_3, n))
+            while (x3::parse(iter, last, ',') && x3::parse(iter, last, uint3_3, n))
             {
                 result = result * 1000 + n;
-                save = first;
-                hit = true;
+                first = iter;
             }
 
-            first = save;
-            if (hit)
-                attr = result;
-            return hit;
+            return true;
         }
         return false;
     }
@@ -100,10 +92,12 @@ struct no_leading_dot_policy : boost::spirit::x3::real_policies<T>
 };
 
 template <typename T>
-bool
-compare(T n, double expected)
+bool compare(T n, boost::type_identity_t<T> expected)
 {
-    T const eps = std::pow(10.0, -std::numeric_limits<T>::digits10);
+    using std::abs;
+    using std::log10;
+    using std::pow;
+    T const eps = pow(T(10), -std::numeric_limits<T>::digits10 + log10(abs(expected)));
     T delta = n - expected;
     return (delta >= -eps) && (delta <= eps);
 }
@@ -117,8 +111,6 @@ struct custom_real
     custom_real(double n_) : n(n_) {}
     friend bool operator==(custom_real a, custom_real b)
         { return a.n == b.n; }
-    friend bool operator==(custom_real a, double b)
-        { return a.n == b; }
     friend custom_real operator*(custom_real a, custom_real b)
         { return custom_real(a.n * b.n); }
     friend custom_real operator+(custom_real a, custom_real b)

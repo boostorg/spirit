@@ -9,16 +9,27 @@
 #if !defined(BOOST_SPIRIT_TEST_QI_REAL_HPP)
 #define BOOST_SPIRIT_TEST_QI_REAL_HPP
 
-#include <climits>
-#include <boost/math/concepts/real_concept.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/include/qi_real.hpp>
+
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_numeric.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
-#include <boost/math/special_functions/fpclassify.hpp>
-#include <boost/math/special_functions/sign.hpp>
 
 #include "test.hpp"
+
+#include <boost/core/cmath.hpp>
+#include <climits>
+
+#ifdef _MSVC_LANG
+# if _MSC_VER < 1910 || _MSVC_LANG < 201402L
+#  define BOOST_SPIRIT_NO_MATH_REAL_CONCEPT
+# endif
+#elif __cplusplus < 201402L
+# define BOOST_SPIRIT_NO_MATH_REAL_CONCEPT
+#endif
+#ifndef BOOST_SPIRIT_NO_MATH_REAL_CONCEPT
+# include <boost/math/concepts/real_concept.hpp>
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 //  These policies can be used to parse thousand separated
@@ -57,9 +68,9 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
     }
 
     //  Thousands separated numbers
-    template <typename Iterator, typename Attribute>
+    template <typename Iterator, typename Accumulator>
     static bool
-    parse_n(Iterator& first, Iterator const& last, Attribute& attr)
+    parse_n(Iterator& first, Iterator const& last, Accumulator& result)
     {
         using boost::spirit::qi::uint_parser;
         namespace qi = boost::spirit::qi;
@@ -67,25 +78,18 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
         uint_parser<unsigned, 10, 1, 3> uint3;
         uint_parser<unsigned, 10, 3, 3> uint3_3;
 
-        typedef typename boost::spirit::traits::real_accumulator<T>::type acc_type;
-        acc_type result = 0;
         if (parse(first, last, uint3, result))
         {
-            bool hit = false;
-            acc_type n;
-            Iterator save = first;
+            Accumulator n;
+            Iterator iter = first;
 
-            while (qi::parse(first, last, ',') && qi::parse(first, last, uint3_3, n))
+            while (qi::parse(iter, last, ',') && qi::parse(iter, last, uint3_3, n))
             {
                 result = result * 1000 + n;
-                save = first;
-                hit = true;
+                first = iter;
             }
 
-            first = save;
-            if (hit)
-                attr = result;
-            return hit;
+            return true;
         }
         return false;
     }
@@ -105,9 +109,9 @@ struct no_leading_dot_policy : boost::spirit::qi::real_policies<T>
 
 template <typename T>
 bool
-compare(T n, double expected)
+compare(T n, double expected
+  , T const eps = std::pow(10.0, -std::numeric_limits<T>::digits10))
 {
-    T const eps = std::pow(10.0, -std::numeric_limits<T>::digits10);
     T delta = n - expected;
     return (delta >= -eps) && (delta <= eps);
 }
@@ -119,15 +123,13 @@ struct custom_real
     double n;
     custom_real() : n(0) {}
     custom_real(double n_) : n(n_) {}
-    friend bool operator==(custom_real a, custom_real b) 
+    friend bool operator==(custom_real a, custom_real b)
         { return a.n == b.n; }
-    friend bool operator==(custom_real a, double b) 
-        { return a.n == b; }
-    friend custom_real operator*(custom_real a, custom_real b) 
+    friend custom_real operator*(custom_real a, custom_real b)
         { return custom_real(a.n * b.n); }
-    friend custom_real operator+(custom_real a, custom_real b) 
+    friend custom_real operator+(custom_real a, custom_real b)
         { return custom_real(a.n + b.n); }
-    friend custom_real operator-(custom_real a, custom_real b) 
+    friend custom_real operator-(custom_real a, custom_real b)
         { return custom_real(a.n - b.n); }
 };
 

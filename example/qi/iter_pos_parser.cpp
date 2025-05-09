@@ -13,6 +13,7 @@
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
 
+#include <iostream>
 #include <string>
 #include "iter_pos.hpp"
 

@@ -583,7 +583,7 @@ Some using declarations:
 
 [heading Description]
 
-The `skip` directive is the inverse of __qi_lexeme__ or [qi_no_skip `no_skip[]`]. 
+The `skip` directive is the inverse of __qi_lexeme__ or [qi_no_skip `no_skip`]. 
 While the __qi_lexeme__ directive turns off white space
 skipping, the `skip` directive turns it on again. This is simply done by
 wrapping the parts inside the `skip` directive:
@@ -728,9 +728,9 @@ a: Unused --> hold[a]: Unused``]]
 
 [note The `hold[]` directive uses `swap()` to implement the rollback/commit 
       semantics for the attribute. For this reason the attribute type needs to
-      to be usable with `boost::swap` (needs to either define a proper overload
-      for `swap(attribute_type&, attribute_type&)` or expose a member function
-      `attribute_type::swap(attribute_type&)`.]
+      to be usable with `boost::core::invoke_swap` (needs to define a proper overload
+      for `swap(attribute_type&, attribute_type&)` or be both move-constructible
+      and move-assignable.]
 
 [heading Complexity]
 

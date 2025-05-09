@@ -7,7 +7,8 @@
 //
 
 #include <boost/spirit/include/classic_core.hpp>
-#include <boost/detail/lightweight_test.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 

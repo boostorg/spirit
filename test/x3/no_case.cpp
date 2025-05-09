@@ -6,10 +6,6 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-// this file intentionally contains non-ascii characters
-// boostinspect:noascii
-
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
 
 #include <iostream>
@@ -21,6 +17,8 @@ main()
     using spirit_test::test;
     using spirit_test::test_attr;
     using boost::spirit::x3::no_case;
+
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(no_case['x']);
 
     {
         using namespace boost::spirit::x3::ascii;
@@ -48,16 +46,19 @@ main()
 
     {
         using namespace boost::spirit::x3::iso8859_1;
-        BOOST_TEST(test("Á", no_case[char_('á')]));
-    }
-
-    {
-        using namespace boost::spirit::x3::iso8859_1;
         BOOST_TEST(test("X", no_case[char_("a-z")]));
         BOOST_TEST(!test("1", no_case[char_("a-z")]));
+    }
 
-        BOOST_TEST(test("É", no_case[char_("å-ï")]));
-        BOOST_TEST(!test("ÿ", no_case[char_("å-ï")]));
+    { // test extended ASCII characters
+        using namespace boost::spirit::x3::iso8859_1;
+        BOOST_TEST(test("\xC1", no_case[char_('\xE1')]));
+
+        BOOST_TEST(test("\xC9", no_case[char_("\xE5-\xEF")]));
+        BOOST_TEST(!test("\xFF", no_case[char_("\xE5-\xEF")]));
+
+        BOOST_TEST(test("\xC1\xE1", no_case[lit("\xE1\xC1")]));
+        BOOST_TEST(test("\xE1\xE1", no_case[no_case[lit("\xE1\xC1")]]));
     }
 
     {
@@ -65,12 +66,6 @@ main()
         BOOST_TEST(test("Bochi Bochi", no_case[lit("bochi bochi")]));
         BOOST_TEST(test("BOCHI BOCHI", no_case[lit("bochi bochi")]));
         BOOST_TEST(!test("Vavoo", no_case[lit("bochi bochi")]));
-    }
-
-    {
-        using namespace boost::spirit::x3::iso8859_1;
-        BOOST_TEST(test("Áá", no_case[lit("áÁ")]));
-        BOOST_TEST(test("áá", no_case[no_case[lit("áÁ")]]));
     }
 
     {
@@ -141,6 +136,13 @@ main()
         BOOST_TEST(test("Bochi Bochi", no_case[lit(s)]));
         BOOST_TEST(test("Bochi Bochi", no_case[s.c_str()]));
         BOOST_TEST(test("Bochi Bochi", no_case[s]));
+    }
+
+    {
+        {
+            using namespace boost::spirit::x3::standard;
+            BOOST_TEST(!test("Ä…", no_case['a']));
+        }
     }
 
     return boost::report_errors();

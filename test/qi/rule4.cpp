@@ -5,10 +5,6 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-// this file deliberately contains non-ascii characters
-// boostinspect:noascii
-
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_string.hpp>
@@ -17,10 +13,10 @@
 #include <boost/spirit/include/qi_directive.hpp>
 #include <boost/spirit/include/qi_nonterminal.hpp>
 #include <boost/spirit/include/qi_action.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_object.hpp>
-#include <boost/spirit/include/phoenix_bind.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/object.hpp>
+#include <boost/phoenix/bind.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 
 #include <string>
@@ -107,32 +103,25 @@ main()
         BOOST_TEST(!test("[123,456]", r));
     }
 
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("french")
-#endif
     { // specifying the encoding
 
         typedef boost::spirit::char_encoding::iso8859_1 iso8859_1;
         rule<char const*, iso8859_1> r;
 
-        r = no_case['·'];
-        BOOST_TEST(test("¡", r));
-        r = no_case[char_('·')];
-        BOOST_TEST(test("¡", r));
+        r = no_case['\xE1'];
+        BOOST_TEST(test("\xC1", r));
+        r = no_case[char_('\xE1')];
+        BOOST_TEST(test("\xC1", r));
 
-        r = no_case[char_("Â-Ô")];
-        BOOST_TEST(test("…", r));
-        BOOST_TEST(!test("ˇ", r));
+        r = no_case[char_("\xE5-\xEF")];
+        BOOST_TEST(test("\xC9", r));
+        BOOST_TEST(!test("\xFF", r));
 
-        r = no_case["·¡"];
-        BOOST_TEST(test("¡·", r));
-        r = no_case[lit("·¡")];
-        BOOST_TEST(test("¡·", r));
+        r = no_case["\xE1\xC1"];
+        BOOST_TEST(test("\xC1\xE1", r));
+        r = no_case[lit("\xE1\xC1")];
+        BOOST_TEST(test("\xC1\xE1", r));
     }
-
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
 
     {
         typedef boost::variant<double, int> v_type;

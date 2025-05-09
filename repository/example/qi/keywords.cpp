@@ -7,8 +7,8 @@
 =============================================================================*/
 //[reference_includes
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/spirit/repository/include/qi_kwd.hpp>
 #include <boost/spirit/repository/include/qi_keywords.hpp>
@@ -148,7 +148,7 @@ main()
         test_phrase_parser_attr(
                         "name = \"John\" \n age = 10 \n size = 1.69m "
                         ,no_constraint_person_rule 
-                        ,John);  // full in orginal order
+                        ,John);  // full in original order
         std::cout<<John;
 
         test_phrase_parser_attr(

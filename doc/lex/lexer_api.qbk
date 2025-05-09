@@ -139,7 +139,7 @@ sequence has been successfully matched by the given grammar).
       , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip);
 
     template <typename Iterator, typename Lexer, typename ParserExpr
-      , typename Skipper, typename Attr1, typename Attr2, ..., typename AttrN>
+      , typename Skipper, typename Attribute>
     inline bool
     tokenize_and_phrase_parse(
         Iterator& first
@@ -147,10 +147,10 @@ sequence has been successfully matched by the given grammar).
       , Lexer const& lex
       , ParserExpr const& expr
       , Skipper const& skipper
-      , Attr1 const& attr1, Attr2 const& attr2, ..., AttrN const& attrN);
+      , Attribute& attr);
 
     template <typename Iterator, typename Lexer, typename ParserExpr
-      , typename Skipper, typename Attr1, typename Attr2, ..., typename AttrN>
+      , typename Skipper, typename Attribute>
     inline bool
     tokenize_and_phrase_parse(
         Iterator& first
@@ -158,8 +158,7 @@ sequence has been successfully matched by the given grammar).
       , Lexer const& lex
       , ParserExpr const& expr
       , Skipper const& skipper
-      , BOOST_SCOPED_ENUM(skip_flag) post_skip
-      , Attr1 const& attr1, Attr2 const& attr2, ..., AttrN const& attrN);
+      , BOOST_SCOPED_ENUM(skip_flag) post_skip, Attribute& attr);
 
 The maximum number of supported arguments is limited by the preprocessor 
 constant `SPIRIT_ARGUMENTS_LIMIT`. This constant defaults to the value defined

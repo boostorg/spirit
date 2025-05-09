@@ -4,8 +4,8 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#if !defined(SPIRIT_KARMA_REPEAT_MAY_18_2009_0926AM)
-#define SPIRIT_KARMA_REPEAT_MAY_18_2009_0926AM
+#ifndef BOOST_SPIRIT_KARMA_DIRECTIVE_REPEAT_HPP
+#define BOOST_SPIRIT_KARMA_DIRECTIVE_REPEAT_HPP
 
 #if defined(_MSC_VER)
 #pragma once
@@ -77,6 +77,10 @@ namespace boost { namespace spirit { namespace karma
     using spirit::inf_type;
 
     ///////////////////////////////////////////////////////////////////////////
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
     // handles repeat(exact)[p]
     template <typename T>
     struct exact_iterator
@@ -90,10 +94,6 @@ namespace boost { namespace spirit { namespace karma
         bool got_min(T i) const { return i >= exact; }
 
         T const exact;
-
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        exact_iterator& operator= (exact_iterator const&);
     };
 
     // handles repeat(min, max)[p]
@@ -111,10 +111,6 @@ namespace boost { namespace spirit { namespace karma
 
         T const min;
         T const max;
-
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        finite_iterator& operator= (finite_iterator const&);
     };
 
     // handles repeat(min, inf)[p]
@@ -130,11 +126,10 @@ namespace boost { namespace spirit { namespace karma
         bool got_min(T i) const { return i >= min; }
 
         T const min;
-
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        infinite_iterator& operator= (infinite_iterator const&);
     };
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Subject, typename LoopIter, typename Strict

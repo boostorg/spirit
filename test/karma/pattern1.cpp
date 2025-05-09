@@ -3,9 +3,6 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
-
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_auxiliary.hpp>
@@ -13,10 +10,9 @@
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_nonterminal.hpp>
 #include <boost/spirit/include/karma_action.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
-#include <boost/spirit/include/phoenix_fusion.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/fusion.hpp>
 
 #include "test.hpp"
 
@@ -51,7 +47,7 @@ int main()
         start = a[_1 = at_c<0>(_r0)] << b[_1 = at_c<1>(_r0)] << c[_1 = at_c<2>(_r0)];
         BOOST_TEST(test("a1012.4", start, vec));
 
-        start = (a << b << c)[_1 = at_c<0>(_r0), _2 = at_c<1>(_r0), _3 = at_c<2>(_r0)];
+        start = (a << b << c)[(_1 = at_c<0>(_r0), _2 = at_c<1>(_r0), _3 = at_c<2>(_r0))];
         BOOST_TEST(test("a1012.4", start, vec));
 
         start = a << b << c;
@@ -80,7 +76,7 @@ int main()
         start = a[_1 = at_c<0>(_r0)] << b[_1 = at_c<1>(_r0)] << c[_1 = at_c<2>(_r0)];
         BOOST_TEST(test_delimited("a  10 12.4 ", start, vec, space));
 
-        start = (a << b << c)[_1 = at_c<0>(_r0), _2 = at_c<1>(_r0), _3 = at_c<2>(_r0)];
+        start = (a << b << c)[(_1 = at_c<0>(_r0), _2 = at_c<1>(_r0), _3 = at_c<2>(_r0))];
         BOOST_TEST(test_delimited("a  10 12.4 ", start, vec, space));
 
         start = a << b << c;
@@ -90,7 +86,7 @@ int main()
         BOOST_TEST(test_delimited("a  10 12.4 ", start, vec, space));
     }
 
-    // test direct initalization
+    // test direct initialization
     {
         using boost::phoenix::at_c;
 

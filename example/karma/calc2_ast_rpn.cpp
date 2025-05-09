@@ -14,7 +14,6 @@
 //  [ HK April 28, 2008 ]
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/config/warning_disable.hpp>
 
 #include <iostream>
 #include <vector>

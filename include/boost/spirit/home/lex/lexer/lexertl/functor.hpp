@@ -11,10 +11,10 @@
 #endif
 
 #include <boost/mpl/bool.hpp>
-#include <boost/detail/iterator.hpp>
 #include <boost/detail/workaround.hpp>
 #include <boost/spirit/home/lex/lexer/pass_flags.hpp>
 #include <boost/assert.hpp>
+#include <iterator> // for std::iterator_traits
 
 #if 0 != __COMO_VERSION__ || !BOOST_WORKAROUND(BOOST_MSVC, <= 1310)
 #define BOOST_SPIRIT_STATIC_EOF 1
@@ -66,7 +66,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     {
     public:
         typedef typename 
-            boost::detail::iterator_traits<Iterator>::value_type 
+            std::iterator_traits<Iterator>::value_type 
         char_type;
 
     private:
@@ -77,6 +77,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         friend class FunctorData<Iterator, SupportsActors, SupportsState
           , token_value_type>;
 
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
         // Helper template allowing to assign a value on exit
         template <typename T>
         struct assign_on_exit
@@ -91,11 +95,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             T& dst_;
             T const& src_;
-
-        private:
-            // silence MSVC warning C4512: assignment operator could not be generated
-            assign_on_exit& operator= (assign_on_exit const&);
         };
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
     public:
         functor() {}

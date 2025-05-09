@@ -21,16 +21,16 @@
 #include <boost/spirit/home/karma/delimit_out.hpp>
 #include <boost/spirit/home/karma/auxiliary/lazy.hpp>
 #include <boost/spirit/home/karma/stream/detail/format_manip.hpp>
-#include <boost/spirit/home/karma/stream/detail/iterator_sink.hpp>
+#include <boost/spirit/home/karma/detail/generate_to.hpp>
 #include <boost/spirit/home/karma/detail/get_casetag.hpp>
 #include <boost/spirit/home/karma/detail/extract_from.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/cons.hpp>
-#include <boost/utility/enable_if.hpp>
+#include <boost/core/enable_if.hpp>
+#include <boost/mpl/bool.hpp>
 #include <boost/type_traits/is_same.hpp>
-
-#include <iosfwd>
+#include <ostream>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit
@@ -113,6 +113,36 @@ namespace boost { namespace spirit { namespace karma
     using spirit::stream_type;
     using spirit::wstream_type;
 
+namespace detail
+{
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
+    template <typename OutputIterator, typename Char, typename CharEncoding
+      , typename Tag>
+    struct psbuf : std::basic_streambuf<Char>
+    {
+        psbuf(OutputIterator& sink) : sink_(sink) {}
+
+    protected:
+        typename psbuf::int_type overflow(typename psbuf::int_type ch) BOOST_OVERRIDE
+        {
+            if (psbuf::traits_type::eq_int_type(ch, psbuf::traits_type::eof()))
+                return psbuf::traits_type::not_eof(ch);
+
+            return detail::generate_to(sink_, psbuf::traits_type::to_char_type(ch),
+                                       CharEncoding(), Tag()) ? ch : psbuf::traits_type::eof();
+        }
+
+    private:
+        OutputIterator& sink_;
+    };
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
+}
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename Char, typename CharEncoding, typename Tag>
     struct any_stream_generator
@@ -132,10 +162,6 @@ namespace boost { namespace spirit { namespace karma
         static bool generate(OutputIterator& sink, Context& context
           , Delimiter const& d, Attribute const& attr)
         {
-            typedef karma::detail::iterator_sink<
-                OutputIterator, Char, CharEncoding, Tag
-            > sink_device;
-
             if (!traits::has_optional_value(attr))
                 return false;
 
@@ -143,7 +169,8 @@ namespace boost { namespace spirit { namespace karma
             typedef typename attribute<Context>::type attribute_type;
 
             {
-                boost::iostreams::stream<sink_device> ostr(sink);
+                detail::psbuf<OutputIterator, Char, CharEncoding, Tag> pseudobuf(sink);
+                std::basic_ostream<Char> ostr(&pseudobuf);
                 ostr << traits::extract_from<attribute_type>(attr, context) << std::flush;
 
                 if (!ostr.good())
@@ -168,9 +195,6 @@ namespace boost { namespace spirit { namespace karma
             typedef karma::detail::output_iterator<
                 karma::ostream_iterator<T, Char, Traits>, Properties
             > output_iterator;
-            typedef karma::detail::iterator_sink<
-                output_iterator, Char, CharEncoding, Tag
-            > sink_device;
 
             if (!traits::has_optional_value(attr))
                 return false;
@@ -179,7 +203,8 @@ namespace boost { namespace spirit { namespace karma
             typedef typename attribute<Context>::type attribute_type;
 
             {
-                boost::iostreams::stream<sink_device> ostr(sink);
+                detail::psbuf<output_iterator, Char, CharEncoding, Tag> pseudobuf(sink);
+                std::basic_ostream<Char> ostr(&pseudobuf);
                 ostr.imbue(sink.get_ostream().getloc());
                 ostr << traits::extract_from<attribute_type>(attr, context) 
                      << std::flush;
@@ -236,11 +261,8 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attribute const&) const
         {
-            typedef karma::detail::iterator_sink<
-                OutputIterator, Char, CharEncoding, Tag
-            > sink_device;
-
-            boost::iostreams::stream<sink_device> ostr(sink);
+            detail::psbuf<OutputIterator, Char, CharEncoding, Tag> pseudobuf(sink);
+            std::basic_ostream<Char> ostr(&pseudobuf);
             ostr << t_ << std::flush;             // use existing operator<<()
 
             if (ostr.good()) 
@@ -261,12 +283,10 @@ namespace boost { namespace spirit { namespace karma
             typedef karma::detail::output_iterator<
                 karma::ostream_iterator<T1, Char, Traits>, Properties
             > output_iterator;
-            typedef karma::detail::iterator_sink<
-                output_iterator, Char, CharEncoding, Tag
-            > sink_device;
 
             {
-                boost::iostreams::stream<sink_device> ostr(sink);
+                detail::psbuf<output_iterator, Char, CharEncoding, Tag> pseudobuf(sink);
+                std::basic_ostream<Char> ostr(&pseudobuf);
                 ostr.imbue(sink.get_ostream().getloc());
                 ostr << t_ << std::flush;             // use existing operator<<()
 
@@ -284,10 +304,6 @@ namespace boost { namespace spirit { namespace karma
         }
 
         T t_;
-
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        lit_stream_generator& operator= (lit_stream_generator const&);
     };
 
     ///////////////////////////////////////////////////////////////////////////

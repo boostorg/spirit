@@ -113,15 +113,6 @@ Again, don't use any of the header files underneath the boost/spirit/home
 directory directly, always include files from the boost/spirit/include 
 directory.
 
-The last bit missing is __phoenix__ (which currently still lives under the 
-Spirit umbrella, but already has been accepted as a Boost library, so it will 
-move away). __phoenix__ is a library allowing to write functional style C++, 
-which is interesting in itself, but as it initially has been developed for 
-Spirit, it is nicely integrated and very useful when it comes to writing 
-semantic actions. I think using the boost/spirit/include/phoenix_... headers 
-will be safe in the future as well, as we will probably redirect to the 
-Boost.Phoenix headers as soon as these are available.
-
 
 [heading Why doesn't my symbol table work in a `no_case` directive?]
 
@@ -164,7 +155,7 @@ compatible type. The error above arises when this is not the case, i.e.:
   defined with another, incompatible skip parser type.
 
 [note The same applies to __karma__, replacing 'skip parser' and `lexeme`
-      by 'delimit generator' and `verbatim`. Similarily, corresponding error 
+      by 'delimit generator' and `verbatim`. Similarly, corresponding error 
       messages in __karma__ reference `boost::function3` and the 3rd 
       parameter (instead of the 4th).]
 

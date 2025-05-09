@@ -6,10 +6,6 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-// this file deliberately contains non-ascii characters
-// boostinspect:noascii
-
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
 
 #include <string>
@@ -25,7 +21,6 @@ main()
 
     using namespace boost::spirit::x3::ascii;
     using boost::spirit::x3::any_parser;
-    using boost::spirit::x3::int_;
     using boost::spirit::x3::make_context;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused_type;

@@ -3,10 +3,7 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-// #define KARMA_TEST_COMPILE_FAIL
-
-#include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/include/karma_sequence.hpp>
 
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_string.hpp>
@@ -19,10 +16,9 @@
 #include <boost/spirit/include/karma_auxiliary.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/support_unused.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
-#include <boost/spirit/include/phoenix_stl.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/function.hpp>
 #include <boost/fusion/include/vector.hpp>
 
 #include "test.hpp"
@@ -98,17 +94,17 @@ int main()
         using namespace boost::phoenix;
 
         BOOST_TEST(test("abcdefg", 
-            (char_ << char_ << string)[_1 = 'a', _2 = 'b', _3 = "cdefg"]));
+            (char_ << char_ << string)[(_1 = 'a', _2 = 'b', _3 = "cdefg")]));
         BOOST_TEST(test_delimited("a b cdefg ", 
-            (char_ << char_ << string)[_1 = 'a', _2 = 'b', _3 = "cdefg"], 
+            (char_ << char_ << string)[(_1 = 'a', _2 = 'b', _3 = "cdefg")], 
             char(' ')));
 
         BOOST_TEST(test_delimited("a 12 c ", 
-            (char_ << lit(12) << char_)[_1 = 'a', _2 = 'c'], char(' ')));
+            (char_ << lit(12) << char_)[(_1 = 'a', _2 = 'c')], char(' ')));
 
         char c = 'c';
         BOOST_TEST(test("abc", 
-            (char_[_1 = 'a'] << 'b' << char_)[_1 = 'x', _2 = ref(c)]));
+            (char_[_1 = 'a'] << 'b' << char_)[(_1 = 'x', _2 = ref(c))]));
         BOOST_TEST(test_delimited("a b c ", 
             (char_[_1 = 'a'] << 'b' << char_)[_2 = ref(c)], char(' ')));
 

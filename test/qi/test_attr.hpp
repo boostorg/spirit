@@ -17,6 +17,7 @@
 #include <boost/spirit/include/qi_parse.hpp>
 #include <boost/spirit/include/qi_what.hpp>
 
+#include <boost/core/lightweight_test.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/iterate.hpp>
 #include <boost/preprocessor/repetition/repeat.hpp>

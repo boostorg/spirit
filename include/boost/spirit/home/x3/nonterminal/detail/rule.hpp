@@ -1,5 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
+    Copyright (c) 2017 wanghan02
+    Copyright (c) 2024 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -11,15 +13,16 @@
 #include <boost/spirit/home/x3/auxiliary/guard.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
+#include <boost/spirit/home/x3/support/expectation.hpp>
 #include <boost/spirit/home/x3/directive/expect.hpp>
-#include <boost/spirit/home/x3/support/traits/make_attribute.hpp>
-#include <boost/spirit/home/x3/support/utility/sfinae.hpp>
 #include <boost/spirit/home/x3/nonterminal/detail/transform_attribute.hpp>
 #include <boost/utility/addressof.hpp>
 
 #if defined(BOOST_SPIRIT_X3_DEBUG)
 #include <boost/spirit/home/x3/nonterminal/simple_trace.hpp>
 #endif
+
+#include <type_traits>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -33,6 +36,9 @@ namespace boost { namespace spirit { namespace x3
 
     namespace detail
     {
+        template <typename ID>
+        struct rule_id {};
+
         // we use this so we can detect if the default parse_rule
         // is the being called.
         struct default_parse_rule_result
@@ -45,11 +51,11 @@ namespace boost { namespace spirit { namespace x3
     }
 
     // default parse_rule implementation
-    template <typename ID, typename Attribute, typename Iterator
+    template <typename ID, typename Iterator
       , typename Context, typename ActualAttribute>
     inline detail::default_parse_rule_result
     parse_rule(
-        rule<ID, Attribute> rule_
+        detail::rule_id<ID>
       , Iterator& first, Iterator const& last
       , Context const& context, ActualAttribute& attr);
 }}}
@@ -94,15 +100,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename ID, typename Iterator, typename Context>
     struct has_on_error<ID, Iterator, Context,
-        typename disable_if_substitution_failure<
-            decltype(
+            decltype(void(
                 std::declval<ID>().on_error(
                     std::declval<Iterator&>()
                   , std::declval<Iterator>()
                   , std::declval<expectation_failure<Iterator>>()
                   , std::declval<Context>()
                 )
-            )>::type
+            ))
         >
       : mpl::true_
     {};
@@ -112,15 +117,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename ID, typename Iterator, typename Attribute, typename Context>
     struct has_on_success<ID, Iterator, Context, Attribute,
-        typename disable_if_substitution_failure<
-            decltype(
+            decltype(void(
                 std::declval<ID>().on_success(
                     std::declval<Iterator&>()
-                  , std::declval<Iterator>()
+                  , std::declval<Iterator&>()
                   , std::declval<Attribute&>()
                   , std::declval<Context>()
                 )
-            )>::type
+            ))
         >
       : mpl::true_
     {};
@@ -152,12 +156,12 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         return make_unique_context<ID>(rhs, context);
     }
 
-    template <typename Attribute, typename ID>
+    template <typename Attribute, typename ID, bool skip_definition_injection = false>
     struct rule_parser
     {
         template <typename Iterator, typename Context, typename ActualAttribute>
         static bool call_on_success(
-            Iterator& /* first */, Iterator const& /* last */
+            Iterator& /* before */, Iterator& /* after */
           , Context const& /* context */, ActualAttribute& /* attr */
           , mpl::false_ /* No on_success handler */ )
         {
@@ -166,14 +170,15 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         template <typename Iterator, typename Context, typename ActualAttribute>
         static bool call_on_success(
-            Iterator& first, Iterator const& last
+            Iterator& before, Iterator& after
           , Context const& context, ActualAttribute& attr
           , mpl::true_ /* Has on_success handler */)
         {
+            x3::skip_over(before, after, context);
             bool pass = true;
             ID().on_success(
-                first
-              , last
+                before
+              , after
               , attr
               , make_context<parse_pass_context_tag>(pass, context)
             );
@@ -191,8 +196,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             // see if the user has a BOOST_SPIRIT_DEFINE for this rule
             typedef
                 decltype(parse_rule(
-                    rule<ID, Attribute>(), first, last
-                  , make_unique_context<ID>(rhs, context), attr))
+                    detail::rule_id<ID>{}, first, last
+                  , make_unique_context<ID>(rhs, context), std::declval<Attribute&>()))
             parse_rule_result;
 
             // If there is no BOOST_SPIRIT_DEFINE for this rule,
@@ -203,25 +208,21 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 is_same<parse_rule_result, default_parse_rule_result>
             is_default_parse_rule;
 
-            Iterator i = first;
+            Iterator start = first;
             bool r = rhs.parse(
-                i
+                first
               , last
-              , make_rule_context<ID>(rhs, context, is_default_parse_rule())
+              , make_rule_context<ID>(rhs, context, std::conditional_t<skip_definition_injection, mpl::false_, is_default_parse_rule>())
               , rcontext
               , attr
             );
 
             if (r)
             {
-                auto first_ = first;
-                x3::skip_over(first_, last, context);
-                r = call_on_success(first_, i, context, attr
+                r = call_on_success(start, first, context, attr
                   , has_on_success<ID, Iterator, Context, ActualAttribute>());
             }
 
-            if (r)
-                first = i;
             return r;
         }
 
@@ -235,25 +236,45 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         {
             for (;;)
             {
+            #if BOOST_SPIRIT_X3_THROW_EXPECTATION_FAILURE
                 try
+            #endif
                 {
-                    return parse_rhs_main(
-                        rhs, first, last, context, rcontext, attr, mpl::false_());
+                    if (parse_rhs_main(
+                        rhs, first, last, context, rcontext, attr, mpl::false_()))
+                    {
+                        return true;
+                    }
                 }
-                catch (expectation_failure<Iterator> const& x)
-                {
+
+            #if BOOST_SPIRIT_X3_THROW_EXPECTATION_FAILURE
+                catch (expectation_failure<Iterator> const& x) {
+            #else
+                if (has_expectation_failure(context)) {
+                    auto& x = get_expectation_failure(context);
+            #endif
+                    // X3 developer note: don't forget to sync this implementation with x3::guard
                     switch (ID().on_error(first, last, x, context))
                     {
                         case error_handler_result::fail:
+                            clear_expectation_failure(context);
                             return false;
+
                         case error_handler_result::retry:
                             continue;
+
                         case error_handler_result::accept:
                             return true;
+
                         case error_handler_result::rethrow:
+                        #if BOOST_SPIRIT_X3_THROW_EXPECTATION_FAILURE
                             throw;
+                        #else
+                            return false; // TODO: design decision required
+                        #endif
                     }
                 }
+                return false;
             }
         }
 
@@ -303,18 +324,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         {
             boost::ignore_unused(rule_name);
 
-            typedef traits::make_attribute<Attribute, ActualAttribute> make_attribute;
-
             // do down-stream transformation, provides attribute for
             // rhs parser
             typedef traits::transform_attribute<
-                typename make_attribute::type, Attribute, parser_id>
+                ActualAttribute, Attribute, parser_id>
             transform;
 
-            typedef typename make_attribute::value_type value_type;
             typedef typename transform::type transform_attr;
-            value_type made_attr = make_attribute::call(attr);
-            transform_attr attr_ = transform::pre(made_attr);
+            transform_attr attr_ = transform::pre(attr);
 
             bool ok_parse
               //Creates a place to hold the result of parse_rhs
@@ -325,7 +342,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
              // the #if...#endif) to call it's DTOR before any
              // modifications are made to the attribute, attr_ passed
              // to parse_rhs (such as might be done in
-             // traits::post_transform when, for example,
+             // transform::post when, for example,
              // ActualAttribute is a recursive variant).
 #if defined(BOOST_SPIRIT_X3_DEBUG)
                 context_debug<Iterator, transform_attr>
@@ -343,7 +360,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             {
                 // do up-stream transformation, this integrates the results
                 // back into the original attribute value, if appropriate
-                traits::post_transform(attr, std::forward<transform_attr>(attr_));
+                transform::post(attr, std::forward<transform_attr>(attr_));
             }
             return ok_parse;
         }

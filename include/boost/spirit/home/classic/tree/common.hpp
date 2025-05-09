@@ -26,7 +26,6 @@
 #include <boost/call_traits.hpp>
 #include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core.hpp>
-#include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 #include <boost/assert.hpp>
 
 #if defined(BOOST_SPIRIT_DEBUG) && \
@@ -36,6 +35,8 @@
 #endif
 
 #include <boost/spirit/home/classic/tree/common_fwd.hpp>
+
+#include <iterator> // for std::iterator_traits, std::distance
 
 namespace boost { namespace spirit {
 
@@ -96,13 +97,6 @@ struct tree_node
     {
         impl::cp_swap(value, x.value);
         impl::cp_swap(children, x.children);
-    }
-
-// Intel V5.0.1 has a problem without this explicit operator=
-    tree_node &operator= (tree_node const &rhs)
-    {
-        tree_node(rhs).swap(*this);
-        return *this;
     }
 };
 
@@ -242,7 +236,7 @@ template <typename IteratorT = char const*, typename ValueT = nil_t>
 struct node_val_data
 {
     typedef
-        typename boost::detail::iterator_traits<IteratorT>::value_type
+        typename std::iterator_traits<IteratorT>::value_type
         value_type;
 
 #if !defined(BOOST_SPIRIT_USE_BOOST_ALLOCATOR_FOR_TREES)
@@ -525,7 +519,6 @@ namespace impl {
     {
         using std::swap;
         using BOOST_SPIRIT_CLASSIC_NS::swap;
-        using boost::swap;
         swap(t1, t2);
     }
 }
@@ -1050,7 +1043,6 @@ struct infix_node_op
         typedef typename MatchT::container_t::value_type value_t;
 
         using std::swap;
-        using boost::swap;
         using BOOST_SPIRIT_CLASSIC_NS::swap;
 
         // copying the tree nodes is expensive, since it may copy a whole
@@ -1102,7 +1094,6 @@ struct discard_first_node_op
         typedef typename MatchT::container_t::value_type value_t;
 
         using std::swap;
-        using boost::swap;
         using BOOST_SPIRIT_CLASSIC_NS::swap;
 
         // copying the tree nodes is expensive, since it may copy a whole
@@ -1166,7 +1157,6 @@ struct discard_last_node_op
         typedef typename MatchT::container_t::value_type value_t;
 
         using std::swap;
-        using boost::swap;
         using BOOST_SPIRIT_CLASSIC_NS::swap;
 
         // copying the tree nodes is expensive, since it may copy a whole
@@ -1226,7 +1216,6 @@ struct inner_node_op
         typedef typename MatchT::container_t::value_type value_t;
 
         using std::swap;
-        using boost::swap;
         using BOOST_SPIRIT_CLASSIC_NS::swap;
 
         // copying the tree nodes is expensive, since it may copy a whole
@@ -1514,7 +1503,7 @@ const action_directive_parser_gen<access_node_action> access_node_d
 //      length: The number of characters consumed by the parser.
 //              This is valid only if we have a successful match
 //              (either partial or full). A negative value means
-//              that the match is unsucessful.
+//              that the match is unsuccessful.
 //
 //     trees:   Contains the root node(s) of the tree.
 //
@@ -1549,7 +1538,6 @@ struct tree_parse_info
         , trees()
     {
         using std::swap;
-        using boost::swap;
         using BOOST_SPIRIT_CLASSIC_NS::swap;
 
         // use auto_ptr like ownership for the trees data member
@@ -1569,7 +1557,6 @@ struct tree_parse_info
         , trees()
     {
         using std::swap;
-        using boost::swap;
         using BOOST_SPIRIT_CLASSIC_NS::swap;
 
         // use auto_ptr like ownership for the trees data member

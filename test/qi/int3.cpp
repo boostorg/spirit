@@ -122,7 +122,7 @@ main()
         using boost::spirit::ascii::space;
         using boost::spirit::qi::int_;
         using boost::spirit::qi::_1;
-        int n, m;
+        int n = 0, m = 0;
 
         BOOST_TEST(test("123", int_(123)[ref(n) = _1]));
         BOOST_TEST(n == 123);

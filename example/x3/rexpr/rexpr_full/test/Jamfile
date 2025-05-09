@@ -10,13 +10,14 @@ import testing ;
 project
    : requirements
       <source>..//rexpr
-      <source>/boost//regex
-      <source>/boost//filesystem
-      <source>/boost//system
+      <library>/boost/regex//boost_regex
+      <library>/boost/filesystem//boost_filesystem
       <c++-template-depth>300
    ;
 
+path-constant TEST_FILES : test_files ;
+
 unit-test parse_rexpr_test
    : parse_rexpr_test.cpp
-   : <testing.arg>"test_files"
+   : <testing.arg>"$(TEST_FILES)"
    ;

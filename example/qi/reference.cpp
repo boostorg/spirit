@@ -13,10 +13,12 @@
 //[reference_includes
 #include <boost/spirit/include/support_utree.hpp>
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/assert.hpp>
+#include <boost/predef/other/endian.h>
+#include <boost/proto/deep_copy.hpp>
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -155,9 +157,9 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
     }
 
     //  Thousands separated numbers
-    template <typename Iterator, typename Attribute>
+    template <typename Iterator, typename Accumulator>
     static bool
-    parse_n(Iterator& first, Iterator const& last, Attribute& attr)
+    parse_n(Iterator& first, Iterator const& last, Accumulator& result)
     {
         using boost::spirit::qi::uint_parser;
         namespace qi = boost::spirit::qi;
@@ -165,24 +167,18 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
         uint_parser<unsigned, 10, 1, 3> uint3;
         uint_parser<unsigned, 10, 3, 3> uint3_3;
 
-        T result = 0;
         if (parse(first, last, uint3, result))
         {
-            bool hit = false;
-            T n;
-            Iterator save = first;
+            Accumulator n;
+            Iterator iter = first;
 
-            while (qi::parse(first, last, ',') && qi::parse(first, last, uint3_3, n))
+            while (qi::parse(iter, last, ',') && qi::parse(iter, last, uint3_3, n))
             {
                 result = result * 1000 + n;
-                save = first;
-                hit = true;
+                first = iter;
             }
 
-            first = save;
-            if (hit)
-                attr = result;
-            return hit;
+            return true;
         }
         return false;
     }
@@ -1276,7 +1272,7 @@ main()
 //<-
 #endif
 
-#ifdef BOOST_LITTLE_ENDIAN
+#if BOOST_ENDIAN_LITTLE_BYTE
 //->
         //`Basic usage of the native binary parsers for little endian platforms:
         test_parser_attr("\x01", byte_, uc); assert(uc == 0x01);

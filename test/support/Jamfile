@@ -11,11 +11,23 @@
 import testing ;
 
 ###############################################################################
+local 9-11 = 9 10 11 ;
 
 project spirit-support
     : requirements
         <include>.
         <c++-template-depth>512
+        <known-warnings>hide,<toolset>gcc-$(9-11):<cxxflags>-Wno-deprecated-copy  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=94492
+
+        # Suppress C++03 deprecation warnings from other libraries
+        <define>BOOST_BIND_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_HASH_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_ENDIAN_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_FUNCTION_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_SMART_PTR_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_SYSTEM_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_TYPEOF_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_UNORDERED_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
     ;
 
 ###############################################################################
@@ -46,12 +58,13 @@ rule compile-fail ( sources + : requirements * : target-name ? )
 
 ###############################################################################
 
+run char_encoding.cpp ;
 run istream_iterator_basic.cpp ;
+run line_pos_iterator.cpp /boost/assign//boost_assign ;
+run multi_pass_error_handler.cpp ;
+run multi_pass_parse.cpp ;
+run unused_type.cpp ;
 run utree.cpp ;
 run utree_debug.cpp ;
 
-compile regression_multi_pass_functor.cpp ;
-compile regression_multi_pass_position_iterator.cpp ;
-run regression_multi_pass_error_handler.cpp ;
-run regression_multi_pass_parse.cpp ;
-run regression_line_pos_iterator.cpp ;
+compile multi_pass_functor.cpp ;

@@ -15,7 +15,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/spirit/include/classic_core.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -39,6 +39,7 @@ public:
     bool
     parse(char const* str)
     {
+        using namespace boost::placeholders;
         return BOOST_SPIRIT_CLASSIC_NS::parse(str,
 
             //  Begin grammar

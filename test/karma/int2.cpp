@@ -3,26 +3,21 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-//#define KARMA_FAIL_COMPILATION
+#include <boost/spirit/include/karma_uint.hpp>
 
-#include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/for_each.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/bool.hpp>
 
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/karma_action.hpp>
 #include <boost/spirit/include/karma_rule.hpp>
-#include <boost/spirit/include/karma_phoenix_attributes.hpp>
 
 #include <boost/limits.hpp>
 #include "test.hpp"
@@ -119,8 +114,8 @@ main()
         BOOST_TEST(test_delimited("11110000 ", bin, 0xf0, char_(' ')));
 
         // test unsigned generator with signed integral value
-        BOOST_TEST(test("ff", hex, (char)0xff));
-        BOOST_TEST(test_delimited("ff ", hex, (char)0xff, char_(' ')));
+        BOOST_TEST(test("ff", hex, (signed char)'\xff'));
+        BOOST_TEST(test_delimited("ff ", hex, (signed char)'\xff', char_(' ')));
 
         BOOST_TEST(test("1234", lower[uint_], 1234));
         BOOST_TEST(test("ff", lower[hex], 0xff));

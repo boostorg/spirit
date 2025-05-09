@@ -4,7 +4,6 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/deque.hpp>
@@ -14,6 +13,7 @@
 #include <string>
 #include <iostream>
 #include "test.hpp"
+#include "utils.hpp"
 
 int
 main()
@@ -41,6 +41,8 @@ main()
 
     using spirit_test::test;
     using spirit_test::test_attr;
+
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(char_ >> char_);
 
     {
         BOOST_TEST((test("aa", char_ >> char_)));
@@ -146,7 +148,7 @@ main()
         typedef deque<char, int> attr_type;
         attr_type fv;
 
-        auto r = rule<class r, attr_type>()
+        auto r = rule<class r_id, attr_type>()
             = char_ >> ',' >> int_;
 
         BOOST_TEST((test_attr("test:x,1", "test:" >> r, fv) &&
@@ -161,7 +163,7 @@ main()
         typedef deque<int> attr_type;
         attr_type fv;
 
-        auto r = rule<class r, attr_type>()
+        auto r = rule<class r_id, attr_type>()
             = int_;
 
         BOOST_TEST((test_attr("test:1", "test:" >> r, fv) &&
@@ -177,6 +179,22 @@ main()
         BOOST_TEST((test("aA", no_case[char_('a') >> 'a'])));
         BOOST_TEST((test("BEGIN END", no_case[lit("begin") >> "end"], space)));
         BOOST_TEST((!test("BEGIN END", no_case[lit("begin") >> "nend"], space)));
+    }
+
+    { // check attribute is passed through unary to another sequence
+        using boost::spirit::x3::eps;
+        std::string s;
+        BOOST_TEST(test_attr("ab", eps >> no_case[char_ >> char_], s));
+        BOOST_TEST("ab" == s);
+        s.clear();
+        BOOST_TEST(test_attr("ab", no_case[char_ >> char_] >> eps, s));
+        BOOST_TEST("ab" == s);
+        s.clear();
+        BOOST_TEST(test_attr("abc", char_ >> no_case[char_ >> char_], s));
+        BOOST_TEST("abc" == s);
+        s.clear();
+        BOOST_TEST(test_attr("abc", no_case[char_ >> char_] >> char_, s));
+        BOOST_TEST("abc" == s);
     }
 
     {
@@ -232,7 +250,7 @@ main()
         v.clear();
         BOOST_TEST(!test_attr("abcd", char_ >> *(char_ >> char_), v));
 
-        // $$$ hold not yet implementd $$$
+        // $$$ hold not yet implemented $$$
         //~ v.clear();
         //~ BOOST_TEST(test_attr("abcdef", char_ >> *hold[char_ >> char_] >> char_, v));
         //~ BOOST_TEST(v.size() == 6);
@@ -300,10 +318,10 @@ main()
     {
         std::vector<std::string> v;
 
-        auto e = rule<class e, std::string>()
+        auto e = rule<class e_id, std::string>()
             = *~char_(',');
 
-        auto l = rule<class l, std::vector<std::string>>()
+        auto l = rule<class l_id, std::vector<std::string>>()
             = e >> *(',' >> e);
 
         BOOST_TEST(test_attr("abc1,abc2,abc3", l, v));
@@ -323,10 +341,10 @@ main()
 
     {
         std::string s;
-        auto e = rule<class e, std::string>()
+        auto e = rule<class e_id, std::string>()
             = *~char_(',');
 
-        auto l = rule<class l, std::string>()
+        auto l = rule<class l_id, std::string>()
             = e >> *(',' >> e);
 
         BOOST_TEST(test_attr("abc1,abc2,abc3", l, s));
@@ -364,30 +382,6 @@ main()
     }
 
     // test from spirit mailing list
-    // "Optional operator causes string attribute concatenation"
-    {
-        typedef vector<char, char, int> attr_type;
-        attr_type attr;
-
-        auto node = alnum >> -('[' >> alnum >> '=' >> int_ >> ']');
-
-        BOOST_TEST(test_attr("x[y=123]", node, attr));
-        BOOST_TEST(attr == attr_type('x', 'y', 123));
-    }
-
-    // test from spirit mailing list (variation of above)
-    // "Optional operator causes string attribute concatenation"
-    {
-        typedef vector<std::string, std::string, int> attr_type;
-        attr_type attr;
-
-        auto node = +alnum >> -('[' >> +alnum >> '=' >> int_ >> ']');
-
-        BOOST_TEST(test_attr("xxx[yyy=123]", node, attr));
-        BOOST_TEST(attr == attr_type("xxx", "yyy", 123));
-    }
-
-    // test from spirit mailing list
     // "Error with container within sequence"
     {
         typedef vector<std::string> attr_type;
@@ -413,11 +407,28 @@ main()
         BOOST_TEST(at_c<0>(attr)[1] == 456);
     }
 
+    { // non-flat optional
+        vector<int, boost::optional<vector<int, int>>> v;
+        auto const p = int_ >> -(':' >> int_ >> '-' >> int_);
+        BOOST_TEST(test_attr("1:2-3", p, v))
+            && BOOST_TEST(at_c<1>(v)) && BOOST_TEST_EQ(at_c<0>(*at_c<1>(v)), 2);
+    }
+
+    { // optional with container attribute
+        vector<char, boost::optional<std::string>> v;
+        auto const p = char_ >> -(':' >> +char_);
+        BOOST_TEST(test_attr("x", p, v))
+            && BOOST_TEST(!at_c<1>(v));
+        v = {};
+        BOOST_TEST(test_attr("x:abc", p, v))
+            && BOOST_TEST(at_c<1>(v)) && BOOST_TEST(*at_c<1>(v) == "abc");
+    }
+
     {
         using Attr = boost::variant<int, float>;
         Attr attr;
-        auto const term = rule<class term, Attr>("term") = int_ | float_;
-        auto const expr = rule<class expr, Attr>("expr") = term | ('(' > term > ')');
+        auto const term = rule<class term_id, Attr>("term") = int_ | float_;
+        auto const expr = rule<class expr_id, Attr>("expr") = term | ('(' > term > ')');
         BOOST_TEST((test_attr("(1)", expr, attr, space)));
     }
 
@@ -465,6 +476,21 @@ main()
         BOOST_TEST(test("x 123 \"a string\"", (char_ >> int_ >> "\"a string\"")[f], space));
         BOOST_TEST(c == 'x');
         BOOST_TEST(n == 123);
+    }
+
+    {
+#ifdef SPIRIT_NO_COMPILE_CHECK
+        char const* const s = "";
+        int i;
+        parse(s, s, int_ >> int_, i);
+#endif
+    }
+
+    { // test move only types
+        using boost::spirit::x3::eps;
+        std::vector<move_only> v;
+        BOOST_TEST(test_attr("ssszs", *synth_move_only >> 'z' >> synth_move_only, v));
+        BOOST_TEST_EQ(v.size(), 4);
     }
 
     return boost::report_errors();

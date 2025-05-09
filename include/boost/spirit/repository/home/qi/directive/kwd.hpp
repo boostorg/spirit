@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_KWD_NOVEMBER_14_2008_1148AM)
-#define SPIRIT_KWD_NOVEMBER_14_2008_1148AM
+#ifndef BOOST_SPIRIT_REPOSITORY_QI_DIRECTIVE_KWD_HPP
+#define BOOST_SPIRIT_REPOSITORY_QI_DIRECTIVE_KWD_HPP
 
 #if defined(_MSC_VER)
 #pragma once
@@ -23,8 +23,13 @@
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/repository/home/support/kwd.hpp>
 #include <boost/fusion/include/at.hpp>
-#include <boost/foreach.hpp>
 #include <vector>
+
+#if defined(_MSC_VER)
+# pragma warning(push)
+# pragma warning(disable: 4127) // conditional expression is constant
+# pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
 
 namespace boost { namespace spirit
 {
@@ -171,11 +176,6 @@ template <typename T>
             flag=true;
             return true;
         }
-
-
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        kwd_pass_iterator& operator= (kwd_pass_iterator const&);
     };
 
     template <typename T>
@@ -203,10 +203,6 @@ template <typename T>
 
         }
         T const exact;
-
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        kwd_exact_iterator& operator= (kwd_exact_iterator const&);
     };
 
     template <typename T>
@@ -235,10 +231,6 @@ template <typename T>
         }
         T const min;
         T const max;
-
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        kwd_finite_iterator& operator= (kwd_finite_iterator const&);
     };
 
     template <typename T>
@@ -255,10 +247,6 @@ template <typename T>
             return true;
         }
         T const min;
-
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        kwd_infinite_iterator& operator= (kwd_infinite_iterator const&);
     };
 
     // This class enables the transportation of parameters needed to call
@@ -440,11 +428,9 @@ template <typename T>
                 no_case_keyword,
                 spirit::qi::no_case_literal_string< KeywordType, true>,
                 spirit::qi::literal_string<KeywordType, true> >::type keyword_string_type;
-       keyword_string_type keyword;
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        kwd_parser& operator= (kwd_parser const&);
+        keyword_string_type keyword;
 
+    private:
         template <typename Iterator, typename Context, typename Skipper>
         static spirit::qi::detail::fail_function<Iterator, Context, Skipper>
         fail_function(
@@ -586,10 +572,8 @@ template <typename Subject, typename KeywordType, typename LoopIter, typename Di
         LoopIter iter;
 
         KeywordType keyword;
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        complex_kwd_parser& operator= (complex_kwd_parser const&);
 
+    private:
         template <typename Iterator, typename Context, typename Skipper>
         static spirit::qi::detail::fail_function<Iterator, Context, Skipper>
         fail_function(
@@ -1201,6 +1185,10 @@ namespace boost { namespace spirit { namespace traits
       : unary_handles_container<Subject, Attribute, Context, Iterator> {};
 
 }}}
+
+#if defined(_MSC_VER)
+# pragma warning(pop)
+#endif
 
 #endif
 

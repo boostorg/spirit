@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_REPEAT_NOVEMBER_14_2008_1148AM)
-#define SPIRIT_REPEAT_NOVEMBER_14_2008_1148AM
+#ifndef BOOST_SPIRIT_QI_DIRECTIVE_REPEAT_HPP
+#define BOOST_SPIRIT_QI_DIRECTIVE_REPEAT_HPP
 
 #if defined(_MSC_VER)
 #pragma once
@@ -78,6 +78,10 @@ namespace boost { namespace spirit { namespace qi
     using spirit::repeat_type;
     using spirit::inf_type;
 
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
     template <typename T>
     struct exact_iterator // handles repeat(exact)[p]
     {
@@ -90,10 +94,6 @@ namespace boost { namespace spirit { namespace qi
         bool got_min(T i) const { return i >= exact; }
 
         T const exact;
-
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        exact_iterator& operator= (exact_iterator const&);
     };
 
     template <typename T>
@@ -110,10 +110,6 @@ namespace boost { namespace spirit { namespace qi
 
         T const min;
         T const max;
-
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        finite_iterator& operator= (finite_iterator const&);
     };
 
     template <typename T>
@@ -128,11 +124,10 @@ namespace boost { namespace spirit { namespace qi
         bool got_min(T i) const { return i >= min; }
 
         T const min;
-
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        infinite_iterator& operator= (infinite_iterator const&);
     };
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
     template <typename Subject, typename LoopIter>
     struct repeat_parser : unary_parser<repeat_parser<Subject, LoopIter> >
@@ -208,10 +203,6 @@ namespace boost { namespace spirit { namespace qi
 
         Subject subject;
         LoopIter iter;
-
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        repeat_parser& operator= (repeat_parser const&);
     };
 
     ///////////////////////////////////////////////////////////////////////////

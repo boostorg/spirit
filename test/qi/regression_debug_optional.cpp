@@ -7,9 +7,10 @@
 //  make sure optionals play well with debug output
 
 #define BOOST_SPIRIT_DEBUG
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 #include <boost/optional.hpp>
 
 int main()

@@ -19,6 +19,7 @@ main()
     ///////////////////////////////////////////////////////////////////////////
     //  Custom data type
     ///////////////////////////////////////////////////////////////////////////
+#ifndef BOOST_SPIRIT_NO_MATH_REAL_CONCEPT
     {
         using boost::math::concepts::real_concept;
         using boost::spirit::qi::real_parser;
@@ -58,6 +59,7 @@ main()
         BOOST_TEST(!test("-1.2e", custom_real));
         BOOST_TEST(!test_attr("-1.2e", custom_real, d));
     }
+#endif
     
     ///////////////////////////////////////////////////////////////////////////
     //  custom real tests

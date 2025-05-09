@@ -7,15 +7,17 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <iostream>
 #include <vector>
 #include <string>
 #include <list>
 #include <algorithm>
-#include <boost/iterator.hpp>
+#include <iterator>
+#include <cstddef>
 #include <boost/config.hpp>
 #include <boost/concept_check.hpp>
+#include <boost/mpl/if.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/for_each.hpp>
 
@@ -478,23 +480,28 @@ void CheckDistance(void)
 
 namespace test_impl {
 
+    template <bool AsValue = false>
     class check_singular_iterator
-        : public boost::iterator<std::forward_iterator_tag, int>
     {
         bool singular_;
         int count_;
 
     public:
+        typedef std::forward_iterator_tag iterator_category;
+        typedef int value_type;
+        typedef std::ptrdiff_t difference_type;
+        typedef int const* pointer;
+        typedef typename boost::mpl::if_c<AsValue, int, int const&>::type reference;
 
         check_singular_iterator() : singular_(true), count_(0) {}
         explicit check_singular_iterator(int x) : singular_(false), count_(x) {}
 
-        int const& operator*() const {
+        reference operator*() const {
             BOOST_TEST(!singular_);
             return count_;
         }
 
-        int const* operator->() const {
+        pointer operator->() const {
             BOOST_TEST(!singular_);
             return &count_;
         }
@@ -521,11 +528,11 @@ namespace test_impl {
         }
     };
 
-    template <typename CountIterator>
-    void CheckSingular()
+    template <typename CountIterator, typename Iterator>
+    void CheckSingularImpl()
     {
-        CountIterator begin(check_singular_iterator(5), check_singular_iterator(0));
-        CountIterator end1(check_singular_iterator(0), check_singular_iterator(0));
+        CountIterator begin(Iterator(5), Iterator(0));
+        CountIterator end1(Iterator(0), Iterator(0));
         CountIterator end2;
 
         BOOST_TEST(begin == begin);
@@ -549,24 +556,28 @@ namespace test_impl {
 
         BOOST_TEST(std::distance(end2, end1) == 0);
         BOOST_TEST(std::distance(end2, end2) == 0);
+
+        BOOST_TEST(*begin == 5);
+    }
+
+    template <typename PositionT>
+    void CheckSingular()
+    {
+        {
+            typedef check_singular_iterator<false> interator_type;
+            CheckSingularImpl<position_iterator<interator_type, PositionT>, interator_type>();
+            CheckSingularImpl<position_iterator2<interator_type, PositionT>, interator_type>();
+        }
+        {
+            typedef check_singular_iterator<true> interator_type;
+            CheckSingularImpl<position_iterator<interator_type, PositionT>, interator_type>();
+            CheckSingularImpl<position_iterator2<interator_type, PositionT>, interator_type>();
+        }
     }
 }
 
 void CheckSingular()
 {
-    test_impl::CheckSingular<
-        position_iterator<test_impl::check_singular_iterator, file_position>
-    >();
-
-    test_impl::CheckSingular<
-        position_iterator<test_impl::check_singular_iterator, file_position_without_column>
-    >();
-
-    test_impl::CheckSingular<
-        position_iterator2<test_impl::check_singular_iterator, file_position>
-    >();
-
-    test_impl::CheckSingular<
-        position_iterator2<test_impl::check_singular_iterator, file_position_without_column>
-    >();
+    test_impl::CheckSingular<file_position>();
+    test_impl::CheckSingular<file_position_without_column>();
 }

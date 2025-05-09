@@ -3,15 +3,15 @@
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-#ifndef BOOST_LEXER_DEBUG_HPP
-#define BOOST_LEXER_DEBUG_HPP
+#ifndef BOOST_SPIRIT_SUPPORT_DETAIL_LEXER_DEBUG_HPP
+#define BOOST_SPIRIT_SUPPORT_DETAIL_LEXER_DEBUG_HPP
 
 #include <map>
-#include <ostream>
 #include "rules.hpp"
 #include "size_t.hpp"
 #include "state_machine.hpp"
 #include "string_token.hpp"
+#include <ios>
 #include <vector>
 
 namespace boost

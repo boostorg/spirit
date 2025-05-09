@@ -33,11 +33,10 @@
 
 // #define BOOST_SPIRIT_LEXERTL_DEBUG
 
-#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/statement.hpp>
+#include <boost/phoenix/core.hpp>
 
 #include <iostream>
 #include <string>
@@ -154,7 +153,7 @@ int main(int argc, char* argv[])
     // object instances needed to invoke the parsing process
     strip_comments_tokens<lexer_type> strip_comments;             // Our lexer
 
-    // No parsing is done alltogether, everything happens in the lexer semantic
+    // No parsing is done altogether, everything happens in the lexer semantic
     // actions.
     std::string str (read_from_file(1 == argc ? "strip_comments.input" : argv[1]));
     base_iterator_type first = str.begin();

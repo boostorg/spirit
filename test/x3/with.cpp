@@ -4,7 +4,6 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include "test.hpp"
 
@@ -16,7 +15,7 @@ struct my_rule_class
 {
     template <typename Iterator, typename Exception, typename Context>
     x3::error_handler_result
-    on_error(Iterator&, Iterator const&, Exception const& x, Context const& context)
+    on_error(Iterator&, Iterator const&, Exception const&, Context const& context)
     {
         x3::get<my_tag>(context)++;
         return x3::error_handler_result::fail;
@@ -39,6 +38,16 @@ main()
     using boost::spirit::x3::rule;
     using boost::spirit::x3::int_;
     using boost::spirit::x3::with;
+
+// read from a mutable field is not allowed on these compilers
+#if (!defined(_MSC_VER) || _MSC_VER >= 1910) && \
+    (!defined(__clang__) || __clang_major__ >= 7)
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(with<my_tag>(0)['x']);
+#endif
+    {
+        constexpr int i = 0;
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(with<my_tag>(i)['x']);
+    }
 
     { // injecting data into the context in the grammar
 

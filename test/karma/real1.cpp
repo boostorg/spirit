@@ -4,9 +4,9 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-//#define KARMA_FAIL_COMPILATION
-
 #include "real.hpp"
+
+#include <boost/phoenix/core/value.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 int main()
@@ -145,6 +145,12 @@ int main()
         BOOST_TEST(test("1234.5000", trail_zeros(1234.5)));
         BOOST_TEST(test("12342.0000", trail_zeros(12342.)));
         BOOST_TEST(test("1.2342e05", trail_zeros(123420.)));
+
+        // Regression tests for issue #688
+        BOOST_TEST(test("10.0000", trail_zeros(9.99999)));
+        BOOST_TEST(test("103.0000", trail_zeros(102.99999)));
+        BOOST_TEST(test("-10.0000", trail_zeros(-9.99999)));
+        BOOST_TEST(test("-103.0000", trail_zeros(-102.99999)));
     }
 
     {

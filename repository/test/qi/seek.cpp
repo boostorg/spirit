@@ -4,12 +4,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-
-
-#include <vector>
-
-#include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/repository/include/qi_seek.hpp>
 
 #include <boost/spirit/include/qi_parse.hpp>
 #include <boost/spirit/include/qi_char.hpp>
@@ -20,11 +15,10 @@
 #include <boost/spirit/include/qi_eoi.hpp>
 #include <boost/spirit/include/qi_action.hpp>
 
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 
-#include <boost/spirit/repository/include/qi_seek.hpp>
-
+#include <vector>
 #include "test.hpp"
 
 
@@ -96,6 +90,9 @@ int main()
             && b
         );
     }
+
+    // past the end regression GH#658
+    BOOST_TEST(!test(" ", seek['x'], space));
 
     return boost::report_errors();
 }

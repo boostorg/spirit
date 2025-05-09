@@ -18,6 +18,7 @@
 #if defined(BOOST_SPIRIT_DEBUG)
 #include <boost/spirit/home/support/detail/lexer/debug.hpp>
 #endif
+#include <iterator> // for std::iterator_traits
 
 namespace boost { namespace spirit { namespace lex { namespace lexertl
 { 
@@ -119,8 +120,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // object is always valid
         operator safe_bool() const { return &dummy::true_; }
 
-        typedef typename boost::detail::iterator_traits<Iterator>::value_type 
-            char_type;
+        typedef typename std::iterator_traits<Iterator>::value_type char_type;
         typedef std::basic_string<char_type> string_type;
 
         //  Every lexer type to be used as a lexer for Spirit has to conform to 
@@ -130,6 +130,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         typedef iterator<Functor> iterator_type;
 
     private:
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
         // this type is purely used for the iterator_type construction below
         struct iterator_data_type 
         {
@@ -150,11 +154,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             get_state_name_type get_state_name_;
             std::size_t num_states_;
             bool bol_;
-
-        private:
-            // silence MSVC warning C4512: assignment operator could not be generated
-            iterator_data_type& operator= (iterator_data_type const&);
         };
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
         typedef LexerTables tables_type;
 
@@ -230,7 +233,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             actions_.add_action(unique_id, state, wrapper_type::call(act));
         }
 
-        bool init_dfa(bool minimize = false) const { return true; }
+        bool init_dfa(bool /*minimize*/ = false) const { return true; }
 
     private:
         typename Functor::semantic_actions_type actions_;

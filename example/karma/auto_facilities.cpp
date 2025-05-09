@@ -17,8 +17,6 @@
 //  use a larger value for the alignment field width (default is 10)
 #define BOOST_KARMA_DEFAULT_FIELD_LENGTH 25
 
-#include <boost/config/warning_disable.hpp>
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -27,10 +25,11 @@
 #include <algorithm>
 #include <cstdlib> 
 
-#include <boost/range.hpp>
 #include <boost/array.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 #include <boost/fusion/include/array.hpp>
+#include <boost/proto/deep_copy.hpp>
+#include <boost/range/iterator_range.hpp>
 
 #include <boost/spirit/include/karma.hpp>
 

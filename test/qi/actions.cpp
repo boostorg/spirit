@@ -10,16 +10,23 @@
                                     // has no meaning; ignored
 #endif
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/include/qi_action.hpp>
+
 #include <boost/detail/workaround.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_numeric.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_parse.hpp>
-#include <boost/spirit/include/qi_action.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 #include <boost/lambda/lambda.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 #include <cstring>
+
+#ifdef _MSC_VER
+// bogus https://developercommunity.visualstudio.com/t/buggy-warning-c4709/471956
+# pragma warning(disable: 4709) // comma operator within array index expression
+#endif
 
 int x = 0;
 
@@ -89,6 +96,7 @@ int main()
     }
 
     {
+        using boost::placeholders::_1;
         char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
         qi::parse(s1, e1, '{' >> int_[boost::bind(&fun1, _1)] >> '}');
     }

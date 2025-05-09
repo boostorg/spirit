@@ -3,12 +3,6 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-// this file deliberately contains non-ascii characters
-// boostinspect:noascii
-
-#include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
-
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_auxiliary.hpp>
@@ -17,10 +11,8 @@
 #include <boost/spirit/include/karma_nonterminal.hpp>
 #include <boost/spirit/include/karma_action.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
-#include <boost/spirit/include/phoenix_fusion.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 
 #include "test.hpp"
 
@@ -42,7 +34,7 @@ int main()
         start = char_[_1 = _r1] << int_[_1 = _r2] << double_[_1 = _r3];
         BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
 
-        start = (char_ << int_ << double_)[_1 = _r1, _2 = _r2, _3 = _r3];
+        start = (char_ << int_ << double_)[(_1 = _r1, _2 = _r2, _3 = _r3)];
         BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
 
         karma::rule<outiter_type, void(char)> a;
@@ -63,7 +55,7 @@ int main()
         start = char_[_1 = _r1] << int_[_1 = _r2] << double_[_1 = _r3];
         BOOST_TEST(test_delimited("a 10 12.4 ", start('a', 10, 12.4), space));
 
-        start = (char_ << int_ << double_)[_1 = _r1, _2 = _r2, _3 = _r3];
+        start = (char_ << int_ << double_)[(_1 = _r1, _2 = _r2, _3 = _r3)];
         BOOST_TEST(test_delimited("a 10 12.4 ", start('a', 10, 12.4), space));
 
         karma::rule<outiter_type, space_type, void(char)> a;
@@ -110,9 +102,6 @@ int main()
         BOOST_TEST(test_delimited("a 10 12.4 ", start, space));
     }
 
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("french")
-#endif
     { // specifying the encoding
         using karma::lower;
         using karma::upper;
@@ -121,32 +110,28 @@ int main()
         typedef boost::spirit::char_encoding::iso8859_1 iso8859_1;
         karma::rule<outiter_type, iso8859_1> r;
 
-        r = lower['·'];
-        BOOST_TEST(test("·", r));
-        r = lower[char_('¡')];
-        BOOST_TEST(test("·", r));
-        r = upper['·'];
-        BOOST_TEST(test("¡", r));
-        r = upper[char_('¡')];
-        BOOST_TEST(test("¡", r));
+        r = lower['\xE1'];
+        BOOST_TEST(test("\xE1", r));
+        r = lower[char_('\xC1')];
+        BOOST_TEST(test("\xE1", r));
+        r = upper['\xE1'];
+        BOOST_TEST(test("\xC1", r));
+        r = upper[char_('\xC1')];
+        BOOST_TEST(test("\xC1", r));
 
-        r = lower["·¡"];
-        BOOST_TEST(test("··", r));
-        r = lower[lit("·¡")];
-        BOOST_TEST(test("··", r));
-        r = lower[string("·¡")];
-        BOOST_TEST(test("··", r));
-        r = upper["·¡"];
-        BOOST_TEST(test("¡¡", r));
-        r = upper[lit("·¡")];
-        BOOST_TEST(test("¡¡", r));
-        r = upper[string("·¡")];
-        BOOST_TEST(test("¡¡", r));
+        r = lower["\xE1\xC1"];
+        BOOST_TEST(test("\xE1\xE1", r));
+        r = lower[lit("\xE1\xC1")];
+        BOOST_TEST(test("\xE1\xE1", r));
+        r = lower[string("\xE1\xC1")];
+        BOOST_TEST(test("\xE1\xE1", r));
+        r = upper["\xE1\xC1"];
+        BOOST_TEST(test("\xC1\xC1", r));
+        r = upper[lit("\xE1\xC1")];
+        BOOST_TEST(test("\xC1\xC1", r));
+        r = upper[string("\xE1\xC1")];
+        BOOST_TEST(test("\xC1\xC1", r));
     }
-
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
 
     return boost::report_errors();
 }

@@ -13,9 +13,11 @@
 #include <iterator>
 #include <iostream>
 #include <typeinfo>
+#include <sstream>
 
 #include <boost/spirit/include/karma_stream.hpp>
 
+#include <boost/core/lightweight_test.hpp>
 #include <boost/preprocessor/iterate.hpp>
 #include <boost/preprocessor/repetition/enum.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>

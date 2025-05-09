@@ -362,7 +362,7 @@ See here for more information about __karma_operator__.
     [[[link spirit.karma.reference.operator.not_predicate `!a`]]
                             [`A`]                       [Not predicate. Ensure that `a` does not succeed 
                                                          generating, but don't create any output]]
-    [[[link spirit.karma.reference.operator.not_predicate `&a`]]
+    [[[link spirit.karma.reference.operator.and_predicate `&a`]]
                             [`A`]                       [And predicate. Ensure that `a` does succeed
                                                          generating, but don't create any output]]
     [[[link spirit.karma.reference.operator.optional `-a`]]

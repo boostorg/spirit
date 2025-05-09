@@ -52,7 +52,7 @@ main()
         unsigned long l = 1234567890L;
 
         BOOST_TEST( test("12345",  lit(s)));
-        BOOST_TEST(!test("12345",  lit(s - 1)));
+        BOOST_TEST(!test("12345",  lit(static_cast<unsigned short>(s - 1))));
         BOOST_TEST( test("1234567890",  lit(1234567890UL)));
         BOOST_TEST(!test("1234567890",  lit(98765321UL)));
         BOOST_TEST( test("1234567890",  lit(l)));

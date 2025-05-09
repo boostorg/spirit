@@ -4,14 +4,12 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/include/support_adapt_adt_attributes.hpp>
 
 #include <boost/fusion/include/adapt_adt.hpp>
 #include <boost/optional.hpp>
 
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/support_adapt_adt_attributes.hpp>
 
 #include "test.hpp"
 
@@ -90,6 +88,13 @@ int main()
         BOOST_TEST(test_attr("Hello", 
             +qi::alnum >> -(':' >> +qi::alnum), data) &&
             data.str == "Hello" && !data.optstr);
+    }
+
+    { // GH#396
+        qi::rule<char const*, unsigned()> uint_r = qi::uint_;
+        test1 data;
+        BOOST_TEST(test_attr("123@999", uint_r >> -('@' >> uint_r), data) &&
+            data.var == 123 && data.opt && data.opt.get() == 999);
     }
 
     return boost::report_errors();

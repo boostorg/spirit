@@ -4,11 +4,11 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/include/qi_binary.hpp>
 
 #include <boost/spirit/include/support_argument.hpp>
-#include <boost/spirit/include/qi_binary.hpp>
 #include <boost/cstdint.hpp>
+#include <boost/predef/other/endian.h>
 #include "test.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -48,7 +48,7 @@ int main()
     double d;
 
     {   // test native endian binaries
-#ifdef BOOST_LITTLE_ENDIAN
+#if BOOST_ENDIAN_LITTLE_BYTE
         BOOST_TEST(test_attr("\x01", byte_, uc) && uc == 0x01);
         BOOST_TEST(test_attr("\x01\x02", word, us) && us == 0x0201);
         BOOST_TEST(test_attr("\x01\x02\x03\x04", dword, ui) && ui == 0x04030201);
@@ -76,7 +76,7 @@ int main()
     }
 
     {   // test native endian binaries
-#ifdef BOOST_LITTLE_ENDIAN
+#if BOOST_ENDIAN_LITTLE_BYTE
         BOOST_TEST(test("\x01", byte_(0x01)));
         BOOST_TEST(test("\x01\x02", word(0x0201)));
         BOOST_TEST(test("\x01\x02\x03\x04", dword(0x04030201)));
@@ -96,7 +96,7 @@ int main()
             qword(0x0102030405060708LL)));
 #endif
         BOOST_TEST(binary_test("\x3f\x80\x00\x00", 4, bin_float(1.0f)));
-        BOOST_TEST(binary_test("\x3f\x80\x00\x00\x00\x00\x00\x00", 8,
+        BOOST_TEST(binary_test("\x3f\xf0\x00\x00\x00\x00\x00\x00", 8,
             bin_double(1.0)));
 #endif
     }

@@ -13,6 +13,7 @@
 #  undef NDEBUG  
 #endif  
 
+#include <boost/config.hpp>
 #include <stdexcept>
 
 #define BOOST_SPIRIT_ASSERT_EXCEPTION ::spirit_exception
@@ -23,9 +24,9 @@ struct spirit_exception : std::exception
         : message(msg)
     {
     }
-    ~spirit_exception() throw() {}
+    ~spirit_exception() BOOST_NOEXCEPT_OR_NOTHROW {}
 
-    char const* what() const throw() { return message; }
+    char const* what() const BOOST_NOEXCEPT_OR_NOTHROW { return message; }
 
     char const * message;
 };
@@ -34,7 +35,7 @@ struct spirit_exception : std::exception
 #include <boost/spirit/home/classic/symbols/impl/tst.ipp>
 #include <boost/utility/addressof.hpp>
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 typedef char char_type;
 typedef char const * iterator;

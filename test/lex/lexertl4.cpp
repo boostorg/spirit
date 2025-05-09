@@ -3,7 +3,6 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
 #include "test.hpp"
 
@@ -25,7 +24,6 @@ int main()
 
     token_def c_comment ("\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/", CCOMMENT);
     token_def cpp_comment ("\\/\\/[^\\n\\r]*(\\n|\\r|\\r\\n)", CPPCOMMENT);
-    token_def ws_tok ("[\\v\\f\\n\\r]+", TOKEN_ID_WS);
 
     typedef std::string::iterator base_iterator_type;    
     typedef lex::lexertl::token<base_iterator_type> token_type;

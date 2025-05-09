@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_PASS_CONTAINER_MAR_15_2009_0114PM)
-#define SPIRIT_PASS_CONTAINER_MAR_15_2009_0114PM
+#ifndef BOOST_SPIRIT_KARMA_DETAIL_PASS_CONTAINER_HPP
+#define BOOST_SPIRIT_KARMA_DETAIL_PASS_CONTAINER_HPP
 
 #if defined(_MSC_VER)
 #pragma once
@@ -23,10 +23,8 @@
 #include <boost/mpl/or.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/repetition/repeat.hpp>
-#include <boost/range/iterator_range.hpp>
+#include <boost/range/iterator_range_core.hpp>
 #include <boost/fusion/include/deduce_sequence.hpp>
-
-#include <boost/mpl/print.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail
 {
@@ -273,6 +271,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         mutable Iterator end;
     };
 
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
     template <typename Iterator>
     struct pass_container_base<Iterator&>
     {
@@ -382,11 +384,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         }
 
         F f;
-
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        pass_container& operator= (pass_container const&);
     };
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 }}}}
 
 #endif

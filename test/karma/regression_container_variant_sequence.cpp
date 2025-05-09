@@ -4,11 +4,9 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
-
 #include <boost/spirit/include/karma.hpp>
-#include <boost/spirit/include/phoenix.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <set>
 
@@ -21,9 +19,7 @@ namespace generator
     };
     typedef boost::variant<std::string, Enum> VariantType;
 
-    namespace spirit = boost::spirit;
-    namespace karma = spirit::karma;
-    namespace phoenix = boost::phoenix;
+    namespace karma = boost::spirit::karma;
 
     // Our grammar definition
     template<typename Iterator>
@@ -31,13 +27,8 @@ namespace generator
     {
         SettingsHeaderGenerator() : SettingsHeaderGenerator::base_type(baseRule)
         {
-            using phoenix::insert;
-            using phoenix::at_c;
-            using phoenix::push_back;
-            using phoenix::ref;
             using karma::lit;
             using karma::string;
-            using namespace karma::labels;
 
             enumRule = lit("enum ") << string << lit("\n{\n") << string % ",\n" << "}";
             declarationRule = lit("class ") << string << ';';
