@@ -152,8 +152,9 @@ template <typename Iterator, typename ErrorHandler = error_handler<Iterator> >
 struct parser : qi::grammar<Iterator, utree(), whitespace<Iterator> >
 {
     qi::rule<Iterator, utree(), whitespace<Iterator> >
-        start, element, list;
-
+        start, element;
+    qi::rule<Iterator, utree::list_type(), whitespace<Iterator> >
+        list;
     qi::rule<Iterator, utree()>
         atom;
 
