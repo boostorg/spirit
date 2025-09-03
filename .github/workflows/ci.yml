@@ -19,28 +19,28 @@ jobs:
         include:
           - name: "C++23 test/x3"
             buildtype: "boost"
-            packages: "clang-20 libc++-20-dev libc++abi-20-dev libunwind-20-dev jq ccache"
+            packages: "clang++-20 libc++-20-dev libc++abi-20-dev libunwind-20-dev jq ccache"
             packages_to_remove: ""
             os: "ubuntu-22.04"
-            cxx: "clang-20"
+            cxx: "clang++-20"
             sources: ""
             llvm_os: "jammy"
             llvm_ver: "20"
             std: "23"
             job: "test/x3"
-            travis_compiler: "clang-20"
+            travis_compiler: "clang++-20"
           - name: "C++23 test/x3"
             buildtype: "boost"
             packages: "g++-14 jq ccache"
             packages_to_remove: ""
             os: "ubuntu-22.04"
-            cxx: "gcc-14"
+            cxx: "g++-14"
             sources: ""
             llvm_os: ""
             llvm_ver: ""
             std: "23"
             job: "test/x3"
-            travis_compiler: "gcc-14"
+            travis_compiler: "g++-14"
           - name: "C++11 test/qi"
             buildtype: "boost"
             packages: "clang-14 libc++-14-dev libc++abi-14-dev libunwind-14-dev jq ccache"
@@ -219,7 +219,7 @@ jobs:
               done
           fi
           echo ">>>>> APT: INSTALL ${PACKAGES}.."
-          sudo -E DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=3 -y --no-install-suggests --no-install-recommends install ${PACKAGES}
+          sudo -E DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=3 -y install ${PACKAGES}
 
           echo '==================================> INSTALL AND COMPILE'
           set -e
