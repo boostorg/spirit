@@ -114,7 +114,9 @@ namespace boost::spirit::x3
         static constexpr bool has_action = Subject::has_action;
 
         template <typename SubjectT>
-            requires std::is_constructible_v<Subject, SubjectT>
+            requires
+                (!std::is_same_v<std::remove_cvref_t<SubjectT>, unary_parser>) &&
+                std::is_constructible_v<Subject, SubjectT>
         constexpr unary_parser(SubjectT&& subject)
             noexcept(std::is_nothrow_constructible_v<Subject, SubjectT>)
             : subject(std::forward<SubjectT>(subject))
