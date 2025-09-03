@@ -30,11 +30,7 @@ namespace boost::spirit::x3
         typename Attribute = unused_type,
         typename Context = unused_type // used only for polymorphism
     >
-    struct [[deprecated(
-        "Prefer static grammar (e.g. `a_prefix >> a_body | b_prefix >> b_body`) or "
-        "static branching (e.g. `x3::eps[lazy_cond_func] >> a | b`)."
-    )]]
-    any_parser : parser<any_parser<It, Attribute, Context>>
+    struct any_parser : parser<any_parser<It, Attribute, Context>>
     {
         // `any_parser` existed historically because writing a type-erased parser in C++
         // was cumbersome before modern language features. Its use is now discouraged for
@@ -75,6 +71,11 @@ namespace boost::spirit::x3
             requires
                 (!std::is_same_v<std::remove_cvref_t<Parser>, any_parser>) &&
                 X3Parser<Parser, It, It>
+        [[deprecated(
+            "`any_parser` is deprecated. Prefer static grammar "
+            "(e.g. `a_prefix >> a_body | b_prefix >> b_body`) or "
+            "static branching (e.g. `x3::eps[lazy_cond_func] >> a | b`)."
+        )]]
         constexpr any_parser(Parser&& parser)
             : parser_(std::make_unique<holder<as_parser_plain_t<Parser>>>(
                 std::forward<Parser>(parser)
