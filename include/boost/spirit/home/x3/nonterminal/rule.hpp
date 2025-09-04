@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
+    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -19,7 +20,7 @@
 #include <typeinfo>
 #endif
 
-namespace boost { namespace spirit { namespace x3
+namespace boost::spirit::x3
 {
     // default parse_rule implementation
     template <typename ID, typename Iterator
@@ -147,7 +148,7 @@ namespace boost { namespace spirit { namespace x3
                 "The rule does not have an attribute. Check your parser.");
 
             using transform = traits::transform_attribute<
-                Attribute_, attribute_type, parser_id>;
+                Attribute_, attribute_type, detail::parser_id>;
 
             using transform_attr = typename transform::type;
             transform_attr attr_ = transform::pre(attr);
@@ -255,6 +256,6 @@ namespace boost { namespace spirit { namespace x3
     /***/
 
 
-}}}
+} // boost::spirit::x3
 
 #endif

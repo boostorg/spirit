@@ -1,6 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
+    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -13,10 +14,12 @@
 #include <type_traits>
 #include <utility>
 
-///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace x3
+namespace boost::spirit::x3
 {
-    struct parser_id;
+    namespace detail
+    {
+        struct parser_id;
+    }
 
     template <typename Exposed, typename Transformed>
     struct default_transform_attribute
@@ -73,13 +76,12 @@ namespace boost { namespace spirit { namespace x3
     template <typename Attribute>
     struct transform_attribute<Attribute const, unused_type>
       : transform_attribute<unused_type, unused_type> {};
-}}}
+} // boost::spirit::x3
 
-///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace x3 { namespace traits
+namespace boost::spirit::x3::traits
 {
     template <typename Exposed, typename Transformed>
-    struct transform_attribute<Exposed, Transformed, x3::parser_id>
+    struct transform_attribute<Exposed, Transformed, x3::detail::parser_id>
       : x3::transform_attribute<Exposed, Transformed>
     {
         static_assert(!std::is_reference<Exposed>::value,
@@ -87,6 +89,6 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         static_assert(!std::is_reference<Transformed>::value,
             "Transformed cannot be a reference type");
     };
-}}}}
+} // boost::spirit::x3::traits
 
 #endif

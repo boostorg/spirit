@@ -1,6 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2013-2014 Agustin Berge
+    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -9,142 +10,184 @@
 #define BOOST_SPIRIT_X3_AUXILIARY_ANY_PARSER_APR_09_2014_1145PM
 
 #include <boost/spirit/home/x3/core/parser.hpp>
-#include <boost/spirit/home/x3/support/context.hpp>
-#include <boost/spirit/home/x3/support/subcontext.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>
-#include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
-#include <boost/spirit/home/x3/support/traits/is_parser.hpp>
+
+#include <boost/assert.hpp>
+
+#include <iterator>
 #include <memory>
 #include <string>
+#include <type_traits>
+#include <utility>
 
-namespace boost { namespace spirit { namespace x3
+namespace boost::spirit::x3
 {
+    // Type-erased parser that holds any underlying parser which models `X3Parser<It, It>`.
     template <
-        typename Iterator
-      , typename Attribute = unused_type
-      , typename Context = subcontext<>>
-    struct any_parser : parser<any_parser<Iterator, Attribute, Context>>
+        std::forward_iterator It, // used only for polymorphism
+        typename Attribute = unused_type,
+        typename Context = unused_type // used only for polymorphism
+    >
+    struct any_parser : parser<any_parser<It, Attribute, Context>>
     {
-        typedef Attribute attribute_type;
+        // `any_parser` existed historically because writing a type-erased parser in C++
+        // was cumbersome before modern language features. Its use is now discouraged for
+        // technical reasons:
+        //
+        //  1) Performance: type erasure places dynamic indirection on the parsing hot path.
+        //     Every token step must operate through type-erased iterators/contexts,
+        //     inhibiting inlining and adding dispatch overhead.
+        //
+        //  2) Formal grounds: PEGs are deterministic (ordered choice) and do not require
+        //     runtime reification of the grammar. The same behaviors can be expressed as
+        //     a static composition of parsers with semantic predicates.
+        //
+        //  3) Empirical evidence: a GitHub full-text search indicates that `any_parser`
+        //     is rarely used in practice.
+        //
+        // Reaching for `any_parser` means attempting to *define* the right-hand side of the
+        // grammar dynamically from the left-hand side of the input. That indirection is
+        // unnecessary in PEG; you can always structure the grammar statically. If more
+        // complex branching is required, use the symbols parser or design a fully featured
+        // parser class for your specific grammar.
+        //
+        // Note for X3 developers: if we allow the existence of `any_parser`, it would become
+        // a very undesirable technical burden which prohibits the future enhancements.
+        // Imagine that we're implementing an out-of-the-box packrat memoization support in
+        // the future. The existence of `any_parser` makes the situation undesirably complex,
+        // as we need to consider the *dynamic* properties of stateful parsers.
 
-        static bool const has_attribute =
-            !is_same<unused_type, attribute_type>::value;
-        static bool const handles_container =
-            traits::is_container<Attribute>::value;
+        using attribute_type = Attribute;
+
+        static constexpr bool has_attribute = !std::is_same_v<Attribute, unused_type>;
+        static constexpr bool handles_container = traits::is_container<Attribute>::value;
 
     public:
-        any_parser() = default;
+        constexpr any_parser() = default;
 
-        template <typename Expr,
-            typename Enable = typename enable_if<traits::is_parser<Expr>>::type>
-        any_parser(Expr const& expr)
-          : _content(new holder<Expr>(expr)) {}
+        template <typename Parser>
+            requires
+                (!std::is_same_v<std::remove_cvref_t<Parser>, any_parser>) &&
+                X3Parser<Parser, It, It>
+        [[deprecated(
+            "`any_parser` is deprecated. Prefer static grammar "
+            "(e.g. `a_prefix >> a_body | b_prefix >> b_body`) or "
+            "static branching (e.g. `x3::eps[lazy_cond_func] >> a | b`)."
+        )]]
+        constexpr any_parser(Parser&& parser)
+            : parser_(std::make_unique<holder<as_parser_plain_t<Parser>>>(
+                std::forward<Parser>(parser)
+            ))
+        {}
 
-        any_parser(any_parser const& other)
-          : _content(other._content ? other._content->clone() : nullptr) {}
+        constexpr any_parser(any_parser const& other)
+            : parser_(other.parser_ ? other.parser_->clone() : nullptr)
+        {}
 
-        any_parser(any_parser&& other) = default;
+        constexpr any_parser(any_parser&& other) = default;
 
-        any_parser& operator=(any_parser const& other)
+        constexpr any_parser& operator=(any_parser const& other)
         {
-            _content.reset(other._content ? other._content->clone() : nullptr);
+            parser_.reset(other.parser_ ? other.parser_->clone() : nullptr);
             return *this;
         }
 
         any_parser& operator=(any_parser&& other) = default;
 
-        template <typename Iterator_, typename Context_>
-        bool parse(Iterator_& first, Iterator_ const& last
-          , Context_ const& context, unused_type, Attribute& attr) const
+        // Runtime attribute is the same type as the predefined attribute type
+        template <std::forward_iterator It_, std::sentinel_for<It_> Se_, typename Context_>
+        [[nodiscard]] constexpr bool
+        parse(
+            It_& first, Se_ const& last,
+            Context_ const& context, unused_type, Attribute& attr
+        ) const
         {
-            BOOST_STATIC_ASSERT_MSG(
-                (is_same<Iterator, Iterator_>::value)
-              , "Incompatible iterator used"
-            );
+            static_assert(std::is_same_v<It_, It>, "Runtime iterator type must match `any_parser`'s iterator type");
+            BOOST_ASSERT_MSG(parser_ != nullptr, "Invalid use of uninitialized any_parser");
 
-            BOOST_ASSERT_MSG(
-                (_content != nullptr)
-              , "Invalid use of uninitialized any_parser"
-            );
-
-            return _content->parse(first, last, context, attr);
+            return parser_->parse(first, last, context, attr);
         }
 
-        template <typename Iterator_, typename Context_, typename Attribute_>
-        bool parse(Iterator_& first, Iterator_ const& last
-          , Context_ const& context, unused_type, Attribute_& attr_) const
+        // Runtime attribute is NOT the same type as the predefined attribute type
+        template <std::forward_iterator It_, std::sentinel_for<It_> Se_, typename Context_, typename Attribute_>
+        [[nodiscard]] constexpr bool
+        parse(
+            It_& first, Se_ const& last,
+            Context_ const& context, unused_type, Attribute_& attr_
+        ) const
         {
-            Attribute attr;
-            if (parse(first, last, context, unused, attr))
+            Attribute attr; // default-initialize
+            if (this->parse(first, last, context, unused, attr))
             {
-                traits::move_to(attr, attr_);
+                traits::move_to(std::move(attr), attr_);
                 return true;
             }
             return false;
         }
 
-        std::string get_info() const
+        [[nodiscard]] constexpr std::string get_x3_info() const
         {
-            return _content ? _content->get_info() : "";
+            return parser_ ? parser_->get_x3_info() : "(uninitialized `any_parser`)";
         }
 
     private:
-
         struct placeholder
         {
-            virtual placeholder* clone() const = 0;
+            constexpr virtual ~placeholder() = default;
 
-            virtual bool parse(Iterator& first, Iterator const& last
-              , Context const& context, Attribute& attr) const = 0;
+            [[nodiscard]]
+            constexpr virtual std::unique_ptr<placeholder> clone() const = 0;
 
-            virtual std::string get_info() const = 0;
+            [[nodiscard]]
+            constexpr virtual bool parse(
+                It& first, It const& last, Context const& context, Attribute& attr
+            ) const = 0;
 
-            virtual ~placeholder() {}
+            [[nodiscard]]
+            constexpr virtual std::string get_x3_info() const = 0;
         };
 
-        template <typename Expr>
+        template <X3Parser<It, It> Parser>
         struct holder : placeholder
         {
-            typedef typename extension::as_parser<Expr>::value_type parser_type;
+            template <X3Subject Subject>
+                requires is_parser_constructible_v<Parser, Subject>
+            constexpr explicit holder(Subject&& subject)
+                noexcept(is_parser_nothrow_constructible_v<Parser, Subject>)
+                : parser_(as_parser(std::forward<Subject>(subject)))
+            {}
 
-            explicit holder(Expr const& p)
-              : _parser(as_parser(p)) {}
-
-            holder* clone() const override
+            [[nodiscard]]
+            constexpr std::unique_ptr<placeholder> clone() const override
             {
-                return new holder(*this);
+                return std::make_unique<holder>(*this);
             }
 
-            bool parse(Iterator& first, Iterator const& last
-              , Context const& context, Attribute& attr) const override
+            [[nodiscard]]
+            constexpr bool parse(
+                It& first, It const& last,
+                Context const& context, Attribute& attr
+            ) const override
             {
-                return _parser.parse(first, last, context, unused, attr);
+                static_assert(Parsable<Parser, It, It, Context, unused_type, Attribute>);
+                return parser_.parse(first, last, context, unused, attr);
             }
 
-            std::string get_info() const override
+            [[nodiscard]]
+            constexpr std::string get_x3_info() const override
             {
-                return x3::what(_parser);
+                return x3::what(parser_);
             }
 
-            parser_type _parser;
+        private:
+            Parser parser_;
         };
 
-    private:
-        std::unique_ptr<placeholder> _content;
+        std::unique_ptr<placeholder> parser_;
     };
 
-    template <typename Iterator, typename Attribute, typename Context>
-    struct get_info<any_parser<Iterator, Attribute, Context>>
-    {
-        typedef std::string result_type;
-        std::string operator()(
-            any_parser<Iterator, Attribute, Context> const& p) const
-        {
-            return p.get_info();
-        }
-    };
-}}}
+} // boost::spirit::x3
 
 #endif
