@@ -279,8 +279,7 @@ jobs:
         run: |
           set -xe
           cp -rp $GITHUB_WORKSPACE libs/spirit
-          cd libs/spirit
-          cd test
+          cd libs/spirit/test
           ln -s ../repository/test repository # workaround legacy directory structure
           cd ${{ matrix.spirit_component }}
 
@@ -293,10 +292,9 @@ jobs:
         working-directory: ${{ steps.env-info.outputs.BOOST_ROOT }}
         shell: cmd
         run: |
+          echo "GITHUB_WORKSPACE: %GITHUB_WORKSPACE%"
           xcopy /S /E /Q %GITHUB_WORKSPACE% libs\spirit\
-          cd libs\spirit
-          cd test
-          mklink /D repository ..\repository\test # workaround legacy directory structure
+          cd libs\spirit\test
           cd ${{ matrix.spirit_component }}
 
           %BOOST_ROOT%\b2 -d1 -j%BOOST_SPIRIT_BUILD_JOBS% link=shared threading=multi variant=${{ matrix.build_type.lowercase }} toolset=${{ matrix.compiler.toolset }} cxxflags="${{ matrix.cpp_version.msvc_std }} ${{matrix.compiler.cxxflags}}" warnings=extra warnings-as-errors=off
