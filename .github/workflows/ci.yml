@@ -269,6 +269,7 @@ jobs:
           key: ${{ steps.cache-boost.outputs.cache-primary-key }}
           path: |
             ${{ steps.env-info.outputs.BOOST_ROOT }}
+            !${{ steps.env-info.outputs.BOOST_ROOT }}/.git
 
       - name: Build and test (Ubuntu)
         if: matrix.os.name == 'ubuntu'
