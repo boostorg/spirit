@@ -9,8 +9,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  BOOST_SPIRIT_SUBDIR: libs/spirit
   BOOST_SPIRIT_BUILD_JOBS: 4
+  BOOST_SPIRIT_CACHED_UPSTREAM_LIBS: --with-regex --with-thread --with-atomic --with-chrono --with-container --with-date_time --with-exception --with-math
 
 jobs:
   changes:
@@ -24,7 +24,7 @@ jobs:
       repository: ${{ steps.filter.outputs.repository }}
       x3: ${{ steps.filter.outputs.x3 }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: dorny/paths-filter@v3
         id: filter
         with:
@@ -83,8 +83,8 @@ jobs:
         os:
           - name: ubuntu
             version: 24.04
-          # - name: windows
-          #   version: 2022
+          - name: windows
+            version: 2022
         build_type:
           - name: Debug
             lowercase: debug
@@ -96,9 +96,9 @@ jobs:
           - name: C++23
             number: 23
             msvc_std: /std:c++23preview
-          # - name: C++26
-          #   number: 26
-          #   msvc_std: /std:c++latest
+          - name: C++26
+            number: 26
+            msvc_std: /std:c++latest
         compiler:
           - name: GCC
             toolset: gcc
@@ -110,7 +110,7 @@ jobs:
             cxxflags: -fcolor-diagnostics
           - name: MSVC
             toolset: msvc
-            version: v143
+            version: 2022
             cxxflags: /EHsc /utf-8
 
         spirit_component: ${{ fromJSON(needs.changes.outputs.spirit_component) }}
@@ -170,7 +170,7 @@ jobs:
               number: 11
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           # required for upstream Boost version detection
           # sadly not working due to upstream bug: https://github.com/actions/checkout/issues/1471
@@ -202,72 +202,84 @@ jobs:
           sudo apt-get install -y libc++-${{ matrix.compiler.version }}-dev libc++abi-${{ matrix.compiler.version }}-dev
           echo "BOOST_SPIRIT_STDLIB=stdlib=libc++" >> "$GITHUB_ENV"
 
+      - name: Fetch Environment Info
+        id: env-info
+        shell: bash
+        run: |
+          set -e
+          export BOOST_RELEASE_VERSION_NAME=$(git for-each-ref refs/tags --sort=-refname --format='%(refname:lstrip=-1)' --count=1)
+          echo "BOOST_RELEASE_VERSION_NAME: $BOOST_RELEASE_VERSION_NAME"
+          echo "BOOST_RELEASE_VERSION_NAME=$BOOST_RELEASE_VERSION_NAME" >> "$GITHUB_OUTPUT"
+
+          if [ "${{ matrix.os.name }}" = "windows" ]; then
+            export BOOST_ROOT=$(cygpath -w $HOME/boost)
+          else
+            export BOOST_ROOT=$HOME/boost
+          fi
+          echo "BOOST_ROOT: $BOOST_ROOT"
+          echo "BOOST_ROOT=$BOOST_ROOT" >> "$GITHUB_OUTPUT"
+
+      - name: Cache upstream Boost libraries (restore)
+        id: cache-boost
+        uses: actions/cache/restore@v4
+        with:
+          key: ${{ steps.env-info.outputs.BOOST_RELEASE_VERSION_NAME }}-${{ matrix.os.name }}-${{ matrix.os.version }}-${{ matrix.compiler.toolset }}-${{ matrix.compiler.version }}-${{ matrix.cpp_version.name }}-${{ matrix.build_type.name }}
+          path: |
+            ${{ steps.env-info.outputs.BOOST_ROOT }}
+
+      - name: Clone upstream Boost libraries
+        if: steps.cache-boost.outputs.cache-hit != 'true'
+        run: |
+          git -c advice.detachedHead=false clone --no-tags --single-branch --branch=${{ steps.env-info.outputs.BOOST_RELEASE_VERSION_NAME }} --depth=1 --quiet --recurse-submodules=":(exclude)libs/spirit" --shallow-submodules https://github.com/boostorg/boost.git ${{ steps.env-info.outputs.BOOST_ROOT }}
+
+      - name: Build upstream Boost libraries (Ubuntu)
+        if: matrix.os.name == 'ubuntu' && steps.cache-boost.outputs.cache-hit != 'true'
+        env:
+          BOOST_ROOT: ${{ steps.env-info.outputs.BOOST_ROOT }}
+        working-directory: ${{ steps.env-info.outputs.BOOST_ROOT }}
+        shell: bash
+        run: |
+          set -xe
+          rm -rf libs/spirit
+          ./bootstrap.sh --with-toolset=${{ matrix.compiler.toolset }}
+          ./b2 -d0 headers
+          ./b2 -d1 -j$BOOST_SPIRIT_BUILD_JOBS $BOOST_SPIRIT_CACHED_UPSTREAM_LIBS link=shared threading=multi variant=${{ matrix.build_type.lowercase }} toolset=${{ matrix.compiler.toolset }}-${{ matrix.compiler.version }} cxxstd=${{ matrix.cpp_version.number }} cxxflags="${{ matrix.compiler.cxxflags }}" $BOOST_SPIRIT_STDLIB warnings=extra warnings-as-errors=off
+
       - uses: TheMrMilchmann/setup-msvc-dev@v3
         if: matrix.os.name == 'windows'
         with:
           arch: x64
 
-      - name: Fetch Environment Info (Ubuntu)
-        id: env-ubuntu
-        if: matrix.os.name == 'ubuntu'
-        shell: bash
-        run: |
-          set -e
-          export BOOST_ROOT=$HOME/boost
-          echo "BOOST_ROOT: $BOOST_ROOT"
-          echo "BOOST_ROOT=$BOOST_ROOT" >> "$GITHUB_OUTPUT"
-
-          export BOOST_RELEASE_VERSION_NAME=$(git for-each-ref refs/tags --sort=-refname --format='%(refname:lstrip=-1)' --count=1)
-          echo "BOOST_RELEASE_VERSION_NAME: $BOOST_RELEASE_VERSION_NAME"
-          echo "BOOST_RELEASE_VERSION_NAME=$BOOST_RELEASE_VERSION_NAME" >> "$GITHUB_OUTPUT"
-
-      - name: Fetch Environment Info (Windows)
-        if: matrix.os.name == 'windows'
-        run:
-          exit 2
-
-      - name: Cache upstream Boost headers (restore) (Ubuntu)
-        id: cache-boost-ubuntu
-        if: matrix.os.name == 'ubuntu'
-        uses: actions/cache/restore@v4
-        with:
-          key: ${{ steps.env-ubuntu.outputs.BOOST_RELEASE_VERSION_NAME }}-${{ matrix.os.name }}-${{ matrix.os.version }}-${{ matrix.compiler.toolset }}-${{ matrix.compiler.version }}-${{ matrix.cpp_version.name }}-${{ matrix.build_type.name }}
-          path: |
-            ${{ steps.env-ubuntu.outputs.BOOST_ROOT }}
-
-      - name: Install upstream Boost headers (Ubuntu)
-        if: matrix.os.name == 'ubuntu' && steps.cache-boost-ubuntu.outputs.cache-hit != 'true'
+      - name: Build upstream Boost libraries (Windows)
+        if: matrix.os.name == 'windows' && steps.cache-boost.outputs.cache-hit != 'true'
         env:
-          BOOST_ROOT: ${{ steps.env-ubuntu.outputs.BOOST_ROOT }}
-          BOOST_RELEASE_VERSION_NAME: ${{ steps.env-ubuntu.outputs.BOOST_RELEASE_VERSION_NAME }}
-        shell: bash
+          BOOST_ROOT: ${{ steps.env-info.outputs.BOOST_ROOT }}
+        working-directory: ${{ steps.env-info.outputs.BOOST_ROOT }}
+        shell: cmd
         run: |
-          set -xe
-          git -c 'advice.detachedHead=false' clone -j10 --branch=$BOOST_RELEASE_VERSION_NAME --depth=1 --quiet --recurse-submodules=":(exclude)$BOOST_SPIRIT_SUBDIR" --shallow-submodules https://github.com/boostorg/boost.git $BOOST_ROOT
-          cd $BOOST_ROOT
+          rd /s /q libs\spirit
+          .\bootstrap.bat --with-toolset=${{ matrix.compiler.toolset }}
+          .\b2 -d0 headers
+          .\b2 -d1 -j%BOOST_SPIRIT_BUILD_JOBS% %BOOST_SPIRIT_CACHED_UPSTREAM_LIBS% link=shared threading=multi variant=${{ matrix.build_type.lowercase }} toolset=${{ matrix.compiler.toolset }} cxxflags="${{ matrix.cpp_version.msvc_std }} ${{matrix.compiler.cxxflags}}" warnings=extra warnings-as-errors=off
 
-          rm -rf $BOOST_SPIRIT_SUBDIR
-          ./bootstrap.sh --with-toolset=${{ matrix.compiler.toolset }}
-          ./b2 -d0 headers
-
-      - name: Cache upstream Boost headers (save) (Ubuntu)
-        if: matrix.os.name == 'ubuntu' && always() && steps.cache-boost-ubuntu.outputs.cache-hit != 'true'
+      - name: Cache upstream Boost libraries
+        if: steps.cache-boost.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
         with:
-          key: ${{ steps.cache-boost-ubuntu.outputs.cache-primary-key }}
+          key: ${{ steps.cache-boost.outputs.cache-primary-key }}
           path: |
-            ${{ steps.env-ubuntu.outputs.BOOST_ROOT }}
+            ${{ steps.env-info.outputs.BOOST_ROOT }}
 
       - name: Build and test (Ubuntu)
         if: matrix.os.name == 'ubuntu'
         env:
-          BOOST_ROOT: ${{ steps.env-ubuntu.outputs.BOOST_ROOT }}
-        working-directory: ${{ steps.env-ubuntu.outputs.BOOST_ROOT }}
+          BOOST_ROOT: ${{ steps.env-info.outputs.BOOST_ROOT }}
+        working-directory: ${{ steps.env-info.outputs.BOOST_ROOT }}
         shell: bash
         run: |
           set -xe
-          cp -rp $GITHUB_WORKSPACE $BOOST_SPIRIT_SUBDIR
-          cd $BOOST_SPIRIT_SUBDIR
+          cp -rp $GITHUB_WORKSPACE libs/spirit
+          cd libs/spirit
           cd test
           ln -s ../repository/test repository # workaround legacy directory structure
           cd ${{ matrix.spirit_component }}
@@ -276,5 +288,15 @@ jobs:
 
       - name: Build and test (Windows)
         if: matrix.os.name == 'windows'
+        env:
+          BOOST_ROOT: ${{ steps.env-info.outputs.BOOST_ROOT }}
+        working-directory: ${{ steps.env-info.outputs.BOOST_ROOT }}
+        shell: cmd
         run: |
-          $BOOST_ROOT/b2 -d1 -j$BOOST_SPIRIT_BUILD_JOBS link=shared threading=multi variant=${{ matrix.build_type.lowercase }} toolset=${{ matrix.compiler.toolset }} cxxflags="${{ matrix.cpp_version.msvc_std }} ${{matrix.compiler.cxxflags}}" warnings=extra warnings-as-errors=off
+          xcopy /S /E /Q %GITHUB_WORKSPACE% libs\spirit\
+          cd libs\spirit
+          cd test
+          mklink /D repository ..\repository\test # workaround legacy directory structure
+          cd ${{ matrix.spirit_component }}
+
+          %BOOST_ROOT%\b2 -d1 -j%BOOST_SPIRIT_BUILD_JOBS% link=shared threading=multi variant=${{ matrix.build_type.lowercase }} toolset=${{ matrix.compiler.toolset }} cxxflags="${{ matrix.cpp_version.msvc_std }} ${{matrix.compiler.cxxflags}}" warnings=extra warnings-as-errors=off
