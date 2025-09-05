@@ -8,19 +8,21 @@ exclusively in C++. Inline grammar specifications can mix freely with other
 C++ code and, thanks to the generative power of C++ templates, are immediately
 executable.
 
-### Spirit.X3 (3rd generation)
+## Spirit.X3 (3rd generation)
 
 [Documentation](http://www.boost.org/doc/libs/develop/libs/spirit/doc/x3/html/index.html)
 
 The newest Spirit shines faster compile times. Currently only a parser framework (no serialization support).
 
-Supported environments:
-  - C++23 and C++26
-  - GCC 14
-  - Clang 22
-  - MSVC (2022)
+### Supported environments
 
-### Spirit V2 (2nd generation)
+- C++23 and C++26
+- GCC 14
+- Clang 22
+- MSVC (2022)
+
+
+## Spirit V2 (2nd generation)
 
 [Documentation](http://www.boost.org/doc/libs/develop/libs/spirit/doc/html/index.html)
 
@@ -30,23 +32,25 @@ manipulation on any kind of input.
 Note: Spirit V2 is no longer actively maintained. For new projects, use X3.
 
 Consists of:
-  - [Qi]: Parser framework.
-  - [Karma]: Generator framework.
-  - [Lex]: Lexical analyzer framework.
 
-Supported environments:
-  - C++11 only
-  - GCC 14
-  - Clang 22
-  - MSVC (2022)
-
+- [Qi]: Parser framework.
+- [Karma]: Generator framework.
+- [Lex]: Lexical analyzer framework.
 
 [Spirit V2]: http://www.boost.org/doc/libs/develop/libs/spirit/doc/html/index.html
 [Qi]: http://www.boost.org/doc/libs/develop/libs/spirit/doc/html/spirit/qi.html
 [Karma]: http://www.boost.org/doc/libs/develop/libs/spirit/doc/html/spirit/karma.html
 [Lex]: http://www.boost.org/doc/libs/develop/libs/spirit/doc/html/spirit/lex.html
 
-### Spirit.Classic (1st generation)
+### Supported environments
+
+- C++11 only
+- GCC 14
+- Clang 22
+- **Windows is no longer supported** because [C++11 support was removed in Visual Studio 2017 and later](https://learn.microsoft.com/en-us/cpp/build/reference/std-specify-language-standard-version?view=msvc-170#remarks).
+
+
+## Spirit.Classic (1st generation)
 
 [Documentation](http://www.boost.org/doc/libs/develop/libs/spirit/classic/index.html)
 
@@ -54,7 +58,7 @@ An elderling member of Spirit. It receives only limited maintanance, but
 it is still used even inside Boost by [Boost.Serialization] and [Boost.Wave]
 libraries. It also contains Phoenix V1.
 
-Spririt.Classic should support even ancient compilers.
+Spirit.Classic should support even ancient compilers.
 
 [Boost.Serialization]: http://boost.org/libs/serialization
 [Boost.Wave]: http://boost.org/libs/wave
