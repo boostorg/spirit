@@ -292,7 +292,6 @@ jobs:
         working-directory: ${{ steps.env-info.outputs.BOOST_ROOT }}
         shell: cmd
         run: |
-          echo "GITHUB_WORKSPACE: %GITHUB_WORKSPACE%"
           xcopy /S /E /Q %GITHUB_WORKSPACE% libs\spirit\
           cd libs\spirit\test
           cd ${{ matrix.spirit_component }}
