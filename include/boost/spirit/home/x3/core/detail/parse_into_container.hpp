@@ -42,7 +42,7 @@ namespace boost::spirit::x3::detail
     {
         template <typename Value, typename Attribute>
         static constexpr void call(Key const&, Value&& value, Attribute& attr)
-            noexcept(noexcept(traits::move_to(value, fusion::at_key<Key>(attr))))
+            noexcept(noexcept(traits::move_to(std::move(value), fusion::at_key<Key>(attr))))
         {
             static_assert(std::is_rvalue_reference_v<Value&&>);
             traits::move_to(std::move(value), fusion::at_key<Key>(attr));

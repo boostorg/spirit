@@ -80,7 +80,7 @@ namespace boost::spirit::x3
             noexcept(
                 std::is_nothrow_default_constructible_v<x3::traits::optional_value_t<Attribute>> &&
                 is_nothrow_parsable_v<Subject, It, Se, Context, RContext, x3::traits::optional_value_t<Attribute>&> &&
-                noexcept(x3::traits::move_to(std::declval<x3::traits::optional_value_t<Attribute>&>(), attr))
+                noexcept(x3::traits::move_to(std::declval<x3::traits::optional_value_t<Attribute>&&>(), attr))
             )
         {
             using value_type = x3::traits::optional_value_t<Attribute>;
