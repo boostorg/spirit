@@ -1,26 +1,29 @@
 /*=============================================================================
     Copyright (c) 2001-2015 Joel de Guzman
+    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #define BOOST_SPIRIT_X3_DEBUG
 
+#include "test.hpp"
+
 #include <boost/spirit/home/x3.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 #include <boost/fusion/include/vector.hpp>
 
+#include <iterator>
 #include <vector>
 #include <string>
 #include <cstring>
 #include <iostream>
-#include "test.hpp"
 
 struct my_error_handler
 {
-    template <typename Iterator, typename Exception, typename Context>
+    template <std::forward_iterator It, std::sentinel_for<It> Se, typename Exception, typename Context>
     boost::spirit::x3::error_handler_result
-    operator()(Iterator&, Iterator const& last, Exception const& x, Context const&) const
+    operator()(It const&, Se const& last, Exception const& x, Context const&) const
     {
         std::cout
             << "Error! Expecting: "
@@ -46,24 +49,22 @@ struct my_attribute
         alive = false;
     }
 
-    friend std::ostream & operator << (std::ostream & os, my_attribute const & attr)
+    friend std::ostream& operator<<(std::ostream & os, my_attribute const & attr)
     {
         attr.access();
         return os << "my_attribute";
     }
 };
 
-int
-main()
+int main()
 {
     using spirit_test::test_attr;
     using spirit_test::test;
 
-    using namespace boost::spirit::x3::ascii;
+    using namespace boost::spirit::x3::standard;
     using boost::spirit::x3::rule;
     using boost::spirit::x3::symbols;
     using boost::spirit::x3::int_;
-    using boost::spirit::x3::alpha;
 
     { // basic tests
 
