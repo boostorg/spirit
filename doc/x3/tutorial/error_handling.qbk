@@ -1,6 +1,6 @@
 [/==============================================================================
     Copyright (C) 2001-2018 Joel de Guzman
-    Copyright (C) 2024 Nana Sakisaka
+    Copyright (C) 2024-2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -129,10 +129,12 @@ Here's our `on_error` handler:
 
     struct error_handler
     {
-        template <typename Iterator, typename Exception, typename Context>
-        x3::error_handler_result on_error(
-            Iterator& first, Iterator const& last
-          , Exception const& x, Context const& context)
+        template <std::forward_iterator It, std::sentinel_for<It> Se, typename Exception, typename Context>
+        [[nodiscard]] x3::error_handler_result
+        on_error(
+            It const& first, Se const& last,
+            Exception const& x, Context const& context
+        )
         {
             auto& error_handler = x3::get<x3::error_handler_tag>(context).get();
             std::string message = "Error! Expecting: " + x3::which(x) + " here:";
