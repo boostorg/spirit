@@ -2,7 +2,7 @@
     Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
     Copyright (c) 2017 wanghan02
-    Copyright (c) 2024 Nana Sakisaka
+    Copyright (c) 2024-2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -10,7 +10,7 @@
 #if !defined(BOOST_SPIRIT_X3_OPTIONAL_MARCH_23_2007_1117PM)
 #define BOOST_SPIRIT_X3_OPTIONAL_MARCH_23_2007_1117PM
 
-#include <boost/spirit/home/x3/core/proxy.hpp>
+#include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 #include <boost/spirit/home/x3/support/expectation.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
@@ -18,72 +18,101 @@
 #include <boost/spirit/home/x3/support/traits/optional_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
 
-namespace boost { namespace spirit { namespace x3
+#include <iterator>
+#include <type_traits>
+#include <utility>
+
+namespace boost::spirit::x3
 {
     template <typename Subject>
-    struct optional : proxy<Subject, optional<Subject>>
+    struct optional : unary_parser<Subject, optional<Subject>>
     {
-        typedef proxy<Subject, optional<Subject>> base_type;
-        static bool const is_pass_through_unary = false;
-        static bool const handles_container = true;
+        using base_type = unary_parser<Subject, optional<Subject>>;
+        static constexpr bool is_pass_through_unary = false;
+        static constexpr bool handles_container = true;
 
-        constexpr optional(Subject const& subject)
-          : base_type(subject) {}
+        template <typename SubjectT>
+            requires std::is_constructible_v<Subject, SubjectT>
+        constexpr optional(SubjectT&& subject)
+            noexcept(std::is_nothrow_constructible_v<Subject, SubjectT>)
+            : base_type(std::forward<SubjectT>(subject))
+        {}
 
-        using base_type::parse_subject;
-
-        // Attribute is a container
-        template <typename Iterator, typename Context
-          , typename RContext, typename Attribute>
-        bool parse_subject(Iterator& first, Iterator const& last
-          , Context const& context, RContext& rcontext, Attribute& attr
-          , traits::container_attribute) const
+        // catch-all overload
+        template <
+            std::forward_iterator It, std::sentinel_for<It> Se, typename Context, typename RContext,
+            typename Attribute // unconstrained
+        >
+        [[nodiscard]] constexpr bool
+        parse(
+            It& first, Se const& last, Context const& context, RContext& rcontext, Attribute& attr
+        ) const
+            noexcept(is_nothrow_parsable_v<Subject, It, Se, Context, RContext, Attribute>)
         {
-            detail::parse_into_container(
-                this->subject, first, last, context, rcontext, attr);
-            return !has_expectation_failure(context);
+            static_assert(Parsable<Subject, It, Se, Context, RContext, Attribute>);
+
+            // discard [[nodiscard]]
+            (void)this->subject.parse(first, last, context, rcontext, attr);
+            return !x3::has_expectation_failure(context);
         }
 
-        // Attribute is an optional
-        template <typename Iterator, typename Context
-          , typename RContext, typename Attribute>
-        bool parse_subject(Iterator& first, Iterator const& last
-          , Context const& context, RContext& rcontext, Attribute& attr
-          , traits::optional_attribute) const
+        // container attribute
+        template <
+            std::forward_iterator It, std::sentinel_for<It> Se, typename Context, typename RContext,
+            traits::CategorizedAttr<traits::container_attribute> Attribute
+        >
+        [[nodiscard]] constexpr bool
+        parse(It& first, Se const& last, Context const& context, RContext& rcontext, Attribute& attr) const
+            noexcept(noexcept(detail::parse_into_container(this->subject, first, last, context, rcontext, attr)))
         {
-            typedef typename
-                x3::traits::optional_value<Attribute>::type
-            value_type;
+            // discard [[nodiscard]]
+            (void)detail::parse_into_container(this->subject, first, last, context, rcontext, attr);
+            return !x3::has_expectation_failure(context);
+        }
 
-            // create a local value
-            value_type val{};
+        // optional attribute
+        template <
+            std::forward_iterator It, std::sentinel_for<It> Se, typename Context, typename RContext,
+            traits::CategorizedAttr<traits::optional_attribute> Attribute
+        >
+        [[nodiscard]] constexpr bool
+        parse(It& first, Se const& last, Context const& context, RContext& rcontext, Attribute& attr) const
+            noexcept(
+                std::is_nothrow_default_constructible_v<x3::traits::optional_value_t<Attribute>> &&
+                is_nothrow_parsable_v<Subject, It, Se, Context, RContext, x3::traits::optional_value_t<Attribute>> &&
+                noexcept(x3::traits::move_to(std::declval<x3::traits::optional_value_t<Attribute>&&>(), attr))
+            )
+        {
+            using value_type = x3::traits::optional_value_t<Attribute>;
+            value_type val; // default-initialize
 
+            static_assert(Parsable<Subject, It, Se, Context, RContext, value_type>);
             if (this->subject.parse(first, last, context, rcontext, val))
             {
                 // assign the parsed value into our attribute
-                x3::traits::move_to(val, attr);
-
-            } else {
-                return !has_expectation_failure(context);
+                x3::traits::move_to(std::move(val), attr);
+                return true;
             }
-            return true;
+
+            return !x3::has_expectation_failure(context);
         }
     };
 
-    template <typename Subject>
-    constexpr optional<typename extension::as_parser<Subject>::value_type>
-    operator-(Subject const& subject)
+    template <X3Subject Subject>
+    [[nodiscard]] constexpr optional<as_parser_plain_t<Subject>>
+    operator-(Subject&& subject)
+        noexcept(is_parser_nothrow_constructible_v<optional<as_parser_plain_t<Subject>>, Subject>)
     {
-        return { as_parser(subject) };
+        return { as_parser(std::forward<Subject>(subject)) };
     }
-}}}
+} // boost::spirit::x3
 
-namespace boost { namespace spirit { namespace x3 { namespace traits
+namespace boost::spirit::x3::traits
 {
     template <typename Subject, typename Context>
     struct attribute_of<x3::optional<Subject>, Context>
-        : build_optional<
-            typename attribute_of<Subject, Context>::type> {};
-}}}}
+        : build_optional<attribute_of_t<Subject, Context>>
+    {};
+} // boost::spirit::x3::traits
 
 #endif

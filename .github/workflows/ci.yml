@@ -228,6 +228,7 @@ jobs:
           key: ${{ steps.env-info.outputs.BOOST_RELEASE_VERSION_NAME }}-${{ matrix.os.name }}-${{ matrix.os.version }}-${{ matrix.compiler.toolset }}-${{ matrix.compiler.version }}-${{ matrix.cpp_version.name }}-${{ matrix.build_type.name }}
           path: |
             ${{ steps.env-info.outputs.BOOST_ROOT }}
+            !${{ steps.env-info.outputs.BOOST_ROOT }}/.git
 
       - name: Clone upstream Boost libraries
         if: steps.cache-boost.outputs.cache-hit != 'true'
