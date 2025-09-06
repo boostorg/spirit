@@ -79,7 +79,7 @@ namespace boost::spirit::x3
         parse(It& first, Se const& last, Context const& context, RContext& rcontext, Attribute& attr) const
             noexcept(
                 std::is_nothrow_default_constructible_v<x3::traits::optional_value_t<Attribute>> &&
-                is_nothrow_parsable_v<Subject, It, Se, Context, RContext, x3::traits::optional_value_t<Attribute>&> &&
+                is_nothrow_parsable_v<Subject, It, Se, Context, RContext, x3::traits::optional_value_t<Attribute>> &&
                 noexcept(x3::traits::move_to(std::declval<x3::traits::optional_value_t<Attribute>&&>(), attr))
             )
         {

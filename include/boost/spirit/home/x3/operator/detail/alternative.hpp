@@ -171,7 +171,7 @@ namespace boost::spirit::x3::detail
         )) &&
         is_nothrow_parsable_v<
             Parser, It, Se, Context, RContext,
-            typename parse_alternative_pseudo_t<Parser, It, Se, Context, Attribute>::type
+            std::remove_reference_t<typename parse_alternative_pseudo_t<Parser, It, Se, Context, Attribute>::type>
         >
     )
     {
@@ -193,7 +193,7 @@ namespace boost::spirit::x3::detail
         )) &&
         is_nothrow_parsable_v<
             Parser, It, Se, Context, RContext,
-            typename parse_alternative_pseudo_t<Parser, It, Se, Context, Attribute>::type
+            std::remove_reference_t<typename parse_alternative_pseudo_t<Parser, It, Se, Context, Attribute>::type>
         > &&
         noexcept(traits::move_to(
             std::declval<typename parse_alternative_pseudo_t<Parser, It, Se, Context, Attribute>::type&&>(),
