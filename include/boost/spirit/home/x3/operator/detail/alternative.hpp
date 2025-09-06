@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
+    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -14,42 +15,42 @@
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
 #include <boost/spirit/home/x3/support/traits/variant_has_substitute.hpp>
 #include <boost/spirit/home/x3/support/traits/variant_find_substitute.hpp>
-#include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 
-#include <boost/mpl/if.hpp>
+#include <boost/spirit/home/x3/core/parser.hpp>
+#include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 
 #include <boost/fusion/include/front.hpp>
 
-#include <boost/type_traits/is_same.hpp>
+#include <iterator>
 #include <type_traits>
 
-namespace boost { namespace spirit { namespace x3
+namespace boost::spirit::x3
 {
     template <typename Left, typename Right>
     struct alternative;
-}}}
+} // boost::spirit::x3
 
-namespace boost { namespace spirit { namespace x3 { namespace detail
+namespace boost::spirit::x3::detail
 {
     struct pass_variant_unused
     {
-        typedef unused_type type;
+        using type = unused_type;
 
         template <typename T>
-        static unused_type
-        call(T&)
+        [[nodiscard]] static constexpr unused_type
+        call(T&) noexcept
         {
-            return unused_type();
+            return unused_type{};
         }
     };
 
     template <typename Attribute>
     struct pass_variant_used
     {
-        typedef Attribute& type;
+        using type = Attribute&;
 
-        static Attribute&
-        call(Attribute& v)
+        [[nodiscard]] static constexpr Attribute&
+        call(Attribute& v) noexcept
         {
             return v;
         }
@@ -58,56 +59,44 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <>
     struct pass_variant_used<unused_type> : pass_variant_unused {};
 
-    template <typename Parser, typename Attribute, typename Context
-      , typename Enable = void>
+    template <typename Parser, typename Attribute, typename Context, typename Enable = void>
     struct pass_parser_attribute
     {
-        typedef typename
-            traits::attribute_of<Parser, Context>::type
-        attribute_type;
-        typedef typename
-            traits::variant_find_substitute<Attribute, attribute_type>::type
-        substitute_type;
+        using attribute_type = traits::attribute_of_t<Parser, Context>;
+        using substitute_type = traits::variant_find_substitute_t<Attribute, attribute_type>;
 
-        typedef typename
-            mpl::if_<
-                is_same<Attribute, substitute_type>
-              , Attribute&
-              , substitute_type
-            >::type
-        type;
+        using type = std::conditional_t<
+            std::is_same_v<Attribute, substitute_type>,
+            Attribute&,
+            substitute_type
+        >;
 
         template <typename Attribute_>
-        static Attribute_&
-        call(Attribute_& attribute, mpl::true_)
+            requires std::is_same_v<Attribute_, std::remove_reference_t<type>>
+        [[nodiscard]] static constexpr Attribute_&
+        call(Attribute_& attribute) noexcept
         {
             return attribute;
         }
 
         template <typename Attribute_>
-        static type
-        call(Attribute_&, mpl::false_)
+            requires (!std::is_same_v<Attribute_, std::remove_reference_t<type>>)
+        [[nodiscard]] static type
+        call(Attribute_&)
+            noexcept(std::is_nothrow_default_constructible_v<type>)
         {
-            return type();
-        }
-
-        template <typename Attribute_>
-        static type
-        call(Attribute_& attribute)
-        {
-            return call(attribute, is_same<Attribute_, typename remove_reference<type>::type>());
+            return type{};
         }
     };
 
     // Pass non-variant attributes as-is
-    template <typename Parser, typename Attribute, typename Context
-      , typename Enable = void>
+    template <typename Parser, typename Attribute, typename Context, typename Enable = void>
     struct pass_non_variant_attribute
     {
-        typedef Attribute& type;
+        using type = Attribute&;
 
-        static Attribute&
-        call(Attribute& attribute)
+        [[nodiscard]] constexpr static Attribute&
+        call(Attribute& attribute) noexcept
         {
             return attribute;
         }
@@ -115,80 +104,110 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     // Unwrap single element sequences
     template <typename Parser, typename Attribute, typename Context>
-    struct pass_non_variant_attribute<Parser, Attribute, Context,
-        typename enable_if<traits::is_size_one_sequence<Attribute>>::type>
+        requires traits::is_size_one_sequence_v<Attribute>
+    struct pass_non_variant_attribute<Parser, Attribute, Context>
     {
-        typedef typename remove_reference<
-            typename fusion::result_of::front<Attribute>::type>::type
-        attr_type;
-
-        typedef pass_parser_attribute<Parser, attr_type, Context> pass;
-        typedef typename pass::type type;
+        using attr_type = typename std::remove_reference_t<
+            typename fusion::result_of::front<Attribute>::type
+        >;
+        using pass = pass_parser_attribute<Parser, attr_type, Context>;
+        using type = typename pass::type;
 
         template <typename Attribute_>
-        static type
+        [[nodiscard]] static constexpr type
         call(Attribute_& attr)
+            noexcept(noexcept(pass::call(fusion::front(attr))))
         {
             return pass::call(fusion::front(attr));
         }
     };
 
     template <typename Parser, typename Attribute, typename Context>
-    struct pass_parser_attribute<Parser, Attribute, Context,
-        typename enable_if_c<(!traits::is_variant<Attribute>::value)>::type>
+        requires (!traits::is_variant_v<Attribute>)
+    struct pass_parser_attribute<Parser, Attribute, Context>
         : pass_non_variant_attribute<Parser, Attribute, Context>
     {};
 
     template <typename Parser, typename Context>
     struct pass_parser_attribute<Parser, unused_type, Context>
-        : pass_variant_unused {};
+        : pass_variant_unused
+    {};
 
     template <typename Parser, typename Attribute, typename Context>
-    struct pass_variant_attribute :
-        mpl::if_c<traits::has_attribute<Parser, Context>::value
-          , pass_parser_attribute<Parser, Attribute, Context>
-          , pass_variant_unused>::type
-    {
-    };
+    struct pass_variant_attribute
+        : std::conditional_t<
+            traits::has_attribute_v<Parser, Context>,
+            pass_parser_attribute<Parser, Attribute, Context>,
+            pass_variant_unused
+        >
+    {};
 
     template <typename L, typename R, typename Attribute, typename Context>
-    struct pass_variant_attribute<alternative<L, R>, Attribute, Context> :
-        mpl::if_c<traits::has_attribute<alternative<L, R>, Context>::value
-          , pass_variant_used<Attribute>
-          , pass_variant_unused>::type
-    {
-    };
+    struct pass_variant_attribute<alternative<L, R>, Attribute, Context>
+        : std::conditional_t<
+            traits::has_attribute_v<alternative<L, R>, Context>,
+            pass_variant_used<Attribute>,
+            pass_variant_unused
+        >
+    {};
 
-    template <bool Condition>
-    struct move_if
-    {
-        template<typename T1, typename T2>
-        static void call(T1& /* attr_ */, T2& /* attr */) {}
-    };
+    template <typename Parser, std::forward_iterator It, std::sentinel_for<It> Se, typename Context, typename Attribute>
+    using parse_alternative_pseudo_t = traits::pseudo_attribute<
+        Context, typename pass_variant_attribute<Parser, Attribute, Context>::type, It, Se
+    >;
 
-    template <>
-    struct move_if<true>
-    {
-        template<typename T1, typename T2>
-        static void call(T1& attr_, T2& attribute)
-        {
-            traits::move_to(attr_, attribute);
-        }
-    };
+    template <typename Parser, std::forward_iterator It, std::sentinel_for<It> Se, typename Context, typename Attribute>
+    constexpr bool is_reference_pseudo_type = std::is_reference_v<typename parse_alternative_pseudo_t<Parser, It, Se, Context, Attribute>::type>;
 
-    template <typename Parser, typename Iterator, typename Context
-      , typename RContext, typename Attribute>
-    bool parse_alternative(Parser const& p, Iterator& first, Iterator const& last
-      , Context const& context, RContext& rcontext, Attribute& attribute)
+    template <typename Parser, std::forward_iterator It, std::sentinel_for<It> Se, typename Context, typename RContext, typename Attribute>
+        requires is_reference_pseudo_type<Parser, It, Se, Context, Attribute>
+    [[nodiscard]] constexpr bool
+    parse_alternative(
+        Parser const& p, It& first, Se const& last,
+        Context const& context, RContext& rcontext, Attribute& attribute
+    ) noexcept(
+        noexcept(parse_alternative_pseudo_t<Parser, It, Se, Context, Attribute>::call(
+            first, last, pass_variant_attribute<Parser, Attribute, Context>::call(attribute)
+        )) &&
+        is_nothrow_parsable_v<
+            Parser, It, Se, Context, RContext,
+            typename parse_alternative_pseudo_t<Parser, It, Se, Context, Attribute>::type
+        >
+    )
     {
-        using pass = detail::pass_variant_attribute<Parser, Attribute, Context>;
-        using pseudo = traits::pseudo_attribute<Context, typename pass::type, Iterator>;
+        using pass = pass_variant_attribute<Parser, Attribute, Context>;
+        using pseudo = traits::pseudo_attribute<Context, typename pass::type, It, Se>;
+        typename pseudo::type attr_ = pseudo::call(first, last, pass::call(attribute));
+        return p.parse(first, last, context, rcontext, attr_);
+    }
 
+    template <typename Parser, std::forward_iterator It, std::sentinel_for<It> Se, typename Context, typename RContext, typename Attribute>
+        requires (!is_reference_pseudo_type<Parser, It, Se, Context, Attribute>)
+    [[nodiscard]] constexpr bool
+    parse_alternative(
+        Parser const& p, It& first, Se const& last,
+        Context const& context, RContext& rcontext, Attribute& attribute
+    ) noexcept(
+        noexcept(parse_alternative_pseudo_t<Parser, It, Se, Context, Attribute>::call(
+            first, last, pass_variant_attribute<Parser, Attribute, Context>::call(attribute)
+        )) &&
+        is_nothrow_parsable_v<
+            Parser, It, Se, Context, RContext,
+            typename parse_alternative_pseudo_t<Parser, It, Se, Context, Attribute>::type
+        > &&
+        noexcept(traits::move_to(
+            std::declval<typename parse_alternative_pseudo_t<Parser, It, Se, Context, Attribute>::type&&>(),
+            attribute
+        ))
+    )
+    {
+        using pass = pass_variant_attribute<Parser, Attribute, Context>;
+        using pseudo = traits::pseudo_attribute<Context, typename pass::type, It, Se>;
         typename pseudo::type attr_ = pseudo::call(first, last, pass::call(attribute));
 
         if (p.parse(first, last, context, rcontext, attr_))
         {
-            move_if<!std::is_reference<decltype(attr_)>::value>::call(attr_, attribute);
+            traits::move_to(std::move(attr_), attribute);
             return true;
         }
         return false;
@@ -197,14 +216,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename Subject>
     struct alternative_helper : unary_parser<Subject, alternative_helper<Subject>>
     {
-        static bool const is_pass_through_unary = true;
+        static constexpr bool is_pass_through_unary = true;
 
         using unary_parser<Subject, alternative_helper<Subject>>::unary_parser;
 
-        template <typename Iterator, typename Context
-          , typename RContext, typename Attribute>
-        bool parse(Iterator& first, Iterator const& last
-          , Context const& context, RContext& rcontext, Attribute& attr) const
+        template <typename Iterator, typename Context, typename RContext, typename Attribute>
+        [[nodiscard]] constexpr bool parse(
+            Iterator& first, Iterator const& last, Context const& context, RContext& rcontext, Attribute& attr
+        ) const noexcept(noexcept(detail::parse_alternative(this->subject, first, last, context, rcontext, attr)))
         {
             return detail::parse_alternative(this->subject, first, last, context, rcontext, attr);
         }
@@ -213,39 +232,34 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename Left, typename Right, typename Context, typename RContext>
     struct parse_into_container_impl<alternative<Left, Right>, Context, RContext>
     {
-        typedef alternative<Left, Right> parser_type;
+        using parser_type = alternative<Left, Right>;
 
         template <typename Iterator, typename Attribute>
-        static bool call(
-            parser_type const& parser
-          , Iterator& first, Iterator const& last
-          , Context const& context, RContext& rcontext, Attribute& attribute, mpl::false_)
-        {
-            return detail::parse_into_container(parser.left, first, last, context, rcontext, attribute)
-                || detail::parse_into_container(parser.right, first, last, context, rcontext, attribute);
-        }
-
-        template <typename Iterator, typename Attribute>
-        static bool call(
-            parser_type const& parser
-          , Iterator& first, Iterator const& last
-          , Context const& context, RContext& rcontext, Attribute& attribute, mpl::true_)
+            requires traits::is_variant_v<traits::container_value_t<Attribute>>
+        [[nodiscard]] static constexpr bool
+        call(
+            parser_type const& parser,
+            Iterator& first, Iterator const& last, Context const& context, RContext& rcontext, Attribute& attribute
+        )
         {
             return detail::parse_into_container(alternative_helper<Left>{parser.left}, first, last, context, rcontext, attribute)
                 || detail::parse_into_container(alternative_helper<Right>{parser.right}, first, last, context, rcontext, attribute);
         }
 
         template <typename Iterator, typename Attribute>
-        static bool call(
-            parser_type const& parser
-          , Iterator& first, Iterator const& last
-          , Context const& context, RContext& rcontext, Attribute& attribute)
+            requires (!traits::is_variant_v<traits::container_value_t<Attribute>>)
+        [[nodiscard]] static constexpr bool
+        call(
+            parser_type const& parser,
+            Iterator& first, Iterator const& last,
+            Context const& context, RContext& rcontext, Attribute& attribute
+        )
         {
-            return call(parser, first, last, context, rcontext, attribute,
-                typename traits::is_variant<typename traits::container_value<Attribute>::type>::type{});
+            return detail::parse_into_container(parser.left, first, last, context, rcontext, attribute)
+                || detail::parse_into_container(parser.right, first, last, context, rcontext, attribute);
         }
     };
 
-}}}}
+} // boost::spirit::x3::detail
 
 #endif

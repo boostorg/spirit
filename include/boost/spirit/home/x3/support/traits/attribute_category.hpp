@@ -1,6 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
-    http://spirit.sourceforge.net/
+    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -8,22 +8,22 @@
 #if !defined(BOOST_SPIRIT_X3_ATTRIBUTE_CATEGORY_JAN_4_2012_1150AM)
 #define BOOST_SPIRIT_X3_ATTRIBUTE_CATEGORY_JAN_4_2012_1150AM
 
-#include <boost/mpl/identity.hpp>
-#include <boost/mpl/logical.hpp>
-#include <boost/mpl/eval_if.hpp>
-#include <boost/fusion/include/is_sequence.hpp>
-#include <boost/fusion/support/category_of.hpp>
 #include <boost/spirit/home/x3/support/traits/is_variant.hpp>
 #include <boost/spirit/home/x3/support/traits/is_range.hpp>
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/optional_traits.hpp>
 
-namespace boost { namespace spirit { namespace x3
+#include <boost/fusion/include/is_sequence.hpp>
+#include <boost/fusion/support/category_of.hpp>
+
+#include <type_traits>
+
+namespace boost::spirit::x3
 {
    struct unused_type;
-}}}
+} // boost::spirit::x3
 
-namespace boost { namespace spirit { namespace x3 { namespace traits
+namespace boost::spirit::x3::traits
 {
     struct unused_attribute {};
     struct plain_attribute {};
@@ -36,60 +36,89 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 
     template <typename T, typename Enable = void>
     struct attribute_category
-        : mpl::identity<plain_attribute> {};
+    {
+        using type = plain_attribute;
+    };
+
+    template <typename T>
+    struct attribute_category<T const> : attribute_category<T> {};
+
+    template <typename T>
+    struct attribute_category<T&> : attribute_category<T> {};
+
+    template <typename T>
+    struct attribute_category<T const&> : attribute_category<T> {};
+
+    template <typename T>
+    struct attribute_category<T&&> : attribute_category<T> {};
+
+    template <typename T>
+    struct attribute_category<T const&&> : attribute_category<T> {};
+
+    template <typename T>
+    using attribute_category_t = typename attribute_category<T>::type;
 
     template <>
     struct attribute_category<unused_type>
-        : mpl::identity<unused_attribute> {};
+    {
+        using type = unused_attribute;
+    };
 
-    template <>
-    struct attribute_category<unused_type const>
-        : mpl::identity<unused_attribute> {};
-
-    template <typename T>
-    struct attribute_category< T
-    , typename enable_if<
-          typename mpl::eval_if<
-          fusion::traits::is_sequence<T>
-          , fusion::traits::is_associative<T>
-          , mpl::false_
-          >::type >::type >
-        : mpl::identity<associative_attribute> {};
+    template <typename T, typename AttributeCategoryTag>
+    concept CategorizedAttr = std::is_same_v<typename attribute_category<T>::type, AttributeCategoryTag>;
 
     template <typename T>
-    struct attribute_category< T
-    , typename enable_if<
-          mpl::and_<
-          fusion::traits::is_sequence<T>
-          , mpl::not_<fusion::traits::is_associative<T> >
-          > >::type >
-        : mpl::identity<tuple_attribute> {};
+    concept NonUnusedAttr = !CategorizedAttr<T, unused_attribute>;
 
     template <typename T>
-    struct attribute_category<T,
-        typename enable_if<traits::is_variant<T>>::type>
-        : mpl::identity<variant_attribute> {};
+        requires
+            fusion::traits::is_sequence<T>::value &&
+            fusion::traits::is_associative<T>::value
+    struct attribute_category<T>
+    {
+        using type = associative_attribute;
+    };
 
     template <typename T>
-    struct attribute_category<T,
-        typename enable_if<traits::is_optional<T>>::type>
-        : mpl::identity<optional_attribute> {};
+        requires
+            fusion::traits::is_sequence<T>::value &&
+            (!fusion::traits::is_associative<T>::value)
+    struct attribute_category<T>
+    {
+        using type = tuple_attribute;
+    };
 
     template <typename T>
-    struct attribute_category<T,
-        typename enable_if<traits::is_range<T>>::type>
-        : mpl::identity<range_attribute> {};
+        requires is_variant_v<T>
+    struct attribute_category<T>
+    {
+        using type = variant_attribute;
+    };
 
     template <typename T>
-    struct attribute_category< T
-    , typename enable_if<
-          mpl::and_<
-          traits::is_container<T>
-          , mpl::not_<fusion::traits::is_sequence<T> >
-          , mpl::not_<traits::is_range<T> >
-          > >::type >
-        : mpl::identity<container_attribute> {};
+        requires is_optional_v<T>
+    struct attribute_category<T>
+    {
+        using type = optional_attribute;
+    };
 
-}}}}
+    template <typename T>
+        requires is_range_v<T>
+    struct attribute_category<T>
+    {
+        using type = range_attribute;
+    };
+
+    template <typename T>
+        requires
+            (!traits::is_range_v<T>) &&
+            traits::is_container_v<T> &&
+            (!fusion::traits::is_sequence<T>::value)
+    struct attribute_category<T>
+    {
+        using type = container_attribute;
+    };
+
+} // boost::spirit::x3::traits
 
 #endif
