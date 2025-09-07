@@ -1,18 +1,18 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
+    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_X3_CAST_CHAR_NOVEMBER_10_2006_0907AM)
+#ifndef BOOST_SPIRIT_X3_CAST_CHAR_NOVEMBER_10_2006_0907AM
 #define BOOST_SPIRIT_X3_CAST_CHAR_NOVEMBER_10_2006_0907AM
 
-#include <boost/type_traits/is_signed.hpp>
-#include <boost/type_traits/make_unsigned.hpp>
-#include <boost/type_traits/make_signed.hpp>
+#include <type_traits>
+#include <concepts>
 
-namespace boost { namespace spirit { namespace x3 { namespace detail
+namespace boost::spirit::x3::detail
 {
     // Here's the thing... typical encodings (except ASCII) deal with unsigned
     // integers > 127 (ASCII uses only 127). Yet, most char and wchar_t are signed.
@@ -24,25 +24,19 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     // optimizer will optimize the if-else branches}
 
     template <typename TargetChar, typename SourceChar>
-    TargetChar cast_char(SourceChar ch)
+    [[nodiscard]] constexpr TargetChar cast_char(SourceChar ch) noexcept
     {
-#if defined(_MSC_VER)
-# pragma warning(push)
-# pragma warning(disable: 4127) // conditional expression is constant
-#endif
-        if (is_signed<TargetChar>::value != is_signed<SourceChar>::value)
+        if constexpr (std::is_signed_v<TargetChar> != std::is_signed_v<SourceChar>)
         {
-            if (is_signed<SourceChar>::value)
+            if constexpr (std::is_signed_v<SourceChar>)
             {
-                 // source is signed, target is unsigned
-                typedef typename make_unsigned<SourceChar>::type USourceChar;
-                return TargetChar(USourceChar(ch));
+                // source is signed, target is unsigned
+                return TargetChar(static_cast<std::make_unsigned_t<SourceChar>>(ch));
             }
             else
             {
-                 // source is unsigned, target is signed
-                typedef typename make_signed<SourceChar>::type SSourceChar;
-                return TargetChar(SSourceChar(ch));
+                // source is unsigned, target is signed
+                return TargetChar(static_cast<std::make_signed_t<SourceChar>>(ch));
             }
         }
         else
@@ -50,12 +44,17 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             // source and target has same signedness
             return TargetChar(ch); // just cast
         }
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif
     }
-}}}}
+
+    template <typename SourceChar, typename TargetChar>
+    concept cast_char_viable = requires(SourceChar ch) {
+        { cast_char<TargetChar>(ch) } -> std::convertible_to<TargetChar>;
+    };
+
+    template <typename SourceChar, typename TargetChar>
+    concept cast_char_noexcept = requires(SourceChar ch) {
+        { cast_char<TargetChar>(ch) } noexcept -> std::convertible_to<TargetChar>;
+    };
+} // boost::spirit::x3::detail
 
 #endif
-
-

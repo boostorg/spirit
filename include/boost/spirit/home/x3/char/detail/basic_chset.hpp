@@ -1,125 +1,113 @@
 /*=============================================================================
     Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2001-2009 Daniel Nuffer
-    http://spirit.sourceforge.net/
+    Copyright (c) 2025 Nana Sakisaka
 
   Distributed under the Boost Software License, Version 1.0. (See accompanying
   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#ifndef BOOST_SPIRIT_BASIC_CHSET_APRIL_17_2008
-#define BOOST_SPIRIT_BASIC_CHSET_APRIL_17_2008
+#ifndef BOOST_SPIRIT_X3_CHAR_DETAIL_BASIC_CHSET_HPP
+#define BOOST_SPIRIT_X3_CHAR_DETAIL_BASIC_CHSET_HPP
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
+#include <boost/spirit/home/x3/char/detail/char_range_run.hpp>
 
-///////////////////////////////////////////////////////////////////////////////
 #include <bitset>
-#include <climits> 
-#include <boost/spirit/home/support/char_set/range_run.hpp>
+#include <climits>
 
-namespace boost { namespace spirit { namespace support { namespace detail
+namespace boost::spirit::x3::detail
 {
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    //  basic_chset: basic character set implementation using range_run
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Char>
+    // basic character set implementation using range_run
+    template <typename CharT>
     struct basic_chset
     {
-        basic_chset() {}
-        basic_chset(basic_chset const& arg_)
-          : rr(arg_.rr) {}
-
-        bool
-        test(Char v) const
+        [[nodiscard]] constexpr bool
+        test(CharT v) const noexcept
         {
             return rr.test(v);
         }
 
-        void
-        set(Char from, Char to)
+        constexpr void
+        set(CharT from, CharT to) noexcept
         {
-            rr.set(range<Char>(from, to));
+            rr.set(char_range<CharT>(from, to));
         }
 
-        void
-        set(Char c)
+        constexpr void
+        set(CharT c) noexcept
         {
-            rr.set(range<Char>(c, c));
+            rr.set(char_range<CharT>(c, c));
         }
 
-        void
-        clear(Char from, Char to)
+        constexpr void
+        clear(CharT from, CharT to) noexcept
         {
-            rr.clear(range<Char>(from, to));
+            rr.clear(char_range<CharT>(from, to));
         }
 
-        void
-        clear(Char c)
+        constexpr void
+        clear(CharT c) noexcept
         {
-            rr.clear(range<Char>(c, c));
+            rr.clear(char_range<CharT>(c, c));
         }
 
-        void
-        clear()
+        constexpr void
+        clear() noexcept
         {
             rr.clear();
         }
 
-        void
-        inverse()
+        constexpr void
+        inverse() noexcept
         {
             basic_chset inv;
             inv.set(
-                (std::numeric_limits<Char>::min)(),
-                (std::numeric_limits<Char>::max)()
+                (std::numeric_limits<CharT>::min)(),
+                (std::numeric_limits<CharT>::max)()
             );
             inv -= *this;
             swap(inv);
         }
 
-        void
-        swap(basic_chset& x)
+        constexpr void
+        swap(basic_chset& x) noexcept
         {
             rr.swap(x.rr);
         }
 
 
-        basic_chset&
-        operator|=(basic_chset const& x)
+        constexpr basic_chset&
+        operator|=(basic_chset const& x) noexcept
         {
-            typedef typename range_run<Char>::const_iterator const_iterator;
+            typedef typename range_run<CharT>::const_iterator const_iterator;
             for (const_iterator iter = x.rr.begin(); iter != x.rr.end(); ++iter)
                 rr.set(*iter);
             return *this;
         }
 
-        basic_chset&
-        operator&=(basic_chset const& x)
+        constexpr basic_chset&
+        operator&=(basic_chset const& x) noexcept
         {
             basic_chset inv;
             inv.set(
-                (std::numeric_limits<Char>::min)(),
-                (std::numeric_limits<Char>::max)()
+                (std::numeric_limits<CharT>::min)(),
+                (std::numeric_limits<CharT>::max)()
             );
             inv -= x;
             *this -= inv;
             return *this;
         }
 
-        basic_chset&
-        operator-=(basic_chset const& x)
+        constexpr basic_chset&
+        operator-=(basic_chset const& x) noexcept
         {
-            typedef typename range_run<Char>::const_iterator const_iterator;
+            typedef typename range_run<CharT>::const_iterator const_iterator;
             for (const_iterator iter = x.rr.begin(); iter != x.rr.end(); ++iter)
                 rr.clear(*iter);
             return *this;
         }
 
-        basic_chset&
-        operator^=(basic_chset const& x)
+        constexpr basic_chset&
+        operator^=(basic_chset const& x) noexcept
         {
             basic_chset bma = x;
             bma -= *this;
@@ -128,7 +116,8 @@ namespace boost { namespace spirit { namespace support { namespace detail
             return *this;
         }
 
-        private: range_run<Char> rr;
+    private:
+        char_range_run<CharT> rr;
     };
 
 #if (CHAR_BIT == 8)
@@ -138,92 +127,89 @@ namespace boost { namespace spirit { namespace support { namespace detail
     //  basic_chset: specializations for 8 bit chars using std::bitset
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Char>
+    template <typename CharT>
     struct basic_chset_8bit
     {
-        basic_chset_8bit() {}
-        basic_chset_8bit(basic_chset_8bit const& arg_)
-          : bset(arg_.bset) {}
-
-        bool
-        test(Char v) const
+        [[nodiscard]] constexpr bool
+        test(CharT v) const noexcept
         {
             return bset.test((unsigned char)v);
         }
 
-        void
-        set(Char from, Char to)
+        constexpr void
+        set(CharT from, CharT to) noexcept
         {
             for (int i = from; i <= to; ++i)
                 bset.set((unsigned char)i);
         }
 
-        void
-        set(Char c)
+        constexpr void
+        set(CharT c) noexcept
         {
             bset.set((unsigned char)c);
         }
 
-        void
-        clear(Char from, Char to)
+        constexpr void
+        clear(CharT from, CharT to) noexcept
         {
             for (int i = from; i <= to; ++i)
                 bset.reset((unsigned char)i);
         }
 
-        void
-        clear(Char c)
+        constexpr void
+        clear(CharT c) noexcept
         {
             bset.reset((unsigned char)c);
         }
 
-        void
-        clear()
+        constexpr void
+        clear() noexcept
         {
             bset.reset();
         }
 
-        void
-        inverse()
+        constexpr void
+        inverse() noexcept
         {
             bset.flip();
         }
 
-        void
-        swap(basic_chset_8bit& x)
+        constexpr void
+        swap(basic_chset_8bit& x) noexcept
         {
             std::swap(bset, x.bset);
         }
 
-        basic_chset_8bit&
-        operator|=(basic_chset_8bit const& x)
+        constexpr basic_chset_8bit&
+        operator|=(basic_chset_8bit const& x) noexcept
         {
             bset |= x.bset;
             return *this;
         }
 
-        basic_chset_8bit&
-        operator&=(basic_chset_8bit const& x)
+        constexpr basic_chset_8bit&
+        operator&=(basic_chset_8bit const& x) noexcept
         {
             bset &= x.bset;
             return *this;
         }
 
-        basic_chset_8bit&
-        operator-=(basic_chset_8bit const& x)
+        constexpr basic_chset_8bit&
+        operator-=(basic_chset_8bit const& x) noexcept
         {
             bset &= ~x.bset;
             return *this;
         }
 
-        basic_chset_8bit&
-        operator^=(basic_chset_8bit const& x)
+        constexpr basic_chset_8bit&
+        operator^=(basic_chset_8bit const& x) noexcept
         {
             bset ^= x.bset;
             return *this;
         }
 
-        private: std::bitset<256> bset;
+    private:
+        std::bitset<256> bset;
     };
 
     /////////////////////////////////
@@ -243,7 +229,7 @@ namespace boost { namespace spirit { namespace support { namespace detail
 
 #endif // #if (CHAR_BIT == 8)
 
-}}}}
+} // boost::spirit::x3::detail
 
 #endif
 
