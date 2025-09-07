@@ -232,7 +232,8 @@ namespace boost::spirit::x3
         "Use `operator[]` instead. The symbol `/` normally means \"ordered choice\" "
         "in PEG, and is irrelevant to semantic actions. Furthermore, using C++'s "
         "`operator/` for this purpose may introduce surprising behavior when it's "
-        "mixed with ordinary PEG operators, for instance, `operator*`, due to precedence."
+        "mixed with ordinary PEG operators, for instance, the unary `operator+`, "
+        "due to precedence."
     )]]
     constexpr action<as_parser_plain_t<Subject>, std::remove_cvref_t<Action>>
     operator/(Subject&& p, Action&& f)
