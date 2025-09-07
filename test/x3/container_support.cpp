@@ -1,6 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2015 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
+    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -58,7 +59,8 @@ x3::rule<class string_rule, std::string> const string_rule("string");
 auto const pair_rule_def = string_rule > x3::lit('=') > string_rule;
 auto const string_rule_def = x3::lexeme[*x3::alnum];
 
-BOOST_SPIRIT_DEFINE(pair_rule, string_rule)
+BOOST_SPIRIT_X3_DEFINE(pair_rule)
+BOOST_SPIRIT_X3_DEFINE(string_rule)
 
 template <typename Container>
 void test_map_support()

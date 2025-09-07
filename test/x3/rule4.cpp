@@ -13,19 +13,25 @@
 #include <boost/fusion/include/at.hpp>
 #include <boost/variant.hpp>
 
+#include <iterator>
 #include <string>
 #include <cstring>
 #include <iostream>
 
 namespace x3 = boost::spirit::x3;
 
+namespace {
 int got_it = 0;
+}
 
 struct my_rule_class
 {
-    template <typename Iterator, typename Exception, typename Context>
+    //template <std::forward_iterator It, std::sentinel_for<It> Se, typename Exception, typename Context>
+    //x3::error_handler_result
+    //on_error(It const&, Se const& last, Exception const& x, Context const&)
+    template <std::forward_iterator It, std::sentinel_for<It> Se, typename Exception, typename Context>
     x3::error_handler_result
-    on_error(Iterator&, Iterator const& last, Exception const& x, Context const&)
+    on_error(It const&, Se const& last, Exception const& x, Context const&)
     {
         std::cout
             << "Error! Expecting: "
@@ -38,9 +44,9 @@ struct my_rule_class
         return x3::error_handler_result::fail;
     }
 
-    template <typename Iterator, typename Attribute, typename Context>
-    inline void
-    on_success(Iterator const&, Iterator const&, Attribute&, Context const&)
+    template <std::forward_iterator It, std::sentinel_for<It> Se, typename Attribute, typename Context>
+    void
+    on_success(It const&, Se const&, Attribute&, Context const&)
     {
         ++got_it;
     }
@@ -50,51 +56,28 @@ struct on_success_gets_preskipped_iterator
 {
     static bool ok;
 
-    template <typename Iterator, typename Attribute, typename Context>
-    void on_success(Iterator before, Iterator& after, Attribute&, Context const&)
+    template <std::forward_iterator It, std::sentinel_for<It> Se, typename Attribute, typename Context>
+    void on_success(It before, Se const& after, Attribute&, Context const&)
     {
-        ok = ('b' == *before) && (++before == after);
+        bool const before_was_b = 'b' == *before;
+        ok = before_was_b && (++before == after);
     }
 };
 bool on_success_gets_preskipped_iterator::ok = false;
 
-struct on_success_advance_iterator
-{
-    template <typename Iterator, typename Attribute, typename Context>
-    void on_success(Iterator const&, Iterator& after, Attribute&, Context const&)
-    {
-        ++after;
-    }
-};
-struct on_success_advance_iterator_mutref
-{
-    template <typename Iterator, typename Attribute, typename Context>
-    void on_success(Iterator&, Iterator& after, Attribute&, Context const&)
-    {
-        ++after;
-    }
-};
-struct on_success_advance_iterator_byval
-{
-    template <typename Iterator, typename Attribute, typename Context>
-    void on_success(Iterator, Iterator& after, Attribute&, Context const&)
-    {
-        ++after;
-    }
-};
 
-int
-main()
+int main()
 {
     using spirit_test::test_attr;
     using spirit_test::test;
 
-    using namespace boost::spirit::x3::ascii;
+    using namespace boost::spirit::x3::standard;
     using boost::spirit::x3::rule;
     using boost::spirit::x3::int_;
     using boost::spirit::x3::lit;
 
-    { // show that ra = rb and ra %= rb works as expected
+    // show that ra = rb and ra %= rb works as expected
+    {
         rule<class a, int> ra;
         rule<class b, int> rb;
         int attr;
@@ -112,7 +95,8 @@ main()
         BOOST_TEST(attr == 123);
     }
 
-    { // show that ra %= rb works as expected with semantic actions
+    // show that ra %= rb works as expected with semantic actions
+    {
         rule<class a, int> ra;
         rule<class b, int> rb;
         int attr;
@@ -128,8 +112,8 @@ main()
     }
 
 
-    { // std::string as container attribute with auto rules
-
+    // std::string as container attribute with auto rules
+    {
         std::string attr;
 
         // test deduced auto rule behavior
@@ -142,8 +126,8 @@ main()
         BOOST_TEST(attr == "x");
     }
 
-    { // error handling
-
+    // error handling
+    {
         auto r = rule<my_rule_class, char const*>()
             = '(' > int_ > ',' > int_ > ')';
 
@@ -156,34 +140,23 @@ main()
         BOOST_TEST(got_it == 1);
     }
 
-    { // on_success gets pre-skipped iterator
+    // on_success gets pre-skipped iterator
+    {
         auto r = rule<on_success_gets_preskipped_iterator, char const*>()
             = lit("b");
         BOOST_TEST(test("a b", 'a' >> r, lit(' ')));
         BOOST_TEST(on_success_gets_preskipped_iterator::ok);
     }
 
-    { // on_success handler mutable 'after' iterator
-        auto r1 = rule<on_success_advance_iterator, char const*>()
-            = lit("ab");
-        BOOST_TEST(test("abc", r1));
-        auto r2 = rule<on_success_advance_iterator_mutref, char const*>()
-            = lit("ab");
-        BOOST_TEST(test("abc", r2));
-        auto r3 = rule<on_success_advance_iterator_byval, char const*>()
-            = lit("ab");
-        BOOST_TEST(test("abc", r3));
-    }
-
     {
-        typedef boost::variant<double, int> v_type;
+        using v_type = boost::variant<double, int>;
         auto r1 = rule<class r1_id, v_type>()
             = int_;
         v_type v;
         BOOST_TEST(test_attr("1", r1, v) && v.which() == 1 &&
             boost::get<int>(v) == 1);
 
-        typedef boost::optional<int> ov_type;
+        using ov_type = boost::optional<int>;
         auto r2 = rule<class r2_id, ov_type>()
             = int_;
         ov_type ov;
@@ -201,21 +174,19 @@ main()
         BOOST_TEST(test_attr("1", r, v) && at_c<0>(v) == 1);
     }
 
-    { // attribute compatibility test
-        using boost::spirit::x3::rule;
-        using boost::spirit::x3::int_;
+    // attribute compatibility test
+    {
+        constexpr auto expr = int_;
 
-        auto const expr = int_;
+        long long i = 0;
+        BOOST_TEST(test_attr("1", expr, i) && i == 1);
 
-        long long i;
-        BOOST_TEST(test_attr("1", expr, i) && i == 1); // ok
+        constexpr rule<class int_rule, int> int_rule("int_rule");
+        constexpr auto int_rule_def = int_;
+        constexpr auto start = int_rule = int_rule_def;
 
-        const rule< class int_rule, int > int_rule( "int_rule" );
-        auto const int_rule_def = int_;
-        auto const start  = int_rule = int_rule_def;
-
-        long long j;
-        BOOST_TEST(test_attr("1", start, j) && j == 1); // error
+        long long j = 0;
+        BOOST_TEST(test_attr("1", start, j) && j == 1);
     }
 
     return boost::report_errors();

@@ -1,11 +1,15 @@
 /*=============================================================================
     Copyright (c) 2015 Joel de Guzman
+    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/spirit/home/x3.hpp>
 #include "test.hpp"
+
+#include <boost/spirit/home/x3.hpp>
+
+#include <iterator>
 
 namespace x3 = boost::spirit::x3;
 
@@ -13,24 +17,23 @@ struct my_tag;
 
 struct my_rule_class
 {
-    template <typename Iterator, typename Exception, typename Context>
-    x3::error_handler_result
-    on_error(Iterator&, Iterator const&, Exception const&, Context const& context)
+    template <std::forward_iterator It, std::sentinel_for<It> Se, typename Exception, typename Context>
+    [[nodiscard]] x3::error_handler_result
+    on_error(It const&, Se const&, Exception const&, Context const& context)
     {
-        x3::get<my_tag>(context)++;
+        ++x3::get<my_tag>(context);
         return x3::error_handler_result::fail;
     }
 
-    template <typename Iterator, typename Attribute, typename Context>
-    inline void
-    on_success(Iterator const&, Iterator const&, Attribute&, Context const& context)
+    template <std::forward_iterator It, std::sentinel_for<It> Se, typename Attribute, typename Context>
+    void
+    on_success(It const&, Se const&, Attribute&, Context const& context)
     {
-        x3::get<my_tag>(context)++;
+        ++x3::get<my_tag>(context);
     }
 };
 
-int
-main()
+int main()
 {
     using spirit_test::test_attr;
     using spirit_test::test;

@@ -22,7 +22,8 @@ rule<class indirect_rule, int> indirect_rule = "indirect_rule";
 auto const direct_rule_def = boost::spirit::x3::int_;
 auto const indirect_rule_def = direct_rule;
 
-BOOST_SPIRIT_DEFINE(direct_rule, indirect_rule)
+BOOST_SPIRIT_X3_DEFINE(direct_rule)
+BOOST_SPIRIT_X3_DEFINE(indirect_rule)
 
 int main()
 {
@@ -83,7 +84,7 @@ int main()
         boost::variant<int, range> attr;
 
         std::string str("test");
-        parse(str.begin(), str.end(),  (int_ | raw[*char_]), attr);
+        (void)parse(str.begin(), str.end(),  (int_ | raw[*char_]), attr);
 
         auto rng = boost::get<range>(attr);
         BOOST_TEST(std::string(rng.begin(), rng.end()) == "test");
@@ -92,7 +93,7 @@ int main()
     {
         std::vector<boost::iterator_range<std::string::iterator>> attr;
         std::string str("123abcd");
-        parse(str.begin(), str.end()
+        (void)parse(str.begin(), str.end()
           , (raw[int_] >> raw[*char_])
           , attr
         );
@@ -104,7 +105,7 @@ int main()
     {
         std::pair<int, boost::iterator_range<std::string::iterator>> attr;
         std::string str("123abcd");
-        parse(str.begin(), str.end()
+        (void)parse(str.begin(), str.end()
           , (int_ >> raw[*char_])
           , attr
         );

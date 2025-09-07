@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2019 Nikita Kniazev
+    Copyright (c) 2025 Nana Sakisaka
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -8,7 +9,7 @@
 
 #include <boost/spirit/home/x3.hpp>
 
-// Check that `BOOST_SPIRIT_INSTANTIATE` instantiates `parse_rule` with proper
+// Check that `BOOST_SPIRIT_X3_INSTANTIATE` instantiates `parse_rule` with proper
 // types when a rule has no attribute.
 
 namespace unused_attr {
@@ -18,17 +19,17 @@ namespace x3 = boost::spirit::x3;
 // skipper must has no attribute, checks `parse` and `skip_over`
 using skipper_type = x3::rule<class skipper_r>;
 const skipper_type skipper;
-BOOST_SPIRIT_DECLARE(skipper_type)
+BOOST_SPIRIT_X3_DECLARE(skipper_type)
 
 // the `unused_type const` must have the same effect as no attribute
 using skipper2_type = x3::rule<class skipper2_r, x3::unused_type const>;
 const skipper2_type skipper2;
-BOOST_SPIRIT_DECLARE(skipper2_type)
+BOOST_SPIRIT_X3_DECLARE(skipper2_type)
 
 // grammar must has no attribute, checks `parse` and `phrase_parse`
 using grammar_type = x3::rule<class grammar_r>;
 const grammar_type grammar;
-BOOST_SPIRIT_DECLARE(grammar_type)
+BOOST_SPIRIT_X3_DECLARE(grammar_type)
 
 }
 
@@ -40,10 +41,10 @@ namespace x3 = boost::spirit::x3;
 
 using skipper_type = x3::rule<class skipper_r>;
 const skipper_type skipper;
-BOOST_SPIRIT_DECLARE(skipper_type)
+BOOST_SPIRIT_X3_DECLARE(skipper_type)
 
 using grammar_type = x3::rule<class grammar_r, int, true>;
 const grammar_type grammar;
-BOOST_SPIRIT_DECLARE(grammar_type)
+BOOST_SPIRIT_X3_DECLARE(grammar_type)
 
 }
