@@ -31,11 +31,9 @@ namespace boost::spirit::x3
         [[nodiscard]] static constexpr bool                                     \
         is(name##_tag, Char ch) noexcept                                        \
         {                                                                       \
-            return Encoding::is##name                                           \
-                BOOST_PREVENT_MACRO_SUBSTITUTION                                \
+            return (Encoding::is##name)                                         \
                     (detail::cast_char<char_type>(ch));                         \
-        }                                                                       \
-        /***/
+        }
 
         BOOST_SPIRIT_X3_CLASSIFY(char)
         BOOST_SPIRIT_X3_CLASSIFY(alnum)
@@ -76,8 +74,8 @@ namespace boost::spirit::x3
     using name##_type = char_class<char_encoding::encoding, name##_tag>;           \
     inline constexpr name##_type name{};
 
-#define BOOST_SPIRIT_X3_CHAR_CLASSES(ns_attr, encoding)                            \
-    namespace ns_attr encoding                                                             \
+#define BOOST_SPIRIT_X3_CHAR_CLASSES(encoding)                                     \
+    namespace encoding                                                             \
     {                                                                              \
         BOOST_SPIRIT_X3_CHAR_CLASS(encoding, alnum)                                \
         BOOST_SPIRIT_X3_CHAR_CLASS(encoding, alpha)                                \
@@ -93,14 +91,14 @@ namespace boost::spirit::x3
         BOOST_SPIRIT_X3_CHAR_CLASS(encoding, upper)                                \
     }
 
-    BOOST_SPIRIT_X3_CHAR_CLASSES(, standard)
+    BOOST_SPIRIT_X3_CHAR_CLASSES(standard)
 
 #ifndef BOOST_SPIRIT_X3_NO_STANDARD_WIDE
-    BOOST_SPIRIT_X3_CHAR_CLASSES(, standard_wide)
+    BOOST_SPIRIT_X3_CHAR_CLASSES(standard_wide)
 #endif
 
-    BOOST_SPIRIT_X3_CHAR_CLASSES([[deprecated(BOOST_SPIRIT_X3_WRONG_ENCODING_ASSUMPTION_WARNING)]], ascii)
-    BOOST_SPIRIT_X3_CHAR_CLASSES([[deprecated(BOOST_SPIRIT_X3_WRONG_ENCODING_ASSUMPTION_WARNING)]], iso8859_1)
+    BOOST_SPIRIT_X3_CHAR_CLASSES(ascii)
+    BOOST_SPIRIT_X3_CHAR_CLASSES(iso8859_1)
 
 #undef BOOST_SPIRIT_X3_CHAR_CLASS
 #undef BOOST_SPIRIT_X3_CHAR_CLASSES

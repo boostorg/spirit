@@ -116,11 +116,13 @@ namespace boost::spirit::x3
     using unicode::helpers::lit;
 #endif
 
-    namespace [[deprecated(BOOST_SPIRIT_X3_WRONG_ENCODING_ASSUMPTION_WARNING)]] ascii
+    namespace ascii
     {
+        [[deprecated(BOOST_SPIRIT_X3_WRONG_ENCODING_ASSUMPTION_WARNING)]]
         inline constexpr any_char<char_encoding::ascii> char_{};
 
-        [[nodiscard]] constexpr literal_char<char_encoding::ascii, unused_type>
+        [[nodiscard, deprecated(BOOST_SPIRIT_X3_WRONG_ENCODING_ASSUMPTION_WARNING)]]
+        constexpr literal_char<char_encoding::ascii, unused_type>
         lit(char ch) noexcept
         {
             return { ch };
@@ -130,11 +132,13 @@ namespace boost::spirit::x3
         constexpr void lit(traits::CharIncompatibleWith<char> auto) = delete; // Mixing incompatible character types is not allowed
     }
 
-    namespace [[deprecated(BOOST_SPIRIT_X3_WRONG_ENCODING_ASSUMPTION_WARNING)]] iso8859_1
+    namespace iso8859_1
     {
+        [[deprecated(BOOST_SPIRIT_X3_WRONG_ENCODING_ASSUMPTION_WARNING)]]
         inline constexpr any_char<char_encoding::iso8859_1> char_{};
 
-        [[nodiscard]] constexpr literal_char<char_encoding::iso8859_1, unused_type>
+        [[nodiscard, deprecated(BOOST_SPIRIT_X3_WRONG_ENCODING_ASSUMPTION_WARNING)]]
+        constexpr literal_char<char_encoding::iso8859_1, unused_type>
         lit(char ch) noexcept
         {
             return { ch };
