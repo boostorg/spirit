@@ -158,11 +158,18 @@ namespace detail
         constexpr symbols_parser_impl& operator=(symbols_parser_impl const& rhs)
         {
             name_ = rhs.name_;
-            lookup = rhs.lookup;
+            if constexpr (IsShared)
+            {
+                lookup = rhs.lookup;
+            }
+            else
+            {
+                *lookup = *rhs.lookup;
+            }
             return *this;
         }
 
-        constexpr symbols_parser_impl& operator=(symbols_parser_impl&&) noexcept = default;
+        constexpr symbols_parser_impl& operator=(symbols_parser_impl&&) = default;
 
         constexpr void clear() noexcept
         {
@@ -171,6 +178,18 @@ namespace detail
 
         struct adder;
         struct remover;
+
+        constexpr symbols_parser_impl& operator=(std::initializer_list<char_type const*> const& syms)
+        {
+            lookup->clear();
+
+            for (auto const& sym : syms)
+            {
+                this->add(sym);
+            }
+
+            return *this;
+        }
 
         constexpr adder const&
         operator=(std::basic_string_view<char_type> const s)
