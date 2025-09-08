@@ -1,6 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
+    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -11,11 +12,11 @@
 #include <boost/spirit/home/x3/string/detail/string_parse.hpp>
 #include <boost/spirit/home/x3/support/numeric_utils/extract_int.hpp>
 
-namespace boost { namespace spirit { namespace x3
+#include <string_view>
+
+namespace boost::spirit::x3
 {
-    ///////////////////////////////////////////////////////////////////////////
-    //  Default (unsigned) real number policies
-    ///////////////////////////////////////////////////////////////////////////
+    // Default (unsigned) real number policies
     template <typename T>
     struct ureal_policies
     {
@@ -72,24 +73,24 @@ namespace boost { namespace spirit { namespace x3
             return extract_int<int, 10, 1, -1>::call(first, last, attr_);
         }
 
-        ///////////////////////////////////////////////////////////////////////
-        //  The parse_nan() and parse_inf() functions get called whenever
-        //  a number to parse does not start with a digit (after having
-        //  successfully parsed an optional sign).
+        // The parse_nan() and parse_inf() functions get called whenever
+        // a number to parse does not start with a digit (after having
+        // successfully parsed an optional sign).
         //
-        //  The functions should return true if a Nan or Inf has been found. In
-        //  this case the attr should be set to the matched value (NaN or
-        //  Inf). The optional sign will be automatically applied afterwards.
+        // The functions should return true if a Nan or Inf has been found. In
+        // this case the attr should be set to the matched value (NaN or
+        // Inf). The optional sign will be automatically applied afterwards.
         //
-        //  The default implementation below recognizes representations of NaN
-        //  and Inf as mandated by the C99 Standard and as proposed for
-        //  inclusion into the C++0x Standard: nan, nan(...), inf and infinity
-        //  (the matching is performed case-insensitively).
-        ///////////////////////////////////////////////////////////////////////
+        // The default implementation below recognizes representations of NaN
+        // and Inf as mandated by the C99 Standard and as proposed for
+        // inclusion into the C++0x Standard: nan, nan(...), inf and infinity
+        // (the matching is performed case-insensitively).
         template <typename Iterator, typename Attribute>
         static bool
         parse_nan(Iterator& first, Iterator const& last, Attribute& attr_)
         {
+            using namespace std::string_view_literals;
+
             if (first == last)
                 return false;   // end of input reached
 
@@ -97,7 +98,7 @@ namespace boost { namespace spirit { namespace x3
                 return false;   // not "nan"
 
             // nan[(...)] ?
-            if (detail::string_parse("nan", "NAN", first, last, unused))
+            if (detail::string_parse("nan"sv, "NAN"sv, first, last, unused))
             {
                 if (first != last && *first == '(')
                 {
@@ -121,6 +122,8 @@ namespace boost { namespace spirit { namespace x3
         static bool
         parse_inf(Iterator& first, Iterator const& last, Attribute& attr_)
         {
+            using namespace std::string_view_literals;
+
             if (first == last)
                 return false;   // end of input reached
 
@@ -128,10 +131,10 @@ namespace boost { namespace spirit { namespace x3
                 return false;   // not "inf"
 
             // inf or infinity ?
-            if (detail::string_parse("inf", "INF", first, last, unused))
+            if (detail::string_parse("inf"sv, "INF"sv, first, last, unused))
             {
                 // skip allowed 'inity' part of infinity
-                detail::string_parse("inity", "INITY", first, last, unused);
+                (void)detail::string_parse("inity"sv, "INITY"sv, first, last, unused);
                 attr_ = std::numeric_limits<T>::infinity();
                 return true;
             }
@@ -139,9 +142,7 @@ namespace boost { namespace spirit { namespace x3
         }
     };
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  Default (signed) real number policies
-    ///////////////////////////////////////////////////////////////////////////
+    // Default (signed) real number policies
     template <typename T>
     struct real_policies : ureal_policies<T>
     {
@@ -164,6 +165,6 @@ namespace boost { namespace spirit { namespace x3
     {
         static bool const expect_dot = true;
     };
-}}}
+} // boost::spirit::x3
 
 #endif

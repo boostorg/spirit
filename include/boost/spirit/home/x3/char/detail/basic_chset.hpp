@@ -16,7 +16,7 @@
 
 namespace boost::spirit::x3::detail
 {
-    // basic character set implementation using range_run
+    // basic character set implementation using char_range_run
     template <typename CharT>
     struct basic_chset
     {
@@ -78,7 +78,7 @@ namespace boost::spirit::x3::detail
         constexpr basic_chset&
         operator|=(basic_chset const& x) noexcept
         {
-            typedef typename range_run<CharT>::const_iterator const_iterator;
+            typedef typename char_range_run<CharT>::const_iterator const_iterator;
             for (const_iterator iter = x.rr.begin(); iter != x.rr.end(); ++iter)
                 rr.set(*iter);
             return *this;
@@ -100,7 +100,7 @@ namespace boost::spirit::x3::detail
         constexpr basic_chset&
         operator-=(basic_chset const& x) noexcept
         {
-            typedef typename range_run<CharT>::const_iterator const_iterator;
+            typedef typename char_range_run<CharT>::const_iterator const_iterator;
             for (const_iterator iter = x.rr.begin(); iter != x.rr.end(); ++iter)
                 rr.clear(*iter);
             return *this;

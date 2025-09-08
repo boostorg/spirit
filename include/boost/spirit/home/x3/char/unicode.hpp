@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
+    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -8,15 +9,12 @@
 #define BOOST_SPIRIT_X3_UNICODE_JAN_20_2012_1218AM
 
 #include <boost/spirit/home/x3/char/char_parser.hpp>
-#include <boost/spirit/home/x3/char/char.hpp>
 #include <boost/spirit/home/x3/char/detail/cast_char.hpp>
-#include <boost/spirit/home/support/char_encoding/unicode.hpp>
+#include <boost/spirit/home/x3/char_encoding/unicode.hpp>
 
-namespace boost { namespace spirit { namespace x3
+namespace boost::spirit::x3
 {
-    ///////////////////////////////////////////////////////////////////////////
-    //  Unicode Major Categories
-    ///////////////////////////////////////////////////////////////////////////
+    // Unicode Major Categories
     struct char_tag;
     struct alnum_tag;
     struct alpha_tag;
@@ -31,9 +29,7 @@ namespace boost { namespace spirit { namespace x3
     struct lower_tag;
     struct upper_tag;
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  Unicode Major Categories
-    ///////////////////////////////////////////////////////////////////////////
+    // Unicode Major Categories
     struct letter_tag {};
     struct mark_tag {};
     struct number_tag {};
@@ -42,9 +38,7 @@ namespace boost { namespace spirit { namespace x3
     struct punctuation_tag {};
     struct symbol_tag {};
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  Unicode General Categories
-    ///////////////////////////////////////////////////////////////////////////
+    // Unicode General Categories
     struct uppercase_letter_tag {};
     struct lowercase_letter_tag {};
     struct titlecase_letter_tag {};
@@ -82,9 +76,7 @@ namespace boost { namespace spirit { namespace x3
     struct modifier_symbol_tag {};
     struct other_symbol_tag {};
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  Unicode Derived Categories
-    ///////////////////////////////////////////////////////////////////////////
+    // Unicode Derived Categories
     struct alphabetic_tag {};
     struct uppercase_tag {};
     struct lowercase_tag {};
@@ -93,9 +85,7 @@ namespace boost { namespace spirit { namespace x3
     struct noncharacter_code_point_tag {};
     struct default_ignorable_code_point_tag {};
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  Unicode Scripts
-    ///////////////////////////////////////////////////////////////////////////
+    // Unicode Scripts
     struct adlam_tag {};
     struct caucasian_albanian_tag {};
     struct ahom_tag {};
@@ -262,11 +252,10 @@ namespace boost { namespace spirit { namespace x3
     struct common_tag {};
     struct unknown_tag {};
 
-    ///////////////////////////////////////////////////////////////////////////
     struct unicode_char_class_base
     {
-        typedef char_encoding::unicode encoding;
-        typedef char_encoding::unicode::char_type char_type;
+        using encoding = char_encoding::unicode;
+        using char_type = char_encoding::unicode::char_type;
 
 #define BOOST_SPIRIT_X3_BASIC_CLASSIFY(name)                                     \
         template <typename Char>                                                 \
@@ -291,9 +280,7 @@ namespace boost { namespace spirit { namespace x3
         /***/
 
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  Unicode Major Categories
-    ///////////////////////////////////////////////////////////////////////////
+    // Unicode Major Categories
         BOOST_SPIRIT_X3_BASIC_CLASSIFY(char)
         BOOST_SPIRIT_X3_BASIC_CLASSIFY(alnum)
         BOOST_SPIRIT_X3_BASIC_CLASSIFY(alpha)
@@ -308,9 +295,7 @@ namespace boost { namespace spirit { namespace x3
         BOOST_SPIRIT_X3_BASIC_CLASSIFY(blank)
         BOOST_SPIRIT_X3_BASIC_CLASSIFY(upper)
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  Unicode Major Categories
-    ///////////////////////////////////////////////////////////////////////////
+    // Unicode Major Categories
         BOOST_SPIRIT_X3_CLASSIFY(letter)
         BOOST_SPIRIT_X3_CLASSIFY(mark)
         BOOST_SPIRIT_X3_CLASSIFY(number)
@@ -319,9 +304,7 @@ namespace boost { namespace spirit { namespace x3
         BOOST_SPIRIT_X3_CLASSIFY(punctuation)
         BOOST_SPIRIT_X3_CLASSIFY(symbol)
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  Unicode General Categories
-    ///////////////////////////////////////////////////////////////////////////
+    // Unicode General Categories
         BOOST_SPIRIT_X3_CLASSIFY(uppercase_letter)
         BOOST_SPIRIT_X3_CLASSIFY(lowercase_letter)
         BOOST_SPIRIT_X3_CLASSIFY(titlecase_letter)
@@ -359,9 +342,7 @@ namespace boost { namespace spirit { namespace x3
         BOOST_SPIRIT_X3_CLASSIFY(modifier_symbol)
         BOOST_SPIRIT_X3_CLASSIFY(other_symbol)
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  Unicode Derived Categories
-    ///////////////////////////////////////////////////////////////////////////
+    // Unicode Derived Categories
         BOOST_SPIRIT_X3_CLASSIFY(alphabetic)
         BOOST_SPIRIT_X3_CLASSIFY(uppercase)
         BOOST_SPIRIT_X3_CLASSIFY(lowercase)
@@ -370,9 +351,7 @@ namespace boost { namespace spirit { namespace x3
         BOOST_SPIRIT_X3_CLASSIFY(noncharacter_code_point)
         BOOST_SPIRIT_X3_CLASSIFY(default_ignorable_code_point)
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  Unicode Scripts
-    ///////////////////////////////////////////////////////////////////////////
+    // Unicode Scripts
         BOOST_SPIRIT_X3_CLASSIFY(adlam)
         BOOST_SPIRIT_X3_CLASSIFY(caucasian_albanian)
         BOOST_SPIRIT_X3_CLASSIFY(ahom)
@@ -545,34 +524,28 @@ namespace boost { namespace spirit { namespace x3
 
     template <typename Tag>
     struct unicode_char_class
-      : char_parser<unicode_char_class<Tag>>
+        : char_parser<unicode_char_class<Tag>>
     {
-        typedef char_encoding::unicode encoding;
-        typedef Tag tag;
-        typedef typename encoding::char_type char_type;
-        typedef char_type attribute_type;
-        static bool const has_attribute = true;
+        using encoding = char_encoding::unicode;
+        using tag = Tag;
+        using char_type = typename encoding::char_type;
+        using attribute_type = char_type;
+        static constexpr bool has_attribute = true;
 
         template <typename Char, typename Context>
-        bool test(Char ch, Context const&) const
+        [[nodiscard]] constexpr bool test(Char ch, Context const&) const noexcept
         {
-            return encoding::ischar(ch) && unicode_char_class_base::is(tag(), ch);
+            return encoding::ischar(ch) && unicode_char_class_base::is(tag{}, ch);
         }
     };
 
 #define BOOST_SPIRIT_X3_CHAR_CLASS(name)                                         \
-    typedef unicode_char_class<name##_tag> name##_type;                          \
-    constexpr name##_type name = name##_type();                                  \
-    /***/
+    using name##_type = unicode_char_class<name##_tag>;                          \
+    inline constexpr name##_type name{};
 
     namespace unicode
     {
-        typedef any_char<char_encoding::unicode> char_type;
-        constexpr auto char_ = char_type{};
-
-    ///////////////////////////////////////////////////////////////////////////
-    //  Unicode Major Categories
-    ///////////////////////////////////////////////////////////////////////////
+    // Unicode Major Categories
         BOOST_SPIRIT_X3_CHAR_CLASS(alnum)
         BOOST_SPIRIT_X3_CHAR_CLASS(alpha)
         BOOST_SPIRIT_X3_CHAR_CLASS(digit)
@@ -586,9 +559,7 @@ namespace boost { namespace spirit { namespace x3
         BOOST_SPIRIT_X3_CHAR_CLASS(blank)
         BOOST_SPIRIT_X3_CHAR_CLASS(upper)
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  Unicode Major Categories
-    ///////////////////////////////////////////////////////////////////////////
+    // Unicode Major Categories
         BOOST_SPIRIT_X3_CHAR_CLASS(letter)
         BOOST_SPIRIT_X3_CHAR_CLASS(mark)
         BOOST_SPIRIT_X3_CHAR_CLASS(number)
@@ -597,9 +568,7 @@ namespace boost { namespace spirit { namespace x3
         BOOST_SPIRIT_X3_CHAR_CLASS(punctuation)
         BOOST_SPIRIT_X3_CHAR_CLASS(symbol)
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  Unicode General Categories
-    ///////////////////////////////////////////////////////////////////////////
+    // Unicode General Categories
         BOOST_SPIRIT_X3_CHAR_CLASS(uppercase_letter)
         BOOST_SPIRIT_X3_CHAR_CLASS(lowercase_letter)
         BOOST_SPIRIT_X3_CHAR_CLASS(titlecase_letter)
@@ -637,9 +606,7 @@ namespace boost { namespace spirit { namespace x3
         BOOST_SPIRIT_X3_CHAR_CLASS(modifier_symbol)
         BOOST_SPIRIT_X3_CHAR_CLASS(other_symbol)
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  Unicode Derived Categories
-    ///////////////////////////////////////////////////////////////////////////
+    // Unicode Derived Categories
         BOOST_SPIRIT_X3_CHAR_CLASS(alphabetic)
         BOOST_SPIRIT_X3_CHAR_CLASS(uppercase)
         BOOST_SPIRIT_X3_CHAR_CLASS(lowercase)
@@ -648,9 +615,7 @@ namespace boost { namespace spirit { namespace x3
         BOOST_SPIRIT_X3_CHAR_CLASS(noncharacter_code_point)
         BOOST_SPIRIT_X3_CHAR_CLASS(default_ignorable_code_point)
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  Unicode Scripts
-    ///////////////////////////////////////////////////////////////////////////
+    // Unicode Scripts
         BOOST_SPIRIT_X3_CHAR_CLASS(adlam)
         BOOST_SPIRIT_X3_CHAR_CLASS(caucasian_albanian)
         BOOST_SPIRIT_X3_CHAR_CLASS(ahom)
@@ -820,6 +785,6 @@ namespace boost { namespace spirit { namespace x3
 
 #undef BOOST_SPIRIT_X3_CHAR_CLASS
 
-}}}
+} // boost::spirit::x3
 
 #endif
