@@ -127,7 +127,7 @@ namespace boost::spirit::x3
         };
     } // detail
 
-    namespace cpos
+    inline namespace cpos
     {
         inline constexpr detail::confix_fn confix{};
     } // cpos
