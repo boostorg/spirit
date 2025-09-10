@@ -5,13 +5,14 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+#include "test.hpp"
+
 #include <boost/spirit/home/x3.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/at.hpp>
 
 #include <string>
 #include <iostream>
-#include "test.hpp"
 
 using boost::spirit::x3::rule;
 
@@ -26,7 +27,7 @@ BOOST_SPIRIT_X3_DEFINE(indirect_rule)
 
 int main()
 {
-    using namespace boost::spirit::x3::ascii;
+    using namespace boost::spirit::x3::standard;
     using boost::spirit::x3::omit;
     using boost::spirit::x3::unused_type;
     using boost::spirit::x3::unused;
