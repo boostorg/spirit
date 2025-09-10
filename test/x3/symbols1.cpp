@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2015 Joel de Guzman
+    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -21,16 +22,15 @@ private:
     char str[2];
 };
 
-int
-main()
+int main()
 {
     using spirit_test::test;
     using spirit_test::test_attr;
-    using boost::spirit::x3::symbols;
+    using boost::spirit::x3::shared_symbols;
     using boost::spirit::x3::no_case;
 
     { // basics
-        symbols<int> sym;
+        shared_symbols<int> sym;
 
         sym.add
             ("Joel")
@@ -52,7 +52,7 @@ main()
         BOOST_TEST((!test("XXX", sym)));
 
         // test copy
-        symbols<int> sym2;
+        shared_symbols<int> sym2;
         sym2 = sym;
         BOOST_TEST((test("Joel", sym2)));
         BOOST_TEST((test("Ruby", sym2)));
@@ -75,7 +75,7 @@ main()
     }
 
     { // comma syntax
-        symbols<int> sym;
+        shared_symbols<int> sym;
         sym += "Joel", "Ruby", "Tenji", "Tutit", "Kim", "Joey";
 
         BOOST_TEST((test("Joel", sym)));
@@ -93,9 +93,9 @@ main()
     }
 
     { // no-case handling
-        using namespace boost::spirit::x3::ascii;
+        using namespace boost::spirit::x3::standard;
 
-        symbols<int> sym;
+        shared_symbols<int> sym;
         // NOTE: make sure all entries are in lower-case!!!
         sym = "joel", "ruby", "tenji", "tutit", "kim", "joey";
 
@@ -118,7 +118,7 @@ main()
     }
 
     { // attributes
-        symbols<int> sym;
+        shared_symbols<int> sym;
 
         sym.add
             ("Joel", 1)
@@ -154,7 +154,7 @@ main()
     { // actions
         using boost::spirit::x3::_attr;
 
-        symbols<int> sym;
+        shared_symbols<int> sym;
         sym.add
             ("Joel", 1)
             ("Ruby", 2)

@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2015 Joel de Guzman
+    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -9,34 +10,17 @@
 #include <iostream>
 #include "test.hpp"
 
-// Custom string type with a C-style string conversion.
-struct custom_string_c
-{
-    custom_string_c(char c) { str[0] = c; str[1] = '\0'; }
-
-    operator char*() { return str; }
-    operator char const*() const { return str; }
-
-private:
-    char str[2];
-};
-
-std::string get_str(char const* str)
-{
-    return std::string(str);
-}
-
-int
-main()
+int main()
 {
     using spirit_test::test;
     using spirit_test::test_attr;
-    using boost::spirit::x3::symbols;
+    using boost::spirit::x3::shared_symbols;
     using boost::spirit::x3::rule;
 
-    { // construction from symbol array
-        char const* syms[] = {"Joel","Ruby","Tenji","Tutit","Kim","Joey"};
-        symbols<int> sym(syms);
+    {
+        // construction from symbol array
+        char const* syms[] = {"Joel", "Ruby", "Tenji", "Tutit", "Kim", "Joey"};
+        shared_symbols<int> sym(syms);
 
         BOOST_TEST((test("Joel", sym)));
         BOOST_TEST((test("Ruby", sym)));
@@ -47,11 +31,12 @@ main()
         BOOST_TEST((!test("XXX", sym)));
     }
 
-    { // construction from 2 arrays
+    {
+        // construction from 2 arrays
 
-        char const* syms[] = {"Joel","Ruby","Tenji","Tutit","Kim","Joey"};
-        int data[] = {1,2,3,4,5,6};
-        symbols<int> sym(syms, data);
+        char const* syms[] = {"Joel", "Ruby", "Tenji", "Tutit", "Kim", "Joey"};
+        int data[] = {1, 2, 3, 4, 5, 6};
+        shared_symbols<int> sym(syms, data);
 
         int i;
         BOOST_TEST((test_attr("Joel", sym, i)));
@@ -69,8 +54,9 @@ main()
         BOOST_TEST((!test_attr("XXX", sym, i)));
     }
 
-    { // allow std::string and other string types
-        symbols<> sym;
+    {
+        // allow std::string and other string types
+        shared_symbols<> sym;
 
         // const and non-const std::string
         std::string a("abc");
@@ -88,19 +74,12 @@ main()
         sym = arr;
         BOOST_TEST((test("a", sym)));
         BOOST_TEST((!test("b", sym)));
-
-        // const and non-const custom string type
-        custom_string_c c('x');
-        custom_string_c const cc('y');
-        sym = c, cc;
-        BOOST_TEST((test("x", sym)));
-        BOOST_TEST((test("y", sym)));
-        BOOST_TEST((!test("z", sym)));
     }
 
-    { // find
+    {
+        // find
 
-        symbols<int> sym;
+        shared_symbols<int> sym;
         sym.add("a", 1)("b", 2);
 
         BOOST_TEST(!sym.find("c"));
@@ -116,7 +95,7 @@ main()
         BOOST_TEST(sym.find("b") && *sym.find("b") == 2);
         BOOST_TEST(sym.find("c") && *sym.find("c") == 0);
 
-        symbols<int> const_sym(sym);
+        shared_symbols<int> const_sym(sym);
 
         BOOST_TEST(const_sym.find("a") && *const_sym.find("a") == 1);
         BOOST_TEST(const_sym.find("b") && *const_sym.find("b") == 2);
@@ -132,20 +111,22 @@ main()
         BOOST_TEST(!sym.prefix_find(first, last) && first == str2);
     }
 
-    { // name
-        symbols <int> sym,sym2;
+    {
+        // name
+        shared_symbols<int> sym,sym2;
         sym.name("test");
         BOOST_TEST(sym.name()=="test");
         sym2 = sym;
         BOOST_TEST(sym2.name()=="test");
 
-        symbols <int> sym3(sym);
+        shared_symbols<int> sym3(sym);
         BOOST_TEST(sym3.name()=="test");
     }
 
-    { // Substrings
+    {
+        // Substrings
 
-        symbols<int> sym;
+        shared_symbols<int> sym;
         BOOST_TEST(sym.at("foo") == 0);
         sym.at("foo") = 1;
         BOOST_TEST(sym.at("foo") == 1);
@@ -175,23 +156,22 @@ main()
     }
 
     {
-        // remove bug
-
         std::string s;
-        symbols<double> vars;
+        shared_symbols<double> vars;
 
         vars.add("l1", 12.0);
         vars.add("l2", 0.0);
         vars.remove("l2");
-        vars.find("l1");
+        (void)vars.find("l1");
         double* d = vars.find("l1");
-        BOOST_TEST(d != 0);
+        BOOST_TEST(d != nullptr);
     }
 
-    { // test for proto problem with rvalue references (10-11-2011)
-        symbols<int> sym;
-        sym += get_str("Joel");
-        sym += get_str("Ruby");
+    {
+        // test for proto problem with rvalue references (10-11-2011)
+        shared_symbols<int> sym;
+        sym += std::string("Joel");
+        sym += std::string("Ruby");
 
         BOOST_TEST((test("Joel", sym)));
         BOOST_TEST((test("Ruby", sym)));
