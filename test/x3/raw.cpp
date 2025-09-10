@@ -29,7 +29,7 @@ int main()
 {
     using spirit_test::test;
     using spirit_test::test_attr;
-    using namespace boost::spirit::x3::ascii;
+    using namespace boost::spirit::x3::standard;
     using boost::spirit::x3::raw;
     using boost::spirit::x3::eps;
     using boost::spirit::x3::lit;
