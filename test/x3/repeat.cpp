@@ -1,33 +1,27 @@
 /*=============================================================================
     Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <string>
-#include <vector>
-
-#include <boost/utility/enable_if.hpp>
-
-#if defined(__GNUC__) && (__GNUC__ >= 8)
-// https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92539
-# pragma GCC diagnostic ignored "-Warray-bounds"
-#endif
-#include <boost/spirit/home/x3.hpp>
-#include <string>
-#include <iostream>
 #include "test.hpp"
 #include "utils.hpp"
 
-int
-main()
+#include <boost/spirit/home/x3.hpp>
+
+#include <vector>
+#include <string>
+#include <iostream>
+
+int main()
 {
     using spirit_test::test_attr;
     using spirit_test::test;
 
-    using namespace boost::spirit::x3::ascii;
+    using namespace boost::spirit::x3::standard;
     using boost::spirit::x3::repeat;
-    using boost::spirit::x3::inf;
+    using boost::spirit::x3::repeat_inf;
     using boost::spirit::x3::omit;
     using boost::spirit::x3::int_;
     using boost::spirit::x3::lexeme;
@@ -36,7 +30,7 @@ main()
     BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(repeat['x']);
     BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(repeat(3)['x']);
     BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(repeat(3, 5)['x']);
-    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(repeat(3, inf)['x']);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(repeat(3, repeat_inf)['x']);
 
     {
         BOOST_TEST(test("aaaaaaaa", repeat[char_])); // kleene synonym
@@ -47,10 +41,10 @@ main()
         BOOST_TEST(!test("aaaaaa", repeat(3, 5)[char_]));
         BOOST_TEST(!test("aa", repeat(3, 5)[char_]));
 
-        BOOST_TEST(test("aaa", repeat(3, inf)[char_]));
-        BOOST_TEST(test("aaaaa", repeat(3, inf)[char_]));
-        BOOST_TEST(test("aaaaaa", repeat(3, inf)[char_]));
-        BOOST_TEST(!test("aa", repeat(3, inf)[char_]));
+        BOOST_TEST(test("aaa", repeat(3, repeat_inf)[char_]));
+        BOOST_TEST(test("aaaaa", repeat(3, repeat_inf)[char_]));
+        BOOST_TEST(test("aaaaaa", repeat(3, repeat_inf)[char_]));
+        BOOST_TEST(!test("aa", repeat(3, repeat_inf)[char_]));
     }
     {
         std::string s;
@@ -76,18 +70,18 @@ main()
         BOOST_TEST(!test("a", repeat(1, 3)[char_ >> char_]));
 
         s.clear();
-        BOOST_TEST(test_attr("aaaa", repeat(2, inf)[char_ >> char_], s));
+        BOOST_TEST(test_attr("aaaa", repeat(2, repeat_inf)[char_ >> char_], s));
         BOOST_TEST(s == "aaaa");
 
         s.clear();
-        BOOST_TEST(test_attr("aaaaaa", repeat(2, inf)[char_ >> char_], s));
+        BOOST_TEST(test_attr("aaaaaa", repeat(2, repeat_inf)[char_ >> char_], s));
         BOOST_TEST(s == "aaaaaa");
 
-        BOOST_TEST(!test("aa", repeat(2, inf)[char_ >> char_]));
+        BOOST_TEST(!test("aa", repeat(2, repeat_inf)[char_ >> char_]));
     }
 
     { // from classic spirit tests
-        BOOST_TEST(test("", repeat(0, inf)['x']));
+        BOOST_TEST(test("", repeat(0, repeat_inf)['x']));
 
         //  repeat exact 8
         #define rep8 repeat(8)[alpha] >> 'X'
@@ -105,7 +99,7 @@ main()
         BOOST_TEST(!test("a*", rep28, false));
 
         //  repeat 2 or more
-        #define rep2_ repeat(2, inf)[alpha] >> '+'
+        #define rep2_ repeat(2, repeat_inf)[alpha] >> '+'
         BOOST_TEST(test("abcdefg+", rep2_));
         BOOST_TEST(test("abcdefgh+", rep2_));
         BOOST_TEST(test("abcdefghi+", rep2_));
