@@ -1,34 +1,35 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
-    http://spirit.sourceforge.net/
+    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_X3_EXTRACT_REAL_APRIL_18_2006_0901AM)
+#ifndef BOOST_SPIRIT_X3_EXTRACT_REAL_APRIL_18_2006_0901AM
 #define BOOST_SPIRIT_X3_EXTRACT_REAL_APRIL_18_2006_0901AM
 
-#include <cmath>
-#include <boost/limits.hpp>
-#include <boost/type_traits/is_same.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/spirit/home/x3/support/numeric_utils/pow10.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
 #include <boost/assert.hpp>
 
+#include <iterator>
+#include <type_traits>
+#include <limits>
+
+#include <cmath>
+
+// TODO: fix this
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
 # pragma warning(push)
 # pragma warning(disable: 4100)   // 'p': unreferenced formal parameter
-# pragma warning(disable: 4127)   // conditional expression is constant
 #endif
 
-namespace boost { namespace spirit { namespace x3 { namespace extension
+namespace boost::spirit::x3::extension
 {
-    using x3::traits::pow10;
-
     template <typename T>
-    inline bool
+    [[nodiscard]] constexpr bool
     scale(int exp, T& n)
     {
         constexpr auto max_exp = std::numeric_limits<T>::max_exponent10;
@@ -38,99 +39,109 @@ namespace boost { namespace spirit { namespace x3 { namespace extension
         {
             // return false if exp exceeds the max_exp
             // do this check only for primitive types!
-            if (is_floating_point<T>() && exp > max_exp)
-                return false;
-            n *= pow10<T>(exp);
+            if constexpr (std::is_floating_point_v<T>)
+            {
+                if (exp > max_exp)
+                {
+                    return false;
+                }
+            }
+            n *= traits::pow10<T>(exp);
         }
         else
         {
             if (exp < min_exp)
             {
-                n /= pow10<T>(-min_exp);
+                n /= traits::pow10<T>(-min_exp);
 
                 // return false if exp still exceeds the min_exp
                 // do this check only for primitive types!
                 exp += -min_exp;
-                if (is_floating_point<T>() && exp < min_exp)
-                    return false;
 
-                n /= pow10<T>(-exp);
+                if constexpr (std::is_floating_point_v<T>)
+                {
+                    if (exp < min_exp)
+                    {
+                        return false;
+                    }
+                }
+
+                n /= traits::pow10<T>(-exp);
             }
             else
             {
-                n /= pow10<T>(-exp);
+                n /= traits::pow10<T>(-exp);
             }
         }
         return true;
     }
 
-    inline bool
-    scale(int /*exp*/, unused_type /*n*/)
+    [[nodiscard]] constexpr bool
+    scale(int /*exp*/, unused_type /*n*/) noexcept
     {
         // no-op for unused_type
         return true;
     }
 
     template <typename T>
-    inline bool
-    scale(int exp, int frac, T& n)
+    [[nodiscard]] constexpr bool
+    scale(int exp, int frac, T& n) noexcept
     {
-        return scale(exp - frac, n);
+        return extension::scale(exp - frac, n);
     }
 
-    inline bool
-    scale(int /*exp*/, int /*frac*/, unused_type /*n*/)
+    [[nodiscard]] constexpr bool
+    scale(int /*exp*/, int /*frac*/, unused_type /*n*/) noexcept
     {
         // no-op for unused_type
         return true;
     }
 
-    inline float
-    negate(bool neg, float n)
+    [[nodiscard]] inline /* constexpr */ float // TODO: constexpr
+    negate(bool neg, float n) noexcept
     {
         return neg ? (std::copysignf)(n, -1.f) : n;
     }
 
-    inline double
-    negate(bool neg, double n)
+    [[nodiscard]] inline /* constexpr */ double // TODO: constexpr
+    negate(bool neg, double n) noexcept
     {
         return neg ? (std::copysign)(n, -1.) : n;
     }
 
-    inline long double
-    negate(bool neg, long double n)
+    [[nodiscard]] inline /* constexpr */ long double // TODO: constexpr
+    negate(bool neg, long double n) noexcept
     {
         return neg ? (std::copysignl)(n, -1.) : n;
     }
 
     template <typename T>
-    inline T
-    negate(bool neg, T const& n)
+    [[nodiscard]] constexpr T
+    negate(bool neg, T const& n) noexcept
     {
         return neg ? -n : n;
     }
 
-    inline unused_type
-    negate(bool /*neg*/, unused_type n)
+    [[nodiscard]] constexpr unused_type
+    negate(bool /*neg*/, unused_type n) noexcept
     {
         // no-op for unused_type
         return n;
     }
-}}}}
+} // boost::spirit::x3::extension
 
-namespace boost { namespace spirit { namespace x3
+namespace boost::spirit::x3
 {
     template <typename T, typename RealPolicies>
     struct extract_real
     {
-        template <typename Iterator, typename Attribute>
-        static bool
-        parse(Iterator& first, Iterator const& last, Attribute& attr,
-            RealPolicies const& p)
+        template <std::forward_iterator It, std::sentinel_for<It> Se, typename Attribute>
+        [[nodiscard]] static constexpr bool
+        parse(It& first, Se const& last, Attribute& attr, RealPolicies const& p)
+            // TODO: noexcept
         {
-            if (first == last)
-                return false;
-            Iterator save = first;
+            if (first == last) return false;
+            It save = first;
 
             // Start by parsing the sign. neg will be true if
             // we got a "-" sign, false otherwise.
@@ -163,7 +174,7 @@ namespace boost { namespace spirit { namespace x3
             }
 
             bool e_hit = false;
-            Iterator e_pos;
+            It e_pos;
             int frac_digits = 0;
 
             // Try to parse the dot ('.' decimal point)
@@ -172,14 +183,15 @@ namespace boost { namespace spirit { namespace x3
                 // We got the decimal point. Now we will try to parse
                 // the fraction if it is there. If not, it defaults
                 // to zero (0) only if we already got a number.
-                Iterator savef = first;
+                It savef = first;
                 if (p.parse_frac_n(first, last, n))
                 {
                     // Optimization note: don't compute frac_digits if T is
                     // an unused_type. This should be optimized away by the compiler.
-                    if (!is_same<T, unused_type>::value)
-                        frac_digits =
-                            static_cast<int>(std::distance(savef, first));
+                    if constexpr (!std::is_same_v<T, unused_type>)
+                    {
+                        frac_digits = static_cast<int>(std::distance(savef, first));
+                    }
                     BOOST_ASSERT(frac_digits >= 0);
                 }
                 else if (!got_a_number || !p.allow_trailing_dot)
@@ -257,6 +269,6 @@ namespace boost { namespace spirit { namespace x3
 # pragma warning(pop)
 #endif
 
-}}}
+} // boost::spirit::x3
 
 #endif
