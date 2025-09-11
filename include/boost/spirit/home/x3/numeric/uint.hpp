@@ -48,31 +48,43 @@ namespace boost::spirit::x3
         }
     };
 
-#define BOOST_SPIRIT_X3_UINT_PARSER(uint_type, name)                            \
-    using name##type = uint_parser<uint_type>;                                  \
-    inline constexpr name##type name{};
+    inline namespace cpos
+    {
+        using ushort_type = uint_parser<unsigned short>;
+        inline constexpr ushort_type ushort_{};
 
-    BOOST_SPIRIT_X3_UINT_PARSER(unsigned long, ulong_)
-    BOOST_SPIRIT_X3_UINT_PARSER(unsigned short, ushort_)
-    BOOST_SPIRIT_X3_UINT_PARSER(unsigned int, uint_)
-    BOOST_SPIRIT_X3_UINT_PARSER(unsigned long long, ulong_long)
+        using uint_type = uint_parser<unsigned int>;
+        inline constexpr uint_type uint_{};
 
-    BOOST_SPIRIT_X3_UINT_PARSER(std::uint8_t, uint8)
-    BOOST_SPIRIT_X3_UINT_PARSER(std::uint16_t, uint16)
-    BOOST_SPIRIT_X3_UINT_PARSER(std::uint32_t, uint32)
-    BOOST_SPIRIT_X3_UINT_PARSER(std::uint64_t, uint64)
+        using ulong_type = uint_parser<unsigned long>;
+        inline constexpr ulong_type ulong_{};
 
-#undef BOOST_SPIRIT_X3_UINT_PARSER
+        using ulong_long_type = uint_parser<unsigned long long>;
+        inline constexpr ulong_long_type ulong_long{};
 
-#define BOOST_SPIRIT_X3_UINT_PARSER(uint_type, radix, name)                     \
-    using name##type = uint_parser<uint_type, radix>;                           \
-    inline constexpr name##type name{};
 
-    BOOST_SPIRIT_X3_UINT_PARSER(unsigned, 2, bin)
-    BOOST_SPIRIT_X3_UINT_PARSER(unsigned, 8, oct)
-    BOOST_SPIRIT_X3_UINT_PARSER(unsigned, 16, hex)
+        using uint8_type = uint_parser<std::uint8_t>;
+        inline constexpr uint8_type uint8{};
 
-#undef BOOST_SPIRIT_X3_UINT_PARSER
+        using uint16_type = uint_parser<std::uint16_t>;
+        inline constexpr uint16_type uint16{};
+
+        using uint32_type = uint_parser<std::uint32_t>;
+        inline constexpr uint32_type uint32{};
+
+        using uint64_type = uint_parser<std::uint64_t>;
+        inline constexpr uint64_type uint64{};
+
+
+        using bin_type = uint_parser<unsigned, 2>;
+        inline constexpr bin_type bin{};
+
+        using oct_type = uint_parser<unsigned, 8>;
+        inline constexpr oct_type oct{};
+
+        using hex_type = uint_parser<unsigned, 16>;
+        inline constexpr hex_type hex{};
+    } // cpos
 
 } // boost::spirit::x3
 

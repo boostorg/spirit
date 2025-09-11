@@ -48,21 +48,34 @@ namespace boost::spirit::x3
         }
     };
 
-#define BOOST_SPIRIT_X3_INT_PARSER(int_type, name)                              \
-    using name##type = int_parser<int_type>;                                    \
-    inline constexpr name##type name{};
+    inline namespace cpos
+    {
+        using short_type = int_parser<short>;
+        inline constexpr short_type short_{};
 
-    BOOST_SPIRIT_X3_INT_PARSER(long, long_)
-    BOOST_SPIRIT_X3_INT_PARSER(short, short_)
-    BOOST_SPIRIT_X3_INT_PARSER(int, int_)
-    BOOST_SPIRIT_X3_INT_PARSER(long long, long_long)
+        using int_type = int_parser<int>;
+        inline constexpr int_type int_{};
 
-    BOOST_SPIRIT_X3_INT_PARSER(std::int8_t, int8)
-    BOOST_SPIRIT_X3_INT_PARSER(std::int16_t, int16)
-    BOOST_SPIRIT_X3_INT_PARSER(std::int32_t, int32)
-    BOOST_SPIRIT_X3_INT_PARSER(std::int64_t, int64)
+        using long_type = int_parser<long>;
+        inline constexpr long_type long_{};
 
-#undef BOOST_SPIRIT_X3_INT_PARSER
+        using long_long_type = int_parser<long long>;
+        inline constexpr long_long_type long_long{};
+
+
+        using int8_type = int_parser<std::int8_t>;
+        inline constexpr int8_type int8{};
+
+        using int16_type = int_parser<std::int16_t>;
+        inline constexpr int16_type int16{};
+
+        using int32_type = int_parser<std::int32_t>;
+        inline constexpr int32_type int32{};
+
+        using int64_type = int_parser<std::int64_t>;
+        inline constexpr int64_type int64{};
+
+    } // cpos
 
 } // boost::spirit::x3
 
