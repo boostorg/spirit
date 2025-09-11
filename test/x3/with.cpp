@@ -9,7 +9,10 @@
 
 #include <boost/spirit/home/x3.hpp>
 
+#include <concepts>
 #include <iterator>
+#include <utility>
+#include <type_traits>
 
 namespace x3 = boost::spirit::x3;
 
@@ -33,27 +36,108 @@ struct my_rule_class
     }
 };
 
+namespace
+{
+    using boost::spirit::x3::rule;
+    using boost::spirit::x3::int_;
+    using boost::spirit::x3::with;
+    using boost::spirit::x3::_pass;
+
+    template<class T>
+    constexpr auto value_equals = int_[([](auto& ctx) {
+        auto&& with_val = x3::get<my_tag>(ctx);
+        static_assert(std::same_as<decltype(with_val), T>);
+        _pass(ctx) = with_val == _attr(ctx);
+    })];
+
+    struct move_only
+    {
+        move_only() = default;
+        move_only(move_only const&) = delete;
+        move_only(move_only&&) noexcept {}
+        move_only& operator=(move_only const&) = delete;
+        move_only& operator=(move_only&&) noexcept { return *this; }
+    };
+
+} // anonymous
+
 int main()
 {
     using spirit_test::test_attr;
     using spirit_test::test;
 
-    using boost::spirit::x3::rule;
-    using boost::spirit::x3::int_;
-    using boost::spirit::x3::with;
-
-// read from a mutable field is not allowed on these compilers
-#if (!defined(_MSC_VER) || _MSC_VER >= 1910) && \
-    (!defined(__clang__) || __clang_major__ >= 7)
     BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(with<my_tag>(0)['x']);
-#endif
+
     {
         constexpr int i = 0;
         BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(with<my_tag>(i)['x']);
     }
 
-    { // injecting data into the context in the grammar
+    // check various value categories
+    {
+        {
+            int i = 42;
+            BOOST_TEST(test("42", with<my_tag>(i)[value_equals<int&>]));
+        }
+        {
+            int const i = 42;
+            BOOST_TEST(test("42", with<my_tag>(i)[value_equals<int const&>]));
+        }
+        {
+            int i = 42;
+            BOOST_TEST(test("42", with<my_tag>(std::move(i))[value_equals<int&>]));
+        }
+        {
+            int const i = 42;
+            BOOST_TEST(test("42", with<my_tag>(std::move(i))[value_equals<int const&>]));
+        }
 
+        {
+            int i = 42;
+            auto with_gen = with<my_tag>(i);
+            BOOST_TEST(test("42", with_gen[value_equals<int&>]));
+        }
+        {
+            int const i = 42;
+            auto with_gen = with<my_tag>(i);
+            BOOST_TEST(test("42", with_gen[value_equals<int const&>]));
+        }
+        {
+            int i = 42;
+            auto with_gen = with<my_tag>(std::move(i));
+            BOOST_TEST(test("42", with_gen[value_equals<int&>]));
+        }
+        {
+            int const i = 42;
+            auto with_gen = with<my_tag>(std::move(i));
+            BOOST_TEST(test("42", with_gen[value_equals<int const&>]));
+        }
+
+        // lvalue `move_only`
+        {
+            move_only mo;
+            (void)with<my_tag>(mo)[int_];
+        }
+        {
+            move_only mo;
+            auto with_gen = with<my_tag>(mo); // passed-by-reference
+            (void)with_gen[int_]; // permitted, never copies
+            (void)std::move(with_gen)[int_];
+        }
+
+        // rvalue `move_only`
+        {
+            (void)with<my_tag>(move_only{})[int_];
+        }
+        {
+            auto with_gen = with<my_tag>(move_only{});
+            // (void)with_gen[int_]; // requires copy-constructible
+            (void)std::move(with_gen)[int_];
+        }
+    }
+
+    {
+        // injecting data into the context in the grammar
         int val = 0;
         auto r = rule<my_rule_class, char const*>() =
             '(' > int_ > ',' > int_ > ')'
@@ -68,7 +152,8 @@ int main()
         BOOST_TEST(val == 2);
     }
 
-    { // injecting non-const lvalue into the context
+    {
+        // injecting non-const lvalue into the context
         int val = 0;
         auto const r  = int_[([](auto& ctx){
             x3::get<my_tag>(ctx) += x3::_attr(ctx);
@@ -77,7 +162,8 @@ int main()
         BOOST_TEST(579 == val);
     }
 
-    { // injecting rvalue into the context
+    {
+        // injecting rvalue into the context
         auto const r1 = int_[([](auto& ctx){
             x3::get<my_tag>(ctx) += x3::_attr(ctx);
         })];
@@ -90,7 +176,8 @@ int main()
         BOOST_TEST(106 == attr);
     }
 
-    { // injecting const/non-const lvalue and rvalue into the context
+    {
+        // injecting const/non-const lvalue and rvalue into the context
         struct functor {
             int operator()(int& val) {
                 return val * 10; // non-const ref returns 10 * injected val
