@@ -115,8 +115,8 @@ namespace boost::spirit::x3
         {}
 
         // The internal context type. This can be used to determine the composed
-        // context type used in `x3::parse`/`x3::phrase_parse`. It is the
-        // required for the argument on `BOOST_SPIRIT_X3_INSTANTIATE`.
+        // context type used in `x3::parse`/`x3::phrase_parse`. It is required for
+        // the argument of `BOOST_SPIRIT_X3_INSTANTIATE`.
         template <typename Context>
         using context_t = context<ID, std::remove_reference_t<T>, Context>;
 
