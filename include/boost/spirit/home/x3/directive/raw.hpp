@@ -1,6 +1,5 @@
 /*=============================================================================
     Copyright (c) 2014 Joel de Guzman
-    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -12,20 +11,11 @@
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
 #include <boost/spirit/home/x3/support/traits/pseudo_attribute.hpp>
+#include <boost/range/iterator_range_core.hpp>
 
-#ifndef BOOST_SPIRIT_X3_NO_BOOST_ITERATOR_RANGE
-# pragma message("Use of `boost::iterator_range` is deprecated in X3. #define BOOST_SPIRIT_X3_NO_BOOST_ITERATOR_RANGE")
-# include <boost/range/iterator_range_core.hpp>
-#endif
-
-#include <ranges>
-#include <iterator>
-#include <type_traits>
-#include <utility>
-
-namespace boost::spirit::x3
+namespace boost { namespace spirit { namespace x3
 {
-    // Pseudo attribute type indicating that the parser wants the
+    // this is a pseudo attribute type indicating that the parser wants the
     // iterator range pointing to the [first, last) matching characters from
     // the input iterators.
     struct raw_attribute_type {};
@@ -33,83 +23,64 @@ namespace boost::spirit::x3
     template <typename Subject>
     struct raw_directive : unary_parser<Subject, raw_directive<Subject>>
     {
-        using base_type = unary_parser<Subject, raw_directive<Subject>>;
-        using attribute_type = raw_attribute_type;
-        using subject_type = Subject;
+        typedef unary_parser<Subject, raw_directive<Subject> > base_type;
+        typedef raw_attribute_type attribute_type;
+        static bool const handles_container = true;
+        typedef Subject subject_type;
 
-        static constexpr bool handles_container = true;
+        constexpr raw_directive(Subject const& subject)
+          : base_type(subject) {}
 
-        template <typename SubjectT>
-            requires std::is_constructible_v<Subject, SubjectT>
-        constexpr raw_directive(SubjectT&& subject)
-            noexcept(std::is_nothrow_constructible_v<Subject, SubjectT>)
-            : base_type(std::forward<SubjectT>(subject))
-        {}
-
-        template <std::forward_iterator It, std::sentinel_for<It> Se, typename Context, typename RContext, typename Attribute>
-        [[nodiscard]] constexpr bool
-        parse(It& first, Se const& last, Context const& context, RContext& rcontext, Attribute& attr) const
-            // never noexcept; construction of `std::ranges::subrange` is never noexcept
+        template <typename Iterator, typename Context
+            , typename RContext, typename Attribute>
+        bool parse(Iterator& first, Iterator const& last
+          , Context const& context, RContext& rcontext, Attribute& attr) const
         {
-            static_assert(Parsable<Subject, It, Se, Context, RContext, unused_type>);
-
             x3::skip_over(first, last, context);
-            It local_it = first;
-            if (this->subject.parse(local_it, last, context, rcontext, unused))
+            Iterator i = first;
+            if (this->subject.parse(i, last, context, rcontext, unused))
             {
-                traits::move_to(first, local_it, attr);
-                first = local_it;
+                traits::move_to(first, i, attr);
+                first = i;
                 return true;
             }
             return false;
         }
 
-        template <std::forward_iterator It, std::sentinel_for<It> Se, typename Context, typename RContext>
-        [[nodiscard]] constexpr bool
-        parse(It& first, Se const& last, Context const& context, RContext& rcontext, unused_type) const
-            noexcept(is_nothrow_parsable_v<Subject, It, Se, Context, RContext, unused_type>)
+        template <typename Iterator, typename Context, typename RContext>
+        bool parse(Iterator& first, Iterator const& last
+          , Context const& context, RContext& rcontext, unused_type) const
         {
             return this->subject.parse(first, last, context, rcontext, unused);
         }
     };
 
-    namespace detail
+    struct raw_gen
     {
-        struct raw_gen
+        template <typename Subject>
+        constexpr raw_directive<typename extension::as_parser<Subject>::value_type>
+        operator[](Subject const& subject) const
         {
-            template <X3Subject Subject>
-            [[nodiscard]] constexpr raw_directive<as_parser_plain_t<Subject>>
-            operator[](Subject&& subject) const
-                noexcept(is_parser_nothrow_constructible_v<raw_directive<as_parser_plain_t<Subject>>, as_parser_t<Subject>>)
-            {
-                return { as_parser(std::forward<Subject>(subject)) };
-            }
-        };
-    } // detail
+            return { as_parser(subject) };
+        }
+    };
 
-    inline namespace cpos
-    {
-        inline constexpr detail::raw_gen raw{};
-    }
+    constexpr auto raw = raw_gen{};
 
     namespace traits
     {
-        template <typename Context, std::forward_iterator It>
-        struct pseudo_attribute<Context, raw_attribute_type, It>
+        template <typename Context, typename Iterator>
+        struct pseudo_attribute<Context, raw_attribute_type, Iterator>
         {
             using attribute_type = raw_attribute_type;
-        #ifdef BOOST_SPIRIT_X3_NO_BOOST_ITERATOR_RANGE
-            using type = std::ranges::subrange<It>;
-        #else
-            using type = boost::iterator_range<It>;
-        #endif
+            using type = boost::iterator_range<Iterator>;
 
-            [[nodiscard]] static constexpr type call(It& first, std::sentinel_for<It> auto const& last, raw_attribute_type)
+            static type call(Iterator& first, Iterator const& last, attribute_type)
             {
                 return { first, last };
             }
         };
     }
-} // boost::spirit::x3
+}}}
 
 #endif
