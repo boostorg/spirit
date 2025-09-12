@@ -1,6 +1,5 @@
 /*=============================================================================
     Copyright (c) 2001-2015 Joel de Guzman
-    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -21,10 +20,10 @@ rule<class indirect_rule, int> indirect_rule = "indirect_rule";
 auto const direct_rule_def = boost::spirit::x3::int_;
 auto const indirect_rule_def = direct_rule;
 
-BOOST_SPIRIT_X3_DEFINE(direct_rule)
-BOOST_SPIRIT_X3_DEFINE(indirect_rule)
+BOOST_SPIRIT_DEFINE(direct_rule, indirect_rule)
 
-int main()
+int
+main()
 {
     using namespace boost::spirit::x3::ascii;
     using boost::spirit::x3::omit;

@@ -54,8 +54,7 @@ boost::spirit::x3::rule<class b_r, stationary> const b;
 auto const a_def = '{' >> boost::spirit::x3::int_ >> '}';
 auto const b_def = a;
 
-BOOST_SPIRIT_X3_DEFINE(a)
-BOOST_SPIRIT_X3_DEFINE(b)
+BOOST_SPIRIT_DEFINE(a, b)
 
 }
 
@@ -70,7 +69,7 @@ boost::spirit::x3::rule<class grammar_r, node_t> const grammar;
 
 auto const grammar_def = '[' >> grammar % ',' >> ']' | boost::spirit::x3::int_;
 
-BOOST_SPIRIT_X3_DEFINE(grammar)
+BOOST_SPIRIT_DEFINE(grammar)
 
 }
 
@@ -96,9 +95,9 @@ namespace check_recursive_tuple {
 
 x3::rule<class grammar_r, recursive_tuple> const grammar;
 auto const grammar_def = x3::int_ >> ('{' >> grammar % ',' >> '}' | x3::eps);
-BOOST_SPIRIT_X3_DEFINE(grammar)
+BOOST_SPIRIT_DEFINE(grammar)
 
-BOOST_SPIRIT_X3_INSTANTIATE(decltype(grammar), char const*, x3::unused_type)
+BOOST_SPIRIT_INSTANTIATE(decltype(grammar), char const*, x3::unused_type)
 
 }
 
