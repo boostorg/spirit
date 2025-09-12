@@ -1,6 +1,5 @@
 
 .DS_Store
-/build*/
 
 test/lex/matlib_static_switch.h
 
