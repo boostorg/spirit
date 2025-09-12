@@ -363,17 +363,8 @@ namespace boost::spirit::x3
         typename RContext,
         typename Attribute
     >
-    struct is_parsable
-    {
-        static_assert(X3Subject<Parser>);
-        static_assert(!std::is_reference_v<It>);
-        static_assert(std::forward_iterator<It>);
-        static_assert(std::sentinel_for<Se, It>);
-        static_assert(!std::is_reference_v<Context>);
-        static_assert(!std::is_reference_v<RContext>);
-        static_assert(!std::is_reference_v<Attribute>);
-
-        static constexpr bool value = requires(Parser const& p) // mutable parser use case is currently unknown
+    struct is_parsable : std::bool_constant<
+        requires(std::remove_cvref_t<as_parser_t<Parser>> const& p) // mutable parser use case is currently unknown
         {
             {
                 p.parse(
@@ -384,7 +375,15 @@ namespace boost::spirit::x3
                     std::declval<Attribute&>() // attr
                 )
             } -> std::convertible_to<bool>;
-        };
+        }
+    > {
+        static_assert(X3Subject<Parser>);
+        static_assert(!std::is_reference_v<It>);
+        static_assert(std::forward_iterator<It>);
+        static_assert(std::sentinel_for<Se, It>);
+        static_assert(!std::is_reference_v<Context>);
+        static_assert(!std::is_reference_v<RContext>);
+        static_assert(!std::is_reference_v<Attribute>);
     };
 
     template <typename Parser, typename It, typename Se, typename Context, typename RContext, typename Attribute>
@@ -403,17 +402,8 @@ namespace boost::spirit::x3
         typename RContext,
         typename Attribute
     >
-    struct is_nothrow_parsable
-    {
-        static_assert(X3Subject<Parser>);
-        static_assert(!std::is_reference_v<It>);
-        static_assert(std::forward_iterator<It>);
-        static_assert(std::sentinel_for<Se, It>);
-        static_assert(!std::is_reference_v<Context>);
-        static_assert(!std::is_reference_v<RContext>);
-        static_assert(!std::is_reference_v<Attribute>);
-
-        static constexpr bool value = requires(Parser const& p) // mutable parser use case is currently unknown
+    struct is_nothrow_parsable : std::bool_constant<
+        requires(std::remove_cvref_t<as_parser_t<Parser>> const& p) // mutable parser use case is currently unknown
         {
             {
                 p.parse(
@@ -424,8 +414,8 @@ namespace boost::spirit::x3
                     std::declval<Attribute&>() // attr
                 )
             } noexcept -> std::convertible_to<bool>;
-        };
-    };
+        }
+    > {};
 
     template <typename Parser, typename It, typename Se, typename Context, typename RContext, typename Attribute>
     constexpr bool is_nothrow_parsable_v = is_nothrow_parsable<Parser, It, Se, Context, RContext, Attribute>::value;
@@ -449,7 +439,7 @@ namespace boost::spirit::x3
     template <typename Parser, class It, class Se>
     concept X3Parser =
         X3Subject<Parser> &&
-        is_parsable_v<as_parser_plain_t<Parser>, It, Se, unused_type, unused_type, unused_type>;
+        is_parsable_v<Parser, It, Se, unused_type, unused_type, unused_type>;
 
 
     // The runtime type info that can be obtained via `x3::what(p)`.

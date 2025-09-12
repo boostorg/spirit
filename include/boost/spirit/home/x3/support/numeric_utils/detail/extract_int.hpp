@@ -4,7 +4,6 @@
     Copyright (c) 2011 Jan Frederick Eick
     Copyright (c) 2011 Christopher Jefferson
     Copyright (c) 2006 Stephen Nutt
-    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -343,7 +342,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
             if (count + leading_zeros >= MinDigits)
             {
-                traits::move_to(std::move(val), attr);
+                traits::move_to(val, attr);
                 first = it;
                 return true;
             }
@@ -445,7 +444,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             {
                 if (count == 0) // must have at least one digit
                     return false;
-                traits::move_to(std::move(val), attr);
+                traits::move_to(val, attr);
                 first = it;
                 return true;
             }
@@ -459,7 +458,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                   , SPIRIT_NUMERIC_INNER_LOOP, _)
             }
 
-            traits::move_to(std::move(val), attr);
+            traits::move_to(val, attr);
             first = it;
             return true;
         }

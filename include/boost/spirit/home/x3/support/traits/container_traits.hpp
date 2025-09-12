@@ -1,7 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
-    Copyright (c) 2025 Nana Sakisaka
+    http://spirit.sourceforge.net/
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -12,55 +12,49 @@
 #include <boost/fusion/support/category_of.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/fusion/include/deque.hpp>
+#include <boost/mpl/identity.hpp>
+#include <boost/type_traits/make_void.hpp>
 
-#include <ranges>
-#include <iterator>
 #include <vector>
 #include <string>
+#include <iterator>
 #include <algorithm>
-#include <type_traits>
 
-namespace boost::spirit::x3::traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
-    template <typename T>
-    struct is_container : std::false_type {};
-
-    // TODO: fully replace this trait using std::ranges
-    template <typename T>
-        requires
-            //std::ranges::range<T> && // TODO: this breaks `fusion::vector<>`; test case in omit.cpp.
-            requires {
-                typename T::value_type;
-                typename T::iterator;
-                typename T::size_type;
-                typename T::reference;
-            }
-    struct is_container<T> : std::true_type {};
-
-    template <typename T>
-    constexpr bool is_container_v = is_container<T>::value;
-
-    template <typename T>
-    concept ContainerAttr = is_container_v<std::remove_cvref_t<T>>;
-
-
-    template <typename T>
-    struct is_associative : std::false_type {};
-
-    template <typename T>
-        requires requires {
-            typename T::key_type;
-        }
-    struct is_associative<T> : std::true_type {};
-
-    template <typename T>
-    constexpr bool is_associative_v = is_associative<T>::value;
-
+    ///////////////////////////////////////////////////////////////////////////
+    //  This file contains some container utils for stl containers.
+    ///////////////////////////////////////////////////////////////////////////
 
     namespace detail
     {
+        template <typename T, typename Enabler = void>
+        struct is_container_impl : mpl::false_ {};
+
         template <typename T>
-        struct remove_value_const : std::type_identity<T> {};
+        struct is_container_impl<T, void_t<
+            typename T::value_type, typename T::iterator,
+            typename T::size_type, typename T::reference> > : mpl::true_ {};
+
+        template <typename T, typename Enabler = void>
+        struct is_associative_impl : mpl::false_ {};
+
+        template <typename T>
+        struct is_associative_impl<T, void_t<typename T::key_type>>
+            : mpl::true_ {};
+    }
+
+    template <typename T>
+    using is_container = typename detail::is_container_impl<T>::type;
+
+    template <typename T>
+    using is_associative = typename detail::is_associative_impl<T>::type;
+
+    ///////////////////////////////////////////////////////////////////////////
+    namespace detail
+    {
+        template <typename T>
+        struct remove_value_const : mpl::identity<T> {};
 
         template <typename T>
         struct remove_value_const<T const> : remove_value_const<T> {};
@@ -68,20 +62,17 @@ namespace boost::spirit::x3::traits
         template <typename F, typename S>
         struct remove_value_const<std::pair<F, S>>
         {
-            using first_type = typename remove_value_const<F>::type;
-            using second_type = typename remove_value_const<S>::type;
-            using type = std::pair<first_type, second_type>;
+            typedef typename remove_value_const<F>::type first_type;
+            typedef typename remove_value_const<S>::type second_type;
+            typedef std::pair<first_type, second_type> type;
         };
     }
 
     ///////////////////////////////////////////////////////////////////////
     template <typename Container, typename Enable = void>
     struct container_value
-        : detail::remove_value_const<typename Container::value_type>
+      : detail::remove_value_const<typename Container::value_type>
     {};
-
-    template <typename Container>
-    using container_value_t = typename container_value<Container>::type;
 
     template <typename Container>
     struct container_value<Container const> : container_value<Container> {};
@@ -91,36 +82,32 @@ namespace boost::spirit::x3::traits
     // saved to container, we simply return whole fusion::map as is
     // so that check can be done in traits::is_substitute specialisation
     template <typename T>
-    struct container_value<
-        T,
-        std::enable_if_t<
-            std::conditional_t<
-				fusion::traits::is_sequence<T>::value,
-                fusion::traits::is_associative<T>,
-                std::false_type
-            >::type::value
-        >
-    > : std::type_identity<T> {};
+    struct container_value<T
+			   , typename enable_if<typename mpl::eval_if <
+						    fusion::traits::is_sequence<T>
+						    , fusion::traits::is_associative<T>
+						    , mpl::false_ >::type >::type>
+    : mpl::identity<T> {};
 
     template <>
-    struct container_value<unused_type> : std::type_identity<unused_type> {};
+    struct container_value<unused_type> : mpl::identity<unused_type> {};
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Container, typename Enable = void>
     struct container_iterator
-        : std::type_identity<typename Container::iterator> {};
+        : mpl::identity<typename Container::iterator> {};
 
     template <typename Container>
     struct container_iterator<Container const>
-         : std::type_identity<typename Container::const_iterator> {};
+         : mpl::identity<typename Container::const_iterator> {};
 
     template <>
     struct container_iterator<unused_type>
-        : std::type_identity<unused_type const*> {};
+        : mpl::identity<unused_type const*> {};
 
     template <>
     struct container_iterator<unused_type const>
-        : std::type_identity<unused_type const*> {};
+        : mpl::identity<unused_type const*> {};
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Container, typename T>
@@ -169,13 +156,13 @@ namespace boost::spirit::x3::traits
     {
     private:
         template <typename Iterator>
-        static void insert(Container& c, Iterator first, Iterator last, std::false_type)
+        static void insert(Container& c, Iterator first, Iterator last, mpl::false_)
         {
             c.insert(c.end(), first, last);
         }
 
         template <typename Iterator>
-        static void insert(Container& c, Iterator first, Iterator last, std::true_type)
+        static void insert(Container& c, Iterator first, Iterator last, mpl::true_)
         {
             c.insert(first, last);
         }
@@ -203,26 +190,23 @@ namespace boost::spirit::x3::traits
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Container, typename Enable = void>
-    struct is_empty_container;
-
-    [[nodiscard]] constexpr bool is_empty(unused_type) noexcept
+    struct is_empty_container
     {
-        return true;
-    }
+        static bool call(Container const& c)
+        {
+            return c.empty();
+        }
+    };
 
-    template <ContainerAttr Container>
-    [[nodiscard]] constexpr bool is_empty(Container const& c) noexcept
+    template <typename Container>
+    inline bool is_empty(Container const& c)
     {
         return is_empty_container<Container>::call(c);
     }
 
-    template <ContainerAttr Container>
-        requires requires {
-            std::ranges::empty(std::declval<Container const&>());
-        }
-    [[nodiscard]] constexpr bool is_empty(Container const& c) noexcept
+    inline bool is_empty(unused_type)
     {
-        return std::ranges::empty(c);
+        return true;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -340,17 +324,17 @@ namespace boost::spirit::x3::traits
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
-    struct build_container : std::type_identity<std::vector<T>> {};
+    struct build_container : mpl::identity<std::vector<T>> {};
 
     template <typename T>
     struct build_container<boost::fusion::deque<T> > : build_container<T> {};
 
     template <>
-    struct build_container<unused_type> : std::type_identity<unused_type> {};
+    struct build_container<unused_type> : mpl::identity<unused_type> {};
 
     template <>
-    struct build_container<char> : std::type_identity<std::string> {};
+    struct build_container<char> : mpl::identity<std::string> {};
 
-} // boost::spirit::x3::traits
+}}}}
 
 #endif

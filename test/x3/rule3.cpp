@@ -1,12 +1,9 @@
 /*=============================================================================
     Copyright (c) 2001-2012 Joel de Guzman
-    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-
-#include "test.hpp"
 
 #include <boost/spirit/home/x3.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
@@ -17,6 +14,7 @@
 #include <vector>
 #include <cstring>
 #include <iostream>
+#include "test.hpp"
 
 #ifdef _MSC_VER
 // bogus https://developercommunity.visualstudio.com/t/buggy-warning-c4709/471956
@@ -36,10 +34,9 @@ struct f
 };
 
 
-struct stationary
+struct stationary : boost::noncopyable
 {
     explicit stationary(int i) : val{i} {}
-    stationary(stationary const&) = delete;
     stationary& operator=(int i) { val = i; return *this; }
 
     int val;

@@ -1,6 +1,5 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
-    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -12,8 +11,6 @@
 #include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
 #include <boost/spirit/home/x3/support/no_case.hpp>
-
-#include <iterator>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -31,7 +28,7 @@ namespace boost { namespace spirit { namespace x3
             x3::skip_over(first, last, context);
             if (first != last && this->derived().test(*first, context))
             {
-                x3::traits::move_to(std::iter_value_t<Iterator>{*first}, attr);
+                x3::traits::move_to(*first, attr);
                 ++first;
                 return true;
             }

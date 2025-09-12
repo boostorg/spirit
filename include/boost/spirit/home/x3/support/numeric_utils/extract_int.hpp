@@ -1,7 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2011 Jan Frederick Eick
-    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -78,7 +77,7 @@ namespace boost { namespace spirit { namespace x3
             T attr;
             if (call(first, last, attr))
             {
-                traits::move_to(std::move(attr), attr_);
+                traits::move_to(attr, attr_);
                 return true;
             }
             return false;
@@ -132,7 +131,7 @@ namespace boost { namespace spirit { namespace x3
             T attr;
             if (call(first, last, attr))
             {
-                traits::move_to(std::move(attr), attr_);
+                traits::move_to(attr, attr_);
                 return true;
             }
             return false;
