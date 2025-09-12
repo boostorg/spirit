@@ -1,6 +1,5 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
-    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -12,9 +11,7 @@
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/char/char_class_tags.hpp>
 
-#include <cstdint>
-
-namespace boost::spirit::x3
+namespace boost { namespace spirit { namespace x3
 {
     struct no_case_tag {};
 
@@ -22,20 +19,19 @@ namespace boost::spirit::x3
     struct case_compare
     {
         template <typename Char, typename CharSet>
-        [[nodiscard]] constexpr bool in_set(Char ch, CharSet const& set) noexcept
+        bool in_set(Char ch, CharSet const& set)
         {
-            static_assert(noexcept(set.test(ch)));
             return set.test(ch);
         }
 
         template <typename Char>
-        [[nodiscard]] constexpr std::int32_t operator()(Char lc, Char rc) const noexcept
+        int32_t operator()(Char lc, Char rc) const
         {
             return lc - rc;
         }
 
         template <typename CharClassTag>
-        [[nodiscard]] constexpr CharClassTag get_char_class_tag(CharClassTag tag) const noexcept
+        CharClassTag get_char_class_tag(CharClassTag tag) const
         {
             return tag;
         }
@@ -45,18 +41,17 @@ namespace boost::spirit::x3
     struct no_case_compare
     {
         template <typename Char, typename CharSet>
-        [[nodiscard]] bool in_set(Char ch_, CharSet const& set) noexcept // TODO: constexpr
+        bool in_set(Char ch_, CharSet const& set)
         {
             using char_type = typename Encoding::classify_type;
             auto ch = char_type(ch_);
-            static_assert(noexcept(set.test(ch)));
             return set.test(ch)
                 || set.test(Encoding::islower(ch)
                     ? Encoding::toupper(ch) : Encoding::tolower(ch));
         }
 
         template <typename Char>
-        [[nodiscard]] std::int32_t operator()(Char lc_, Char const rc_) const noexcept // TODO: constexpr
+        int32_t operator()(Char lc_, Char const rc_) const
         {
             using char_type = typename Encoding::classify_type;
             auto lc = char_type(lc_);
@@ -66,45 +61,43 @@ namespace boost::spirit::x3
         }
 
         template <typename CharClassTag>
-        [[nodiscard]] constexpr CharClassTag get_char_class_tag(CharClassTag tag) const noexcept
+        CharClassTag get_char_class_tag(CharClassTag tag) const
         {
             return tag;
         }
 
-        [[nodiscard]] constexpr alpha_tag get_char_class_tag(lower_tag) const noexcept
+        alpha_tag get_char_class_tag(lower_tag ) const
         {
             return {};
         }
 
-        [[nodiscard]] constexpr alpha_tag get_char_class_tag(upper_tag) const noexcept
+        alpha_tag get_char_class_tag(upper_tag ) const
         {
             return {};
         }
+
     };
 
-    namespace detail
+    template <typename Encoding>
+    case_compare<Encoding> get_case_compare_impl(unused_type const&)
     {
-        template <typename Encoding>
-        [[nodiscard]] constexpr case_compare<Encoding> get_case_compare_impl(unused_type const&) noexcept
-        {
-            return {};
-        }
-
-        template <typename Encoding>
-        [[nodiscard]] constexpr no_case_compare<Encoding> get_case_compare_impl(no_case_tag const&) noexcept
-        {
-            return {};
-        }
-    } // detail
-
-    template <typename Encoding, typename Context>
-    [[nodiscard]] constexpr decltype(auto) get_case_compare(Context const& context) noexcept
-    {
-        return detail::get_case_compare_impl<Encoding>(x3::get<no_case_tag>(context));
+        return {};
     }
 
-    auto const no_case_compare_ = no_case_tag{}; // TODO: this should be private
+    template <typename Encoding>
+    no_case_compare<Encoding> get_case_compare_impl(no_case_tag const&)
+    {
+        return {};
+    }
 
-} // boost::spirit::x3
+    template <typename Encoding, typename Context>
+    inline decltype(auto) get_case_compare(Context const& context)
+    {
+        return get_case_compare_impl<Encoding>(x3::get<no_case_tag>(context));
+    }
+
+    auto const no_case_compare_ = no_case_tag{};
+
+}}}
 
 #endif

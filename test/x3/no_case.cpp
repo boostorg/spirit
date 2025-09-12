@@ -1,6 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2015 Joel de Guzman
-    Copyright (c) 2025 Nana Sakisaka
+    http://spirit.sourceforge.net/
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -11,7 +11,8 @@
 #include <iostream>
 #include "test.hpp"
 
-int main()
+int
+main()
 {
     using spirit_test::test;
     using spirit_test::test_attr;
@@ -20,7 +21,7 @@ int main()
     BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(no_case['x']);
 
     {
-        using namespace boost::spirit::x3::standard;
+        using namespace boost::spirit::x3::ascii;
         BOOST_TEST(test("x", no_case[char_]));
         BOOST_TEST(test("X", no_case[char_('x')]));
         BOOST_TEST(test("X", no_case[char_('X')]));
@@ -34,7 +35,7 @@ int main()
         BOOST_TEST(!test("z", no_case[char_('a', 'y')]));
     }
     {
-        using namespace boost::spirit::x3::standard;
+        using namespace boost::spirit::x3::ascii;
         BOOST_TEST(test("X", no_case['x']));
         BOOST_TEST(test("X", no_case['X']));
         BOOST_TEST(test("x", no_case['X']));
@@ -44,13 +45,24 @@ int main()
     }
 
     {
-        using namespace boost::spirit::x3::standard;
+        using namespace boost::spirit::x3::iso8859_1;
         BOOST_TEST(test("X", no_case[char_("a-z")]));
         BOOST_TEST(!test("1", no_case[char_("a-z")]));
     }
 
+    { // test extended ASCII characters
+        using namespace boost::spirit::x3::iso8859_1;
+        BOOST_TEST(test("\xC1", no_case[char_('\xE1')]));
+
+        BOOST_TEST(test("\xC9", no_case[char_("\xE5-\xEF")]));
+        BOOST_TEST(!test("\xFF", no_case[char_("\xE5-\xEF")]));
+
+        BOOST_TEST(test("\xC1\xE1", no_case[lit("\xE1\xC1")]));
+        BOOST_TEST(test("\xE1\xE1", no_case[no_case[lit("\xE1\xC1")]]));
+    }
+
     {
-        using namespace boost::spirit::x3::standard;
+        using namespace boost::spirit::x3::ascii;
         BOOST_TEST(test("Bochi Bochi", no_case[lit("bochi bochi")]));
         BOOST_TEST(test("BOCHI BOCHI", no_case[lit("bochi bochi")]));
         BOOST_TEST(!test("Vavoo", no_case[lit("bochi bochi")]));
@@ -58,10 +70,38 @@ int main()
 
     {
         // should work!
-        using namespace boost::spirit::x3::standard;
+        using namespace boost::spirit::x3::ascii;
         BOOST_TEST(test("x", no_case[no_case[char_]]));
         BOOST_TEST(test("x", no_case[no_case[char_('x')]]));
         BOOST_TEST(test("yabadabadoo", no_case[no_case[lit("Yabadabadoo")]]));
+    }
+
+    {
+        using namespace boost::spirit::x3::ascii;
+        BOOST_TEST(test("X", no_case[alnum]));
+        BOOST_TEST(test("6", no_case[alnum]));
+        BOOST_TEST(!test(":", no_case[alnum]));
+
+        BOOST_TEST(test("X", no_case[lower]));
+        BOOST_TEST(test("x", no_case[lower]));
+        BOOST_TEST(test("X", no_case[upper]));
+        BOOST_TEST(test("x", no_case[upper]));
+        BOOST_TEST(!test(":", no_case[lower]));
+        BOOST_TEST(!test(":", no_case[upper]));
+    }
+
+    {
+        using namespace boost::spirit::x3::iso8859_1;
+        BOOST_TEST(test("X", no_case[alnum]));
+        BOOST_TEST(test("6", no_case[alnum]));
+        BOOST_TEST(!test(":", no_case[alnum]));
+
+        BOOST_TEST(test("X", no_case[lower]));
+        BOOST_TEST(test("x", no_case[lower]));
+        BOOST_TEST(test("X", no_case[upper]));
+        BOOST_TEST(test("x", no_case[upper]));
+        BOOST_TEST(!test(":", no_case[lower]));
+        BOOST_TEST(!test(":", no_case[upper]));
     }
 
     {

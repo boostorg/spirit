@@ -15,26 +15,29 @@
 
 #include <iterator>
 
-namespace boost::spirit::x3
+namespace boost { namespace spirit { namespace x3
 {
+    ///////////////////////////////////////////////////////////////////////////
+    // The base char_parser
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Derived>
     struct char_parser : parser<Derived>
     {
-        template <std::forward_iterator It, std::sentinel_for<It> Se, typename Context, typename Attribute>
-        [[nodiscard]] constexpr bool parse(
-            It& first, Se const& last, Context const& context, unused_type, Attribute& attr
-        ) const // I (saki7) don't think this can ever be noexcept, due to the nature of the operations below
+        template <typename Iterator, typename Context, typename Attribute>
+        bool parse(
+            Iterator& first, Iterator const& last
+          , Context const& context, unused_type, Attribute& attr) const
         {
             x3::skip_over(first, last, context);
             if (first != last && this->derived().test(*first, context))
             {
-                x3::traits::move_to(std::iter_value_t<It>{*first}, attr);
+                x3::traits::move_to(std::iter_value_t<Iterator>{*first}, attr);
                 ++first;
                 return true;
             }
             return false;
         }
     };
-} // boost::spirit::x3
+}}}
 
 #endif
