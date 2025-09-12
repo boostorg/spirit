@@ -53,7 +53,7 @@ Consists of:
 
 [Documentation](http://www.boost.org/doc/libs/develop/libs/spirit/classic/index.html)
 
-An elderling member of Spirit. It receives only limited maintenance, but
+An elderling member of Spirit. It receives only limited maintanance, but
 it is still used even inside Boost by [Boost.Serialization] and [Boost.Wave]
 libraries. It also contains Phoenix V1.
 
