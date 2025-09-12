@@ -13,7 +13,6 @@
 #include <boost/fusion/include/std_pair.hpp>
 
 #include <boost/variant.hpp>
-
 #include <string>
 #include <vector>
 #include <cstring>
@@ -109,14 +108,15 @@ int main()
     using spirit_test::test_attr;
     using spirit_test::test;
 
-    using namespace boost::spirit::x3::standard;
+    using namespace boost::spirit::x3::ascii;
     using boost::spirit::x3::rule;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::eps;
     using boost::spirit::x3::unused_type;
 
-    // synth attribute value-init
-    {
+
+    { // synth attribute value-init
+
         std::string s;
         typedef rule<class r, std::string> rule_type;
 
@@ -128,15 +128,17 @@ int main()
         BOOST_TEST(s == "abcdef");
     }
 
-    // synth attribute value-init
-    {
+    { // synth attribute value-init
+
         std::string s;
         typedef rule<class r, std::string> rule_type;
 
         auto rdef = rule_type() =
-            alpha[([](auto& ctx) {
-                _val(ctx) += _attr(ctx);
-            })]
+            alpha /
+               [](auto& ctx)
+               {
+                  _val(ctx) += _attr(ctx);
+               }
             ;
 
         BOOST_TEST(test_attr("abcdef", +rdef, s));
@@ -146,16 +148,13 @@ int main()
     {
         auto r = rule<class r_id, int>{} = eps[([] (auto& ctx) {
             using boost::spirit::x3::_val;
-            static_assert(
-                std::is_same_v<std::decay_t<decltype(_val(ctx))>, unused_type>,
-                "Attribute must not be synthesized"
-            );
+            static_assert(std::is_same<std::decay_t<decltype(_val(ctx))>, unused_type>::value,
+                "Attribute must not be synthesized");
         })];
         BOOST_TEST(test("", r));
     }
 
-    // ensure no unneeded synthesization, copying and moving occurred
-    {
+    { // ensure no unneeded synthesization, copying and moving occurred
         stationary st { 0 };
         BOOST_TEST(test_attr("{42}", check_stationary::b, st));
         BOOST_TEST_EQ(st.val, 42);
