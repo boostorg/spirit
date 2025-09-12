@@ -74,8 +74,6 @@ jobs:
     name: "[${{ matrix.cpp_version.name }}] ${{ matrix.spirit_component }} | ${{ matrix.compiler.toolset }}-${{ matrix.compiler.version }} (${{ matrix.build_type.name }}) @ ${{ matrix.os.name }}-${{ matrix.os.version }}"
 
     needs: changes
-    if: ${{ needs.changes.outputs.spirit_component != '[]' && needs.changes.outputs.spirit_component != '' }}
-
     runs-on: ${{ matrix.os.name }}-${{ matrix.os.version }}
 
     strategy:
