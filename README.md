@@ -1,4 +1,5 @@
-# Spirit [![Build Status](https://github.com/boostorg/spirit/actions/workflows/ci.yml/badge.svg)](https://github.com/boostorg/spirit/actions/workflows/ci.yml)
+Spirit
+======
 
 Spirit is a set of C++ libraries for parsing and output generation implemented as
 Domain Specific Embedded Languages (DSEL) using Expression templates and Template
