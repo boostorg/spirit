@@ -9,295 +9,300 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  BOOST_SPIRIT_BUILD_JOBS: 4
-  BOOST_SPIRIT_CACHED_UPSTREAM_LIBS: --with-regex --with-thread --with-atomic --with-chrono --with-container --with-date_time --with-exception --with-math
+    PROJECT: libs/spirit
 
 jobs:
-  changes:
-    runs-on: ubuntu-latest
-    outputs:
-      spirit_component: ${{ steps.filter.outputs.changes }}
-      karma: ${{ steps.filter.outputs.karma }}
-      lex: ${{ steps.filter.outputs.lex }}
-      qi: ${{ steps.filter.outputs.qi }}
-      support: ${{ steps.filter.outputs.support }}
-      repository: ${{ steps.filter.outputs.repository }}
-      x3: ${{ steps.filter.outputs.x3 }}
-    steps:
-      - uses: actions/checkout@v5
-      - uses: dorny/paths-filter@v3
-        id: filter
-        with:
-          # Note: references to "support" directory in X3 can be completely
-          # eliminated as soon as those components are moved to X3's
-          # self-contained location
-          filters: |
-            karma:
-              - '.github/workflows/*.yml'
-              - 'include/boost/spirit/home/support/**/*'
-              - 'include/boost/spirit/home/support.hpp'
-              - 'include/boost/spirit/home/karma/**/*'
-              - 'include/boost/spirit/home/karma.hpp'
-              - 'test/karma/**/*'
-            lex:
-              - '.github/workflows/*.yml'
-              - 'include/boost/spirit/home/support/**/*'
-              - 'include/boost/spirit/home/support.hpp'
-              - 'include/boost/spirit/home/lex/**/*'
-              - 'include/boost/spirit/home/lex.hpp'
-              - 'test/lex/**/*'
-            qi:
-              - '.github/workflows/*.yml'
-              - 'include/boost/spirit/home/support/**/*'
-              - 'include/boost/spirit/home/support.hpp'
-              - 'include/boost/spirit/home/qi/**/*'
-              - 'include/boost/spirit/home/qi.hpp'
-              - 'test/qi/**/*'
-            support:
-              - '.github/workflows/*.yml'
-              - 'include/boost/spirit/home/support/**/*'
-              - 'include/boost/spirit/home/support.hpp'
-              - 'test/support/**/*'
-            repository:
-              - '.github/workflows/*.yml'
-              - 'include/boost/spirit/repository/**/*'
-              - 'repository/**/*'
-            x3:
-              - '.github/workflows/*.yml'
-              - 'include/boost/spirit/home/x3/**/*'
-              - 'include/boost/spirit/home/x3.hpp'
-              - 'test/x3/**/*'
-              - 'include/boost/spirit/home/support/char_set/**/*'
-              - 'include/boost/spirit/home/support/char_encoding/**/*'
-
-  build:
-    name: "[${{ matrix.cpp_version.name }}] ${{ matrix.spirit_component }} | ${{ matrix.compiler.toolset }}-${{ matrix.compiler.version }} (${{ matrix.build_type.name }}) @ ${{ matrix.os.name }}-${{ matrix.os.version }}"
-
-    needs: changes
-    if: ${{ needs.changes.outputs.spirit_component != '[]' && needs.changes.outputs.spirit_component != '' }}
-
-    runs-on: ${{ matrix.os.name }}-${{ matrix.os.version }}
-
+  posix:
     strategy:
       fail-fast: false
-
       matrix:
-        os:
-          - name: ubuntu
-            version: 24.04
-          - name: windows
-            version: 2022
-        build_type:
-          - name: Debug
-            lowercase: debug
-          - name: Release
-            lowercase: release
-        cpp_version:
-          - name: C++11
-            number: 11
-          - name: C++23
-            number: 23
-            msvc_std: /std:c++23preview
-          - name: C++26
-            number: 26
-            msvc_std: /std:c++latest
-        compiler:
-          - name: GCC
-            toolset: gcc
-            version: 14
-            cxxflags: -fdiagnostics-color=always
-          - name: Clang
-            toolset: clang
-            version: 22
-            cxxflags: -fcolor-diagnostics
-          - name: MSVC
-            toolset: msvc
-            version: 2022
-            cxxflags: /EHsc /utf-8
+        include:
+          - name: "C++17 test/x3"
+            buildtype: "boost"
+            packages: "clang-18 libc++-18-dev libc++abi-18-dev libunwind-18-dev jq ccache"
+            packages_to_remove: ""
+            os: "ubuntu-22.04"
+            cxx: "clang-18"
+            sources: ""
+            llvm_os: "jammy"
+            llvm_ver: "18"
+            std: "17"
+            job: "test/x3"
+            travis_compiler: "clang-18"
+          - name: "C++17 test/x3"
+            buildtype: "boost"
+            packages: "g++-13 jq ccache"
+            packages_to_remove: ""
+            os: "ubuntu-22.04"
+            cxx: "gcc-13"
+            sources: ""
+            llvm_os: ""
+            llvm_ver: ""
+            std: "17"
+            job: "test/x3"
+            travis_compiler: "gcc-13"
+          - name: "C++11 test/qi"
+            buildtype: "boost"
+            packages: "clang-14 libc++-14-dev libc++abi-14-dev libunwind-14-dev jq ccache"
+            packages_to_remove: ""
+            os: "ubuntu-22.04"
+            cxx: "clang-14"
+            sources: ""
+            llvm_os: "jammy"
+            llvm_ver: "14"
+            std: "11"
+            job: "test/qi"
+            travis_compiler: "clang-14"
+          - name: "C++11 test/karma"
+            buildtype: "boost"
+            packages: "clang-14 libc++-14-dev libc++abi-14-dev libunwind-14-dev jq ccache"
+            packages_to_remove: ""
+            os: "ubuntu-22.04"
+            cxx: "clang-14"
+            sources: ""
+            llvm_os: "jammy"
+            llvm_ver: "14"
+            std: "11"
+            job: "test/karma"
+            travis_compiler: "clang-14"
+          - name: "C++11 test/lex"
+            buildtype: "boost"
+            packages: "clang-14 libc++-14-dev libc++abi-14-dev libunwind-14-dev jq ccache"
+            packages_to_remove: ""
+            os: "ubuntu-22.04"
+            cxx: "clang-14"
+            sources: ""
+            llvm_os: "jammy"
+            llvm_ver: "14"
+            std: "11"
+            job: "test/lex"
+            travis_compiler: "clang-14"
+          - name: "C++11 test/support"
+            buildtype: "boost"
+            packages: "clang-14 libc++-14-dev libc++abi-14-dev libunwind-14-dev jq ccache"
+            packages_to_remove: ""
+            os: "ubuntu-22.04"
+            cxx: "clang-14"
+            sources: ""
+            llvm_os: "jammy"
+            llvm_ver: "14"
+            std: "11"
+            job: "test/support"
+            travis_compiler: "clang-14"
+          - name: "C++11 repository/test"
+            buildtype: "boost"
+            packages: "clang-14 libc++-14-dev libc++abi-14-dev libunwind-14-dev jq ccache"
+            packages_to_remove: ""
+            os: "ubuntu-22.04"
+            cxx: "clang-14"
+            sources: ""
+            llvm_os: "jammy"
+            llvm_ver: "14"
+            std: "11"
+            job: "repository/test"
+            travis_compiler: "clang-14"
+          - name: "C++11 test/qi"
+            buildtype: "boost"
+            packages: "g++-11 jq ccache"
+            packages_to_remove: ""
+            os: "ubuntu-22.04"
+            cxx: "gcc-11"
+            sources: ""
+            llvm_os: ""
+            llvm_ver: ""
+            std: "11"
+            job: "test/qi"
+            travis_compiler: "gcc-11"
+          - name: "C++11 test/karma"
+            buildtype: "boost"
+            packages: "g++-11 jq ccache"
+            packages_to_remove: ""
+            os: "ubuntu-22.04"
+            cxx: "gcc-11"
+            sources: ""
+            llvm_os: ""
+            llvm_ver: ""
+            std: "11"
+            job: "test/karma"
+            travis_compiler: "gcc-11"
+          - name: "C++11 test/lex"
+            buildtype: "boost"
+            packages: "g++-11 jq ccache"
+            packages_to_remove: ""
+            os: "ubuntu-22.04"
+            cxx: "gcc-11"
+            sources: ""
+            llvm_os: ""
+            llvm_ver: ""
+            std: "11"
+            job: "test/lex"
+            travis_compiler: "gcc-11"
+          - name: "C++11 test/support"
+            buildtype: "boost"
+            packages: "g++-11 jq ccache"
+            packages_to_remove: ""
+            os: "ubuntu-22.04"
+            cxx: "gcc-11"
+            sources: ""
+            llvm_os: ""
+            llvm_ver: ""
+            std: "11"
+            job: "test/support"
+            travis_compiler: "gcc-11"
+          - name: "C++11 repository/test"
+            buildtype: "boost"
+            packages: "g++-11 jq ccache"
+            packages_to_remove: ""
+            os: "ubuntu-22.04"
+            cxx: "gcc-11"
+            sources: ""
+            llvm_os: ""
+            llvm_ver: ""
+            std: "11"
+            job: "repository/test"
+            travis_compiler: "gcc-11"
 
-        spirit_component: ${{ fromJSON(needs.changes.outputs.spirit_component) }}
-
-        exclude:
-          # Blacklist all invalid combinations of environments
-          - os:
-              name: windows
-            cpp_version:
-              number: 11 # /std:c++11 is no longer supported
-          - os:
-              name: windows
-            compiler:
-              name: GCC
-          - os:
-              name: windows
-            compiler:
-              name: Clang
-          - os:
-              name: ubuntu
-            compiler:
-              name: MSVC
-
-          # Blacklist incompatible toolchains
-          - spirit_component: karma
-            cpp_version:
-              number: 23
-          - spirit_component: karma
-            cpp_version:
-              number: 26
-          - spirit_component: lex
-            cpp_version:
-              number: 23
-          - spirit_component: lex
-            cpp_version:
-              number: 26
-          - spirit_component: qi
-            cpp_version:
-              number: 23
-          - spirit_component: qi
-            cpp_version:
-              number: 26
-          - spirit_component: support
-            cpp_version:
-              number: 23
-          - spirit_component: support
-            cpp_version:
-              number: 26
-          - spirit_component: repository
-            cpp_version:
-              number: 23
-          - spirit_component: repository
-            cpp_version:
-              number: 26
-          - spirit_component: x3
-            cpp_version:
-              number: 11
+    runs-on: ${{ matrix.os }}
+    container: ${{ matrix.container }}
 
     steps:
-      - uses: actions/checkout@v5
-        with:
-          # required for upstream Boost version detection
-          # sadly not working due to upstream bug: https://github.com/actions/checkout/issues/1471
-          fetch-tags: true
+      - name: Check if running in container
+        if: matrix.container != ''
+        run: echo "GHA_CONTAINER=${{ matrix.container }}" >> $GITHUB_ENV
 
-      - name: Fetch git tags
-        run: |
-          git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+      - uses: actions/checkout@v2
 
       - name: Initialize Ubuntu
-        if: matrix.os.name == 'ubuntu'
+        if: matrix.os == 'ubuntu-22.04'
         run: |
           sudo echo "set man-db/auto-update false" | sudo debconf-communicate
           sudo dpkg-reconfigure man-db
-          sudo apt-get install -y jq
 
-      - name: Setup GCC
-        if: matrix.compiler.toolset == 'gcc'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y g++-${{ matrix.compiler.version }}
-
-      - name: Setup Clang
-        if: matrix.compiler.toolset == 'clang'
-        run: |
-          wget https://apt.llvm.org/llvm.sh
-          chmod +x ./llvm.sh
-          sudo ./llvm.sh ${{ matrix.compiler.version }}
-          sudo apt-get install -y libc++-${{ matrix.compiler.version }}-dev libc++abi-${{ matrix.compiler.version }}-dev
-          echo "BOOST_SPIRIT_STDLIB=stdlib=libc++" >> "$GITHUB_ENV"
-
-      - name: Fetch Environment Info
-        id: env-info
+      - name: Linux
         shell: bash
+        env:
+          CXX: ${{ matrix.cxx }}
+          SOURCES: ${{ matrix.sources }}
+          LLVM_OS: ${{ matrix.llvm_os }}
+          LLVM_VER: ${{ matrix.llvm_ver }}
+          PACKAGES: ${{ matrix.packages }}
+          PACKAGES_TO_REMOVE: ${{ matrix.packages_to_remove }}
+          JOB_BUILDTYPE: ${{ matrix.buildtype }}
+          STD: ${{ matrix.std }}
+          JOB: ${{ matrix.job }}
+          TRAVIS_COMPILER: ${{ matrix.travis_compiler }}
+          TRAVIS_BRANCH: ${{ github.base_ref }}
+          TRAVIS_OS_NAME: "linux"
         run: |
+          echo '==================================> SETUP'
+          echo '==================================> PACKAGES'
           set -e
-          export BOOST_RELEASE_VERSION_NAME=$(git for-each-ref refs/tags --sort=-refname --format='%(refname:lstrip=-1)' --count=1)
-          echo "BOOST_RELEASE_VERSION_NAME: $BOOST_RELEASE_VERSION_NAME"
-          echo "BOOST_RELEASE_VERSION_NAME=$BOOST_RELEASE_VERSION_NAME" >> "$GITHUB_OUTPUT"
+          if [ -n "$PACKAGES_TO_REMOVE" ]; then sudo apt-get purge -y $PACKAGES_TO_REMOVE; fi
+          echo ">>>>> APT: REPO.."
+          for i in {1..3}; do sudo -E apt-add-repository -y "ppa:ubuntu-toolchain-r/test" && break || sleep 2; done
 
-          if [ "${{ matrix.os.name }}" = "windows" ]; then
-            export BOOST_ROOT=$(cygpath -w $HOME/boost)
-          else
-            export BOOST_ROOT=$HOME/boost
+          if test -n "${LLVM_OS}" ; then
+              wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+              if test -n "${LLVM_VER}" ; then
+                  sudo -E apt-add-repository "deb http://apt.llvm.org/${LLVM_OS}/ llvm-toolchain-${LLVM_OS}-${LLVM_VER} main"
+              else
+                  # Snapshot (i.e. trunk) build of clang
+                  sudo -E apt-add-repository "deb http://apt.llvm.org/${LLVM_OS}/ llvm-toolchain-${LLVM_OS} main"
+              fi
           fi
-          echo "BOOST_ROOT: $BOOST_ROOT"
-          echo "BOOST_ROOT=$BOOST_ROOT" >> "$GITHUB_OUTPUT"
+          echo ">>>>> APT: UPDATE.."
+          sudo -E apt-get -o Acquire::Retries=3 update
+          if test -n "${SOURCES}" ; then
+              echo ">>>>> APT: INSTALL SOURCES.."
+              for SOURCE in $SOURCES; do
+                  sudo -E apt-add-repository ppa:$SOURCE
+              done
+          fi
+          echo ">>>>> APT: INSTALL ${PACKAGES}.."
+          sudo -E DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=3 -y --no-install-suggests --no-install-recommends install ${PACKAGES}
 
-      - name: Cache upstream Boost libraries (restore)
-        id: cache-boost
-        uses: actions/cache/restore@v4
-        with:
-          key: ${{ steps.env-info.outputs.BOOST_RELEASE_VERSION_NAME }}-${{ matrix.os.name }}-${{ matrix.os.version }}-${{ matrix.compiler.toolset }}-${{ matrix.compiler.version }}-${{ matrix.cpp_version.name }}-${{ matrix.build_type.name }}
-          path: |
-            ${{ steps.env-info.outputs.BOOST_ROOT }}
-            !${{ steps.env-info.outputs.BOOST_ROOT }}/.git
+          echo '==================================> INSTALL AND COMPILE'
+          set -e
+          export TRAVIS_BUILD_DIR=$(pwd)
+          export TRAVIS_BRANCH=${TRAVIS_BRANCH:-$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')}
+          export VCS_COMMIT_ID=$GITHUB_SHA
+          export GIT_COMMIT=$GITHUB_SHA
+          export REPO_NAME=$(basename $GITHUB_REPOSITORY)
+          export USER=$(whoami)
+          export CC=${CC:-gcc}
+          export PATH=~/.local/bin:/usr/local/bin:$PATH
+          export BOOST_ROOT="$HOME/boost"
+          export BOOST_BUILD_PATH="$HOME/build-boost"
+          export GITHUB_EVENT_NUMBER=${{ github.event.number }}
+          export TRAVIS_PULL_REQUEST=${GITHUB_EVENT_NUMBER:-false}
+          export TRAVIS_REPO_SLUG=$REPO_NAME
 
-      - name: Clone upstream Boost libraries
-        if: steps.cache-boost.outputs.cache-hit != 'true'
-        run: |
-          git -c advice.detachedHead=false clone --no-tags --single-branch --branch=${{ steps.env-info.outputs.BOOST_RELEASE_VERSION_NAME }} --depth=1 --quiet --recurse-submodules=":(exclude)libs/spirit" --shallow-submodules https://github.com/boostorg/boost.git ${{ steps.env-info.outputs.BOOST_ROOT }}
 
-      - name: Build upstream Boost libraries (Ubuntu)
-        if: matrix.os.name == 'ubuntu' && steps.cache-boost.outputs.cache-hit != 'true'
-        env:
-          BOOST_ROOT: ${{ steps.env-info.outputs.BOOST_ROOT }}
-        working-directory: ${{ steps.env-info.outputs.BOOST_ROOT }}
-        shell: bash
-        run: |
-          set -xe
-          rm -rf libs/spirit
-          ./bootstrap.sh --with-toolset=${{ matrix.compiler.toolset }}
-          ./b2 -d0 headers
-          ./b2 -d1 -j$BOOST_SPIRIT_BUILD_JOBS $BOOST_SPIRIT_CACHED_UPSTREAM_LIBS link=shared threading=multi variant=${{ matrix.build_type.lowercase }} toolset=${{ matrix.compiler.toolset }}-${{ matrix.compiler.version }} cxxstd=${{ matrix.cpp_version.number }} cxxflags="${{ matrix.compiler.cxxflags }}" $BOOST_SPIRIT_STDLIB warnings=extra warnings-as-errors=off
+          if [ "$JOB_BUILDTYPE" == "boost" ]; then
 
-      - uses: TheMrMilchmann/setup-msvc-dev@v3
-        if: matrix.os.name == 'windows'
-        with:
-          arch: x64
+          echo '==================================> INSTALL'
 
-      - name: Build upstream Boost libraries (Windows)
-        if: matrix.os.name == 'windows' && steps.cache-boost.outputs.cache-hit != 'true'
-        env:
-          BOOST_ROOT: ${{ steps.env-info.outputs.BOOST_ROOT }}
-        working-directory: ${{ steps.env-info.outputs.BOOST_ROOT }}
-        shell: cmd
-        run: |
-          rd /s /q libs\spirit
-          .\bootstrap.bat --with-toolset=${{ matrix.compiler.toolset }}
-          .\b2 -d0 headers
-          .\b2 -d1 -j%BOOST_SPIRIT_BUILD_JOBS% %BOOST_SPIRIT_CACHED_UPSTREAM_LIBS% link=shared threading=multi variant=${{ matrix.build_type.lowercase }} toolset=${{ matrix.compiler.toolset }} cxxflags="${{ matrix.cpp_version.msvc_std }} ${{matrix.compiler.cxxflags}}" warnings=extra warnings-as-errors=off
+          export CACHE_NAME=$TRAVIS_OS_NAME-$TOOLSET-$STD-$JOB
+          export PATH=$BOOST_ROOT:$PATH
+          if [[ "$TRAVIS_COMPILER" =~ ^clang- ]]; then export STDLIB=stdlib=libc++ ; fi
+          # Creating ~/user-config.jam file
+          sed 's/^  //' > ~/user-config.jam << 'EOF'
 
-      - name: Cache upstream Boost libraries
-        if: steps.cache-boost.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v4
-        with:
-          key: ${{ steps.cache-boost.outputs.cache-primary-key }}
-          path: |
-            ${{ steps.env-info.outputs.BOOST_ROOT }}
-            !${{ steps.env-info.outputs.BOOST_ROOT }}/.git
+          import feature ;
+          import os ;
+          import regex ;
+          import toolset ;
 
-      - name: Build and test (Ubuntu)
-        if: matrix.os.name == 'ubuntu'
-        env:
-          BOOST_ROOT: ${{ steps.env-info.outputs.BOOST_ROOT }}
-        working-directory: ${{ steps.env-info.outputs.BOOST_ROOT }}
-        shell: bash
-        run: |
-          set -xe
-          cp -rp $GITHUB_WORKSPACE libs/spirit
-          cd libs/spirit/test
-          ln -s ../repository/test repository # workaround legacy directory structure
-          cd ${{ matrix.spirit_component }}
 
-          $BOOST_ROOT/b2 -d1 -j$BOOST_SPIRIT_BUILD_JOBS link=shared threading=multi variant=${{ matrix.build_type.lowercase }} toolset=${{ matrix.compiler.toolset }}-${{ matrix.compiler.version }} cxxstd=${{ matrix.cpp_version.number }} cxxflags="${{ matrix.compiler.cxxflags }}" $BOOST_SPIRIT_STDLIB warnings=extra warnings-as-errors=off
+          local TOOLSET = [ os.environ TRAVIS_COMPILER ] ;
+          local toolset-parts = [ regex.split $(TOOLSET) "-" ] ;
+          local toolset-name = $(toolset-parts[1]) ;
+          local toolset-feature = $(toolset-parts[2-]:J="-") ;
 
-      - name: Build and test (Windows)
-        if: matrix.os.name == 'windows'
-        env:
-          BOOST_ROOT: ${{ steps.env-info.outputs.BOOST_ROOT }}
-        working-directory: ${{ steps.env-info.outputs.BOOST_ROOT }}
-        shell: cmd
-        run: |
-          xcopy /S /E /Q %GITHUB_WORKSPACE% libs\spirit\
-          cd libs\spirit\test
-          cd ${{ matrix.spirit_component }}
+          local cxx ;
+          switch $(toolset-name) {
+              case gcc   : cxx ?= [ regex.replace $(TOOLSET) "gcc" "g++" ] ;
+              case clang : cxx ?= [ regex.replace $(TOOLSET) "clang" "clang++" ] ;
+              case *     : EXIT "user-config: Unsupported toolset $(toolset-name)" ;
+          }
 
-          %BOOST_ROOT%\b2 -d1 -j%BOOST_SPIRIT_BUILD_JOBS% link=shared threading=multi variant=${{ matrix.build_type.lowercase }} toolset=${{ matrix.compiler.toolset }} cxxflags="${{ matrix.cpp_version.msvc_std }} ${{matrix.compiler.cxxflags}}" warnings=extra warnings-as-errors=off
+          using $(toolset-name) : $(toolset-feature) : ccache $(cxx) ;
+
+          # Release variant with enabled asserts
+          variant sanitize : <optimization>speed <debug-symbols>off <inlining>full
+                             <runtime-debugging>off ;
+
+          EOF
+          # Determining the root branch
+          if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
+            export BRANCH=$TRAVIS_BRANCH
+          else
+            # It is a pull request. Retrieve the base branch from GitHub
+            GH_PR_API=https://api.github.com/repos/$TRAVIS_REPO_SLUG/pulls/$TRAVIS_PULL_REQUEST
+            export BRANCH=`curl -s $GH_PR_API | jq -r .head.ref`;
+          fi
+          if [[ ! "$BRANCH" =~ ^(master|develop)$ ]]; then
+            # Travis has been triggered not from our main branches.
+            # Find out the base branch from the git history
+            # TODO: Not implemented yet, but in most cases it will be develop branch
+            export BRANCH=develop
+          fi
+          echo Root branch is $BRANCH
+
+          env
+          sed 's/--depth=1/--depth=9/g' `which git` > ~/git && chmod +x ~/git
+          ~/git clone -j10 --branch=$BRANCH --depth=1 --quiet --recurse-submodules=":(exclude)$PROJECT" --shallow-submodules https://github.com/boostorg/boost.git $BOOST_ROOT
+          pushd $BOOST_ROOT
+          rm -rf $PROJECT
+          ./bootstrap.sh --with-toolset=clang
+          ./b2 headers
+          cp -rp $TRAVIS_BUILD_DIR $PROJECT
+          ln -s $PROJECT $TRAVIS_BUILD_DIR
+          cd $PROJECT
+          cd $JOB
+
+          echo '==================================> SCRIPT'
+
+          b2 link=shared threading=multi variant=release,sanitize toolset=$TRAVIS_COMPILER cxxstd=$STD $STDLIB warnings=extra warnings-as-errors=off define=BOOST_SPIRIT_X3_HIDE_CXX17_WARNING
+
+          fi

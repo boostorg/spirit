@@ -4,7 +4,6 @@
     Copyright (c) 2011 Jan Frederick Eick
     Copyright (c) 2011 Christopher Jefferson
     Copyright (c) 2006 Stephen Nutt
-    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,7 +15,7 @@
 #include <boost/spirit/home/x3/support/traits/attribute_type.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
 #include <boost/spirit/home/x3/support/traits/numeric_traits.hpp>
-#include <boost/spirit/home/x3/support/traits/char_encoding_traits.hpp>
+#include <boost/spirit/home/support/char_encoding/ascii.hpp>
 
 #include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/preprocessor/iteration/local.hpp>
@@ -123,7 +122,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         {
             return (Radix <= 10 || (ch >= '0' && ch <= '9'))
                 ? ch - '0'
-                : traits::char_encoding_traits<Char>::encoding_type::tolower(ch) - 'a' + 10;
+                : char_encoding::ascii::tolower(ch) - 'a' + 10;
         }
     };
 
@@ -343,7 +342,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
             if (count + leading_zeros >= MinDigits)
             {
-                traits::move_to(std::move(val), attr);
+                traits::move_to(val, attr);
                 first = it;
                 return true;
             }
@@ -445,7 +444,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             {
                 if (count == 0) // must have at least one digit
                     return false;
-                traits::move_to(std::move(val), attr);
+                traits::move_to(val, attr);
                 first = it;
                 return true;
             }
@@ -459,7 +458,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                   , SPIRIT_NUMERIC_INNER_LOOP, _)
             }
 
-            traits::move_to(std::move(val), attr);
+            traits::move_to(val, attr);
             first = it;
             return true;
         }

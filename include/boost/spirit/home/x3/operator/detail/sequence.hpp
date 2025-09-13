@@ -1,6 +1,5 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
-    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -26,15 +25,18 @@
 
 #include <boost/mpl/if.hpp>
 
-#include <iterator>
+#include <boost/type_traits/add_reference.hpp>
+#include <boost/type_traits/is_same.hpp>
 
-namespace boost::spirit::x3
+#include <iterator> // for std::make_move_iterator
+
+namespace boost { namespace spirit { namespace x3
 {
     template <typename Left, typename Right>
     struct sequence;
-} // boost::spirit::x3
+}}}
 
-namespace boost::spirit::x3::detail
+namespace boost { namespace spirit { namespace x3 { namespace detail
 {
     template <typename Parser, typename Context, typename Enable = void>
     struct sequence_size
@@ -356,62 +358,62 @@ namespace boost::spirit::x3::detail
     template <typename Left, typename Right, typename Context, typename RContext>
     struct parse_into_container_impl<sequence<Left, Right>, Context, RContext>
     {
-        using parser_type = sequence<Left, Right>;
+        typedef sequence<Left, Right> parser_type;
 
-        template <typename Attribute>
-        static constexpr bool is_container_substitute = traits::is_substitute_v<
-            traits::attribute_of_t<parser_type, Context>,
-            traits::container_value_t<Attribute>
-        >;
-
-        template <std::forward_iterator It, std::sentinel_for<It> Se, typename Attribute>
-            requires is_container_substitute<Attribute>
-        [[nodiscard]] static constexpr bool
-        call(
-            parser_type const& parser, It& first, Se const& last,
-            Context const& context, RContext& rcontext, Attribute& attr
-        ) noexcept(noexcept(parse_into_container_base_impl<parser_type>::call(
-            parser, first, last, context, rcontext, attr
-        )))
-        {
-            return parse_into_container_base_impl<parser_type>::call(
-                parser, first, last, context, rcontext, attr
-            );
-        }
-
-        template <std::forward_iterator It, std::sentinel_for<It> Se, typename Attribute>
-            requires (!is_container_substitute<Attribute>)
-        [[nodiscard]] static constexpr bool
-        call(
-            parser_type const& parser, It& first, Se const& last,
-            Context const& context, RContext& rcontext, Attribute& attr
-        ) // never noexcept (requires container insertion)
+        template <typename Iterator, typename Attribute>
+        static bool call(
+            parser_type const& parser
+          , Iterator& first, Iterator const& last
+          , Context const& context, RContext& rcontext, Attribute& attr, mpl::false_)
         {
             // inform user what went wrong if we jumped here in attempt to
             // parse incompatible sequence into fusion::map
-            static_assert(
-                !std::is_same_v<traits::attribute_category_t<Attribute>, traits::associative_attribute>,
-                "To parse directly into fusion::map sequence must produce tuple attribute "
-                "where type of first element is existing key in fusion::map and second element "
-                "is value to be stored under that key"
-            );
+            static_assert(!is_same< typename traits::attribute_category<Attribute>::type,
+                  traits::associative_attribute>::value,
+                  "To parse directly into fusion::map sequence must produce tuple attribute "
+                  "where type of first element is existing key in fusion::map and second element "
+                  "is value to be stored under that key");
 
             Attribute attr_{};
-            if (!detail::parse_sequence(
-                parser, first, last, context, rcontext, attr_, traits::container_attribute()
-            ))
+            if (!parse_sequence(parser
+			       , first, last, context, rcontext, attr_, traits::container_attribute()))
             {
                 return false;
             }
-            traits::append(
-                attr,
-                std::make_move_iterator(traits::begin(attr_)),
-                std::make_move_iterator(traits::end(attr_))
-            );
+            traits::append(attr, std::make_move_iterator(traits::begin(attr_)),
+                                 std::make_move_iterator(traits::end(attr_)));
             return true;
+        }
+
+        template <typename Iterator, typename Attribute>
+        static bool call(
+            parser_type const& parser
+          , Iterator& first, Iterator const& last
+          , Context const& context, RContext& rcontext, Attribute& attr, mpl::true_)
+        {
+            return parse_into_container_base_impl<parser_type>::call(
+                parser, first, last, context, rcontext, attr);
+        }
+
+        template <typename Iterator, typename Attribute>
+        static bool call(
+            parser_type const& parser
+          , Iterator& first, Iterator const& last
+          , Context const& context, RContext& rcontext, Attribute& attr)
+        {
+            typedef typename
+                traits::attribute_of<parser_type, Context>::type
+            attribute_type;
+
+            typedef typename
+                traits::container_value<Attribute>::type
+            value_type;
+
+            return call(parser, first, last, context, rcontext, attr
+	        , typename traits::is_substitute<attribute_type, value_type>::type());
         }
     };
 
-} // boost::spirit::x3::detail
+}}}}
 
 #endif

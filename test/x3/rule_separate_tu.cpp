@@ -1,6 +1,5 @@
 /*=============================================================================
     Copyright (c) 2019 Nikita Kniazev
-    Copyright (c) 2025 Nana Sakisaka
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -20,19 +19,19 @@ auto nop = [](auto const&){};
 
 x3::rule<class used_attr1_r, int> used_attr1;
 auto const used_attr1_def = used_attr::grammar[nop];
-BOOST_SPIRIT_X3_DEFINE(used_attr1);
+BOOST_SPIRIT_DEFINE(used_attr1);
 
 x3::rule<class used_attr2_r, int> used_attr2;
 auto const used_attr2_def = unused_attr::grammar[nop];
-BOOST_SPIRIT_X3_DEFINE(used_attr2);
+BOOST_SPIRIT_DEFINE(used_attr2);
 
 x3::rule<class unused_attr1_r> unused_attr1;
 auto const unused_attr1_def = used_attr::grammar[nop];
-BOOST_SPIRIT_X3_DEFINE(unused_attr1);
+BOOST_SPIRIT_DEFINE(unused_attr1);
 
 x3::rule<class unused_attr2_r> unused_attr2;
 auto const unused_attr2_def = unused_attr::grammar[nop];
-BOOST_SPIRIT_X3_DEFINE(unused_attr2);
+BOOST_SPIRIT_DEFINE(unused_attr2);
 
 }
 

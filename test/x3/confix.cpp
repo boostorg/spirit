@@ -1,13 +1,10 @@
 /*=============================================================================
     Copyright (c) 2009 Chris Hoeppler
     Copyright (c) 2014 Lee Clagett
-    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-
-#include "test.hpp"
 
 #include <boost/spirit/home/x3/char.hpp>
 #include <boost/spirit/home/x3/core.hpp>
@@ -15,6 +12,8 @@
 #include <boost/spirit/home/x3/operator.hpp>
 #include <boost/spirit/home/x3/string.hpp>
 #include <boost/spirit/home/x3/directive/confix.hpp>
+
+#include "test.hpp"
 
 int main()
 {
@@ -26,7 +25,7 @@ int main()
     BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(x3::confix("/*", "*/"));
 
     {
-        constexpr auto comment = x3::confix("/*", "*/");
+        const auto comment = x3::confix("/*", "*/");
 
         BOOST_TEST(test_failure("/abcdef*/", comment["abcdef"]));
         BOOST_TEST(test_failure("/* abcdef*/", comment["abcdef"]));
@@ -36,18 +35,18 @@ int main()
         {
             unsigned value = 0;
             BOOST_TEST(
-                test_attr(" /* 123 */ ", comment[x3::uint_], value, x3::standard::space));
+                test_attr(" /* 123 */ ", comment[x3::uint_], value, x3::space));
             BOOST_TEST(value == 123);
 
             using x3::_attr;
             value = 0;
-            auto const lambda = [&value](auto& ctx) { value = _attr(ctx) + 1; };
+            const auto lambda = [&value](auto& ctx ){ value = _attr(ctx) + 1; };
             BOOST_TEST(test_attr("/*123*/", comment[x3::uint_][lambda], value));
             BOOST_TEST(value == 124);
         }
     }
     {
-        constexpr auto array = x3::confix('[', ']');
+        const auto array = x3::confix('[', ']');
 
         {
             std::vector<unsigned> values;

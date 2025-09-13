@@ -1,14 +1,11 @@
 /*=============================================================================
     Copyright (c) 2001-2013 Joel de Guzman
     Copyright (c) 2017 wanghan02
-    Copyright (c) 2024-2025 Nana Sakisaka
+    Copyright (c) 2024 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#define BOOST_SPIRIT_X3_USE_BOOST_OPTIONAL 0
-#define BOOST_SPIRIT_X3_NO_BOOST_ITERATOR_RANGE
-
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/x3/binary.hpp>
 #include <boost/spirit/home/x3/directive/with.hpp>
@@ -265,10 +262,10 @@ int TEST_MAIN_FUNC()
     using x3::eps;
     using x3::eoi;
     using x3::eol;
-    //using x3::attr;
+    using x3::attr;
     using x3::dword;
     using x3::int_;
-    using x3::shared_symbols;
+    using x3::symbols;
     using x3::confix;
     using x3::with;
     using x3::expectation_failure;
@@ -491,7 +488,7 @@ int TEST_MAIN_FUNC()
         });
 
         int n = 0;
-        TEST_ATTR_SUCCESS_PASS("abc", lit("abc") > x3::attr(12) > eoi, n);
+        TEST_ATTR_SUCCESS_PASS("abc", lit("abc") > attr(12) > eoi, n);
         BOOST_TEST(n == 12);
     }
 
@@ -512,7 +509,7 @@ int TEST_MAIN_FUNC()
             BOOST_TEST(x.where() == "a"sv);
         });
 
-        shared_symbols<> s;
+        symbols<> s;
         s.add("cat");
         TEST_SUCCESS_PASS("12cat", +digit > s);
         TEST_FAILURE("12dog", +digit > s, {

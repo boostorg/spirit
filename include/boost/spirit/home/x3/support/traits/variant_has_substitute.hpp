@@ -1,6 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
-    Copyright (c) 2025 Nana Sakisaka
+    http://spirit.sourceforge.net/
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -9,49 +9,43 @@
 #define BOOST_SPIRIT_X3_VARIANT_HAS_SUBSTITUTE_APR_18_2014_925AM
 
 #include <boost/spirit/home/x3/support/traits/is_substitute.hpp>
-#include <boost/mpl/find.hpp> // TODO: remove this
+#include <boost/mpl/find.hpp>
 
-#include <type_traits>
-
-namespace boost::spirit::x3::traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
-    namespace detail
+    template <typename Variant, typename T>
+    struct variant_has_substitute_impl
     {
-        template <typename Variant, typename T>
-        struct variant_has_substitute_impl
-        {
-            // Find a type from the Variant that can be a substitute for T.
-            // return true_ if one is found, else false_
+        // Find a type from the Variant that can be a substitute for T.
+        // return true_ if one is found, else false_
 
-            using variant_type = Variant;
-            using types = typename variant_type::types;
-            using end = typename mpl::end<types>::type;
-            using iter_1 = typename mpl::find<types, T>::type;
+        typedef Variant variant_type;
+        typedef typename variant_type::types types;
+        typedef typename mpl::end<types>::type end;
 
-            using iter = typename mpl::eval_if<
-                std::is_same<iter_1, end>,
+        typedef typename mpl::find<types, T>::type iter_1;
+
+        typedef typename
+            mpl::eval_if<
+                is_same<iter_1, end>,
                 mpl::find_if<types, traits::is_substitute<T, mpl::_1>>,
-                std::type_identity<iter_1>
-            >::type;
+                mpl::identity<iter_1>
+            >::type
+        iter;
 
-            using type = std::bool_constant<!std::is_same_v<iter, end>>;
-        };
-    } // detail
+        typedef mpl::not_<is_same<iter, end>> type;
+    };
 
     template <typename Variant, typename T>
     struct variant_has_substitute
-        : detail::variant_has_substitute_impl<Variant, T>::type
-    {};
-
-    template <typename Variant, typename T>
-    constexpr bool variant_has_substitute_v = variant_has_substitute<Variant, T>::value;
+        : variant_has_substitute_impl<Variant, T>::type {};
 
     template <typename T>
-    struct variant_has_substitute<unused_type, T> : std::true_type {};
+    struct variant_has_substitute<unused_type, T> : mpl::true_ {};
 
     template <typename T>
-    struct variant_has_substitute<unused_type const, T> : std::true_type {};
+    struct variant_has_substitute<unused_type const, T> : mpl::true_ {};
 
-} // boost::spirit::x3::traits
+}}}}
 
 #endif

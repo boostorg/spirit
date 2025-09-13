@@ -1,18 +1,15 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
-    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include "test.hpp"
-
 #include <boost/spirit/home/x3.hpp>
 #include <boost/fusion/include/std_pair.hpp>
-#include <boost/variant.hpp>
 
 #include <iostream>
 #include <string>
+#include "test.hpp"
 
 using boost::spirit::x3::rule;
 
@@ -22,14 +19,13 @@ rule<class indirect_rule, int> indirect_rule = "indirect_rule";
 auto const direct_rule_def = boost::spirit::x3::int_;
 auto const indirect_rule_def = direct_rule;
 
-BOOST_SPIRIT_X3_DEFINE(direct_rule)
-BOOST_SPIRIT_X3_DEFINE(indirect_rule)
+BOOST_SPIRIT_DEFINE(direct_rule, indirect_rule)
 
 int main()
 {
     using spirit_test::test;
     using spirit_test::test_attr;
-    using namespace boost::spirit::x3::standard;
+    using namespace boost::spirit::x3::ascii;
     using boost::spirit::x3::raw;
     using boost::spirit::x3::eps;
     using boost::spirit::x3::lit;
@@ -84,7 +80,7 @@ int main()
         boost::variant<int, range> attr;
 
         std::string str("test");
-        (void)parse(str.begin(), str.end(),  (int_ | raw[*char_]), attr);
+        parse(str.begin(), str.end(),  (int_ | raw[*char_]), attr);
 
         auto rng = boost::get<range>(attr);
         BOOST_TEST(std::string(rng.begin(), rng.end()) == "test");
@@ -93,7 +89,7 @@ int main()
     {
         std::vector<boost::iterator_range<std::string::iterator>> attr;
         std::string str("123abcd");
-        (void)parse(str.begin(), str.end()
+        parse(str.begin(), str.end()
           , (raw[int_] >> raw[*char_])
           , attr
         );
@@ -105,7 +101,7 @@ int main()
     {
         std::pair<int, boost::iterator_range<std::string::iterator>> attr;
         std::string str("123abcd");
-        (void)parse(str.begin(), str.end()
+        parse(str.begin(), str.end()
           , (int_ >> raw[*char_])
           , attr
         );

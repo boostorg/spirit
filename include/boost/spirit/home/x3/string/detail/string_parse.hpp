@@ -1,6 +1,5 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
-    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -10,22 +9,36 @@
 
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
 
-#include <string_view>
-#include <iterator>
-
-namespace boost::spirit::x3::detail
+namespace boost { namespace spirit { namespace x3 { namespace detail
 {
-    template <typename CharT, typename CharTraitsT, std::forward_iterator It, std::sentinel_for<It> Se, typename Attribute, typename CaseCompareFunc>
-    [[nodiscard]] constexpr bool
-    string_parse(
-        std::basic_string_view<CharT, CharTraitsT> const str,
-        It& first, Se const& last,
-        Attribute& attr, CaseCompareFunc const& compare
-    ) noexcept(std::is_same_v<std::remove_const_t<Attribute>, unused_type>)
+    template <typename Char, typename Iterator, typename Attribute, typename CaseCompareFunc>
+    inline bool string_parse(
+        Char const* str
+      , Iterator& first, Iterator const& last, Attribute& attr, CaseCompareFunc const& compare) 
     {
-        It i = first;
-        auto stri = str.begin();
-        auto str_last = str.end();
+        Iterator i = first;
+        Char ch = *str;
+
+        for (; !!ch; ++i)
+        {
+            if (i == last || (compare(ch, *i) != 0))
+                return false;
+            ch = *++str;
+        }
+
+        x3::traits::move_to(first, i, attr);
+        first = i;
+        return true;
+    }
+
+    template <typename String, typename Iterator, typename Attribute, typename CaseCompareFunc>
+    inline bool string_parse(
+        String const& str
+      , Iterator& first, Iterator const& last, Attribute& attr, CaseCompareFunc const& compare)
+    {
+        Iterator i = first;
+        typename String::const_iterator stri = str.begin();
+        typename String::const_iterator str_last = str.end();
 
         for (; stri != str_last; ++stri, ++i)
             if (i == last || (compare(*stri, *i) != 0))
@@ -35,29 +48,30 @@ namespace boost::spirit::x3::detail
         return true;
     }
 
-    template <typename CharT, typename CharTraitsT, std::forward_iterator It, std::sentinel_for<It> Se, typename Attribute, typename CaseCompareFunc>
-    [[nodiscard]] constexpr bool
-    string_parse(
-        std::basic_string<CharT, CharTraitsT> const& str,
-        It& first, Se const& last,
-        Attribute& attr, CaseCompareFunc const& compare
-    ) noexcept(std::is_same_v<std::remove_const_t<Attribute>, unused_type>)
+    template <typename Char, typename Iterator, typename Attribute>
+    inline bool string_parse(
+        Char const* uc_i, Char const* lc_i
+      , Iterator& first, Iterator const& last, Attribute& attr)
     {
-        return detail::string_parse(std::basic_string_view{str}, first, last, attr, compare);
+        Iterator i = first;
+
+        for (; *uc_i && *lc_i; ++uc_i, ++lc_i, ++i)
+            if (i == last || ((*uc_i != *i) && (*lc_i != *i)))
+                return false;
+        x3::traits::move_to(first, i, attr);
+        first = i;
+        return true;
     }
 
-    template <typename CharT, typename CharTraitsT, std::forward_iterator It, std::sentinel_for<It> Se, typename Attribute>
-    [[nodiscard]] constexpr bool
-    string_parse(
-        std::basic_string_view<CharT, CharTraitsT> const ucstr,
-        std::basic_string_view<CharT, CharTraitsT> const lcstr,
-        It& first, Se const& last, Attribute& attr
-    ) noexcept(std::is_same_v<std::remove_const_t<Attribute>, unused_type>)
+    template <typename String, typename Iterator, typename Attribute>
+    inline bool string_parse(
+        String const& ucstr, String const& lcstr
+      , Iterator& first, Iterator const& last, Attribute& attr)
     {
-        auto uc_i = ucstr.begin();
-        auto uc_last = ucstr.end();
-        auto lc_i = lcstr.begin();
-        It i = first;
+        typename String::const_iterator uc_i = ucstr.begin();
+        typename String::const_iterator uc_last = ucstr.end();
+        typename String::const_iterator lc_i = lcstr.begin();
+        Iterator i = first;
 
         for (; uc_i != uc_last; ++uc_i, ++lc_i, ++i)
             if (i == last || ((*uc_i != *i) && (*lc_i != *i)))
@@ -66,17 +80,6 @@ namespace boost::spirit::x3::detail
         first = i;
         return true;
     }
-
-    template <typename CharT, typename CharTraitsT, std::forward_iterator It, std::sentinel_for<It> Se, typename Attribute>
-    [[nodiscard]] constexpr bool
-    string_parse(
-        std::basic_string<CharT, CharTraitsT> const& ucstr,
-        std::basic_string<CharT, CharTraitsT> const& lcstr,
-        It& first, Se const& last, Attribute& attr
-    ) noexcept(std::is_same_v<std::remove_const_t<Attribute>, unused_type>)
-    {
-        return detail::string_parse(std::basic_string_view{ucstr}, std::basic_string_view{lcstr}, first, last, attr);
-    }
-} // boost::spirit::x3::detail
+}}}}
 
 #endif

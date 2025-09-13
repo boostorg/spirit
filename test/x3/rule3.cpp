@@ -1,23 +1,20 @@
 /*=============================================================================
     Copyright (c) 2001-2012 Joel de Guzman
-    Copyright (c) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-
-#include "test.hpp"
 
 #include <boost/spirit/home/x3.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 
 #include <boost/variant.hpp>
-
 #include <string>
 #include <vector>
 #include <cstring>
 #include <iostream>
+#include "test.hpp"
 
 #ifdef _MSC_VER
 // bogus https://developercommunity.visualstudio.com/t/buggy-warning-c4709/471956
@@ -37,10 +34,9 @@ struct f
 };
 
 
-struct stationary
+struct stationary : boost::noncopyable
 {
     explicit stationary(int i) : val{i} {}
-    stationary(stationary const&) = delete;
     stationary& operator=(int i) { val = i; return *this; }
 
     int val;
@@ -55,8 +51,7 @@ boost::spirit::x3::rule<class b_r, stationary> const b;
 auto const a_def = '{' >> boost::spirit::x3::int_ >> '}';
 auto const b_def = a;
 
-BOOST_SPIRIT_X3_DEFINE(a)
-BOOST_SPIRIT_X3_DEFINE(b)
+BOOST_SPIRIT_DEFINE(a, b)
 
 }
 
@@ -71,7 +66,7 @@ boost::spirit::x3::rule<class grammar_r, node_t> const grammar;
 
 auto const grammar_def = '[' >> grammar % ',' >> ']' | boost::spirit::x3::int_;
 
-BOOST_SPIRIT_X3_DEFINE(grammar)
+BOOST_SPIRIT_DEFINE(grammar)
 
 }
 
@@ -97,9 +92,9 @@ namespace check_recursive_tuple {
 
 x3::rule<class grammar_r, recursive_tuple> const grammar;
 auto const grammar_def = x3::int_ >> ('{' >> grammar % ',' >> '}' | x3::eps);
-BOOST_SPIRIT_X3_DEFINE(grammar)
+BOOST_SPIRIT_DEFINE(grammar)
 
-BOOST_SPIRIT_X3_INSTANTIATE(decltype(grammar), char const*, x3::unused_type)
+BOOST_SPIRIT_INSTANTIATE(decltype(grammar), char const*, x3::unused_type)
 
 }
 
@@ -109,14 +104,15 @@ int main()
     using spirit_test::test_attr;
     using spirit_test::test;
 
-    using namespace boost::spirit::x3::standard;
+    using namespace boost::spirit::x3::ascii;
     using boost::spirit::x3::rule;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::eps;
     using boost::spirit::x3::unused_type;
 
-    // synth attribute value-init
-    {
+
+    { // synth attribute value-init
+
         std::string s;
         typedef rule<class r, std::string> rule_type;
 
@@ -128,15 +124,17 @@ int main()
         BOOST_TEST(s == "abcdef");
     }
 
-    // synth attribute value-init
-    {
+    { // synth attribute value-init
+
         std::string s;
         typedef rule<class r, std::string> rule_type;
 
         auto rdef = rule_type() =
-            alpha[([](auto& ctx) {
-                _val(ctx) += _attr(ctx);
-            })]
+            alpha /
+               [](auto& ctx)
+               {
+                  _val(ctx) += _attr(ctx);
+               }
             ;
 
         BOOST_TEST(test_attr("abcdef", +rdef, s));
@@ -146,16 +144,13 @@ int main()
     {
         auto r = rule<class r_id, int>{} = eps[([] (auto& ctx) {
             using boost::spirit::x3::_val;
-            static_assert(
-                std::is_same_v<std::decay_t<decltype(_val(ctx))>, unused_type>,
-                "Attribute must not be synthesized"
-            );
+            static_assert(std::is_same<std::decay_t<decltype(_val(ctx))>, unused_type>::value,
+                "Attribute must not be synthesized");
         })];
         BOOST_TEST(test("", r));
     }
 
-    // ensure no unneeded synthesization, copying and moving occurred
-    {
+    { // ensure no unneeded synthesization, copying and moving occurred
         stationary st { 0 };
         BOOST_TEST(test_attr("{42}", check_stationary::b, st));
         BOOST_TEST_EQ(st.val, 42);

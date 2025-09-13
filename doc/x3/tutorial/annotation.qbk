@@ -1,6 +1,5 @@
 [/==============================================================================
     Copyright (C) 2001-2018 Joel de Guzman
-    Copyright (C) 2025 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -129,10 +128,9 @@ our `on_success` handler:
 
     struct annotate_position
     {
-        template <std::forward_iterator It, std::sentinel_for<It> Se, typename T, typename Context>
-        void on_success(
-            It const& first, Se const& last, T& ast, Context const& context
-        ) const
+        template <typename T, typename Iterator, typename Context>
+        inline void on_success(Iterator const& first, Iterator const& last
+        , T& ast, Context const& context)
         {
             auto& position_cache = x3::get<position_cache_tag>(context).get();
             position_cache.annotate(ast, first, last);

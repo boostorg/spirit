@@ -1,7 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2017 wanghan02
-    Copyright (c) 2024-2025 Nana Sakisaka
+    Copyright (c) 2024 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -13,86 +13,61 @@
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
+#include <boost/mpl/bool.hpp>
+#include <boost/mpl/not.hpp>
+#include <boost/type_traits/remove_cv.hpp>
+#include <boost/type_traits/remove_reference.hpp>
+#include <boost/utility/declval.hpp>
+#include <boost/core/ignore_unused.hpp>
 
-#include <boost/spirit/home/x3/core/parser.hpp>
-
-#include <iterator>
-#include <type_traits>
-
-namespace boost::spirit::x3
+namespace boost { namespace spirit { namespace x3
 {
-    // Tag used to find the skipper from the context
-    struct skipper_tag;
-
+    ///////////////////////////////////////////////////////////////////////////
     // Move the /first/ iterator to the first non-matching position
     // given a skip-parser. The function is a no-op if unused_type or
     // unused_skipper is passed as the skip-parser.
-    template <X3Subject Skipper>
-    struct [[nodiscard]] unused_skipper
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Skipper>
+    struct unused_skipper : unused_type
     {
-        constexpr unused_skipper(Skipper const& skipper) noexcept
-            : skipper(skipper)
-        {}
-
+        unused_skipper(Skipper const& skipper)
+          : skipper(skipper) {}
         Skipper const& skipper;
     };
-
-    template <typename Context>
-    using unused_skipper_t = unused_skipper<std::remove_cvref_t<decltype(x3::get<skipper_tag>(std::declval<Context>()))>>;
 
     namespace detail
     {
         template <typename Skipper>
-        struct is_unused_skipper : std::false_type
-        {
-            static_assert(X3Subject<Skipper>);
-        };
+        struct is_unused_skipper
+          : mpl::false_ {};
 
         template <typename Skipper>
-        struct is_unused_skipper<unused_skipper<Skipper>> : std::true_type {};
+        struct is_unused_skipper<unused_skipper<Skipper>>
+          : mpl::true_ {};
 
         template <>
-        struct is_unused_skipper<unused_type> : std::true_type {};
+        struct is_unused_skipper<unused_type>
+          : mpl::true_ {};
 
         template <typename Skipper>
-        [[nodiscard]] constexpr Skipper const&
-        get_unused_skipper(Skipper const& skipper) noexcept
+        inline Skipper const&
+        get_unused_skipper(Skipper const& skipper)
         {
-            static_assert(X3Subject<Skipper>);
             return skipper;
         }
-
         template <typename Skipper>
-        [[nodiscard]] constexpr Skipper const&
-        get_unused_skipper(unused_skipper<Skipper> const& unused_skipper) noexcept
+        inline Skipper const&
+        get_unused_skipper(unused_skipper<Skipper> const& unused_skipper)
         {
-            static_assert(X3Subject<Skipper>);
             return unused_skipper.skipper;
         }
 
-        template <typename Context>
-        struct skip_over_context
-        {
-            using type = unused_type;
-        };
-
-        template <typename Context>
-            requires (!std::is_same_v<expectation_failure_t<Context>, unused_type>)
-        struct skip_over_context<Context>
-        {
-            using type = std::remove_cvref_t<decltype(x3::make_context<expectation_failure_tag>(
-                x3::get<expectation_failure_tag>(std::declval<Context const&>())
-            ))>;
-        };
-
-        template <std::forward_iterator It, std::sentinel_for<It> Se, typename Context, X3Subject Skipper>
-        constexpr void skip_over(
-            It& first, Se const& last, Context& context, Skipper const& skipper
-        )
-            noexcept(is_nothrow_parsable_v<Skipper, It, Se, typename skip_over_context<Context>::type, unused_type, unused_type>)
+        template <typename Iterator, typename Context, typename Skipper>
+        inline void skip_over(
+            Iterator& first, Iterator const& last, Context& context, Skipper const& skipper)
         {
         #if BOOST_SPIRIT_X3_THROW_EXPECTATION_FAILURE
-            (void)context;
+            boost::ignore_unused(context);
             while (skipper.parse(first, last, unused, unused, unused))
                 /* loop */;
         #else
@@ -142,7 +117,7 @@ namespace boost::spirit::x3
                 // For this reason we're going to cherry-pick the reference
                 // and repack it into a brand new context.
 
-                auto const local_ctx = x3::make_context<expectation_failure_tag>(
+                auto const local_ctx = make_context<expectation_failure_tag>(
                     x3::get<expectation_failure_tag>(context));
 
                 while (skipper.parse(first, last, local_ctx, unused, unused))
@@ -151,33 +126,35 @@ namespace boost::spirit::x3
         #endif
         }
 
-        template <std::forward_iterator It, std::sentinel_for<It> Se, typename Context>
-        constexpr void skip_over(It&, Se const&, Context&, unused_type) noexcept
+        template <typename Iterator, typename Context>
+        inline void skip_over(Iterator&, Iterator const&, Context&, unused_type)
         {
         }
 
-        template <std::forward_iterator It, std::sentinel_for<It> Se, typename Context, typename Skipper>
-        constexpr void skip_over(It&, Se const&, Context&, unused_skipper<Skipper> const&) noexcept
+        template <typename Iterator, typename Context, typename Skipper>
+        inline void skip_over(
+            Iterator&, Iterator const&, Context&, unused_skipper<Skipper> const&)
         {
         }
     }
+
+    // this tag is used to find the skipper from the context
+    struct skipper_tag;
 
     template <typename Context>
     struct has_skipper
-      : std::bool_constant<!detail::is_unused_skipper<
-            std::remove_cvref_t<decltype(x3::get<skipper_tag>(std::declval<Context>()))>
-        >::value>
-    {};
+      : mpl::not_<detail::is_unused_skipper<
+            typename remove_cv<typename remove_reference<
+                decltype(x3::get<skipper_tag>(boost::declval<Context>()))
+            >::type>::type
+        >> {};
 
-    template <typename Context>
-    constexpr bool has_skipper_v = has_skipper<Context>::value;
-
-    template <std::forward_iterator It, std::sentinel_for<It> Se, typename Context>
-    constexpr void skip_over(It& first, Se const& last, Context& context)
-        noexcept(noexcept(detail::skip_over(first, last, context, x3::get<skipper_tag>(context))))
+    template <typename Iterator, typename Context>
+    inline void skip_over(
+        Iterator& first, Iterator const& last, Context& context)
     {
         detail::skip_over(first, last, context, x3::get<skipper_tag>(context));
     }
-} // boost::spirit::x3
+}}}
 
 #endif

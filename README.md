@@ -1,63 +1,73 @@
-# Spirit [![Build Status](https://github.com/boostorg/spirit/actions/workflows/ci.yml/badge.svg)](https://github.com/boostorg/spirit/actions/workflows/ci.yml)
+# This repository is no longer actively maintained. [Spirit.X4](https://github.com/boostorg/spirit_x4) is the successor and is currently under development.
 
-Spirit is a set of C++ libraries for parsing and output generation implemented as
-Domain Specific Embedded Languages (DSEL) using Expression templates and Template
-Meta-Programming. The Spirit libraries enable a target grammar to be written
-exclusively in C++. Inline grammar specifications can mix freely with other
-C++ code and, thanks to the generative power of C++ templates, are immediately
+All components predating X4 currently lack an active maintainer. They are feature-frozen and will accept security patches only. 
+
+If you wish to maintain a legacy version, please contact the [Boost developers' mailing list](https://lists.boost.org/).
+
+For background information, see:
+
+- <https://lists.boost.org/archives/list/boost@lists.boost.org/thread/K3EQLEQJHEUBROB6ODUKTZHFP2FDUS2E/?sort=date>
+- <https://github.com/boostorg/spirit/issues/795>
+- <https://github.com/boostorg/spirit/pull/807>
+
+
+
+
+
+
+Spirit
+======
+
+Spirit is a set of C++ libraries for parsing and output generation implemented as 
+Domain Specific Embedded Languages (DSEL) using Expression templates and Template 
+Meta-Programming. The Spirit libraries enable a target grammar to be written 
+exclusively in C++. Inline grammar specifications can mix freely with other 
+C++ code and, thanks to the generative power of C++ templates, are immediately 
 executable.
 
-## Spirit.X3 (3rd generation)
+### Spirit.X3 (3rd generation)
 
 [Documentation](http://www.boost.org/doc/libs/develop/libs/spirit/doc/x3/html/index.html)
 
-The newest Spirit shines faster compile times. Currently only a parser framework (no serialization support).
+The newest Spirit shines faster compile times. Currently only a parser framework.
 
-### Supported environments
+*WARNING*: C++14 compilers support will be dropped soon.
 
-- C++23 and C++26
-- GCC 14
-- Clang 22
-- MSVC (2022)
+Spirit X3 in Boost 1.81 (scheduled to November 2022) will use C++17 features.
 
+Supported compilers will be:
+* Clang 4 (currently 3.6)
+* GCC 7 (currently 5)
+* VS 2017 v15.8 (currently 2015 U3)
 
-## Spirit V2 (2nd generation)
+### Spirit V2 (2nd generation)
 
 [Documentation](http://www.boost.org/doc/libs/develop/libs/spirit/doc/html/index.html)
 
 The latest Long Term Support version of Spirit. A Swiss Army knife for data
 manipulation on any kind of input.
 
-Note: Spirit V2 is no longer actively maintained. For new projects, use X3.
-
 Consists of:
-
-- [Qi]: Parser framework.
-- [Karma]: Generator framework.
-- [Lex]: Lexical analyzer framework.
+  - [Qi]: Parser framework.
+  - [Karma]: Generator framework.
+  - [Lex]: Lexical analyzer framework.
+  
+Runs on most C++03 compilers (GCC 4.1, Clang 3.0, VS 2005).
 
 [Spirit V2]: http://www.boost.org/doc/libs/develop/libs/spirit/doc/html/index.html
 [Qi]: http://www.boost.org/doc/libs/develop/libs/spirit/doc/html/spirit/qi.html
 [Karma]: http://www.boost.org/doc/libs/develop/libs/spirit/doc/html/spirit/karma.html
 [Lex]: http://www.boost.org/doc/libs/develop/libs/spirit/doc/html/spirit/lex.html
 
-### Supported environments
-
-- C++11 only
-- GCC 14
-- Clang 22
-- **Windows is no longer supported** because [C++11 support was removed in Visual Studio 2017 and later](https://learn.microsoft.com/en-us/cpp/build/reference/std-specify-language-standard-version?view=msvc-170#remarks).
-
-
-## Spirit.Classic (1st generation)
+### Spirit.Classic (1st generation)
 
 [Documentation](http://www.boost.org/doc/libs/develop/libs/spirit/classic/index.html)
 
-An elderling member of Spirit. It receives only limited maintenance, but
+An elderling member of Spirit. It receives only limited maintanance, but
 it is still used even inside Boost by [Boost.Serialization] and [Boost.Wave]
 libraries. It also contains Phoenix V1.
 
-Spirit.Classic should support even ancient compilers.
+Spririt.Classic should support even ancient compilers.
 
 [Boost.Serialization]: http://boost.org/libs/serialization
 [Boost.Wave]: http://boost.org/libs/wave

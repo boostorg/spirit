@@ -1,6 +1,5 @@
 /*=============================================================================
     Copyright (c) 2019 Nikita Kniazev
-    Copyright (c) 2025 Nana Sakisaka
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -10,9 +9,6 @@
 #define BOOST_SPIRIT_TEST_X3_UTILS_HPP
 
 #include <boost/spirit/home/x3/core/parser.hpp>
-#include <boost/spirit/home/x3/support/traits/move_to.hpp>
-
-#include <iterator>
 
 struct move_only
 {
@@ -21,19 +17,19 @@ struct move_only
     move_only& operator=(move_only&&) = default;
 };
 
+
 template <typename T>
 struct synth_parser : boost::spirit::x3::parser<synth_parser<T>>
 {
-    using attribute_type = T;
+    typedef T attribute_type;
 
-    static constexpr bool has_attribute = true;
-    static constexpr bool handles_container = false;
+    static bool const has_attribute = true;
+    static bool const handles_container = false;
 
-    template <std::forward_iterator It, std::sentinel_for<It> Se, typename Context, typename RContext, typename Attribute>
-    [[nodiscard]] constexpr bool parse(
-        It& iter, Se const& last, Context const&,
-        RContext&, Attribute& attr
-    ) const
+    template <typename Iterator, typename Context,
+        typename RuleContext, typename Attribute>
+    bool parse(Iterator& iter, Iterator const& last, Context const&,
+        RuleContext&, Attribute& attr) const
     {
         if (iter != last && *iter == 's') {
             ++iter;
@@ -45,8 +41,8 @@ struct synth_parser : boost::spirit::x3::parser<synth_parser<T>>
 };
 
 template <typename T>
-constexpr synth_parser<T> synth{};
+synth_parser<T> synth{};
 
-constexpr synth_parser<move_only> synth_move_only{};
+synth_parser<move_only> const synth_move_only{};
 
 #endif
