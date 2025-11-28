@@ -1,4 +1,5 @@
 //  Copyright (c) 2001-2011 Hartmut Kaiser
+//  Copyright (c) 2025 Joaquin M Lopez Munoz
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -65,6 +66,19 @@ namespace boost { namespace spirit
         {
             this->base_type::operator=(rhs);
             return *this;
+        }
+
+        basic_istream_iterator& operator++()
+        {
+            this->base_type::operator++();
+            return *this;
+        }
+
+        basic_istream_iterator operator++(int)
+        {
+            basic_istream_iterator tmp(*this);
+            this->base_type::operator++();
+            return tmp;
         }
 
     // default generated operators, destructor and assignment operator are ok.
