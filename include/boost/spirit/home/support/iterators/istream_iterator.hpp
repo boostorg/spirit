@@ -54,6 +54,9 @@ namespace boost { namespace spirit
         basic_istream_iterator()
           : base_type() {}
 
+        basic_istream_iterator(basic_istream_iterator const& rhs)
+          : base_type(rhs) {}
+
         explicit basic_istream_iterator(std::basic_istream<Elem, Traits>& x)
           : base_type(x) {}
 
