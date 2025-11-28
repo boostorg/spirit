@@ -62,7 +62,7 @@ namespace boost { namespace spirit
           : base_type() {}            // shipped with gcc 3.1
 #endif // BOOST_WORKAROUND(__GLIBCPP__, == 20020514)
 
-        basic_istream_iterator& operator=(base_type const& rhs)
+        basic_istream_iterator& operator=(basic_istream_iterator const& rhs)
         {
             this->base_type::operator=(rhs);
             return *this;
