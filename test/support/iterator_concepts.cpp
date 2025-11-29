@@ -6,12 +6,14 @@
 // Compliance with Boost.ConceptCheck/C++20 iterator concepts
 
 #include <boost/config.hpp>
+#include <boost/mpl/bool.hpp>
+#include <boost/mpl/vector.hpp>
 #include <boost/spirit/home/classic/iterator/file_iterator.hpp>
 #include <boost/spirit/home/classic/iterator/fixed_size_queue.hpp>
 #include <boost/spirit/home/classic/iterator/multi_pass.hpp>
 #include <boost/spirit/home/classic/iterator/position_iterator.hpp>
 #include <boost/spirit/home/karma/stream/ostream_iterator.hpp>
-#include <boost/spirit/home/lex/lexer/lexertl/iterator.hpp>
+#include <boost/spirit/home/lex/lexer_lexertl.hpp>
 #include <boost/spirit/home/support/iterators/istream_iterator.hpp>
 #include <boost/spirit/home/support/iterators/line_pos_iterator.hpp>
 #include <boost/spirit/home/support/iterators/look_ahead.hpp>
@@ -19,6 +21,7 @@
 #include <boost/spirit/home/support/iterators/ostream_iterator.hpp>
 #include <istream>
 #include <ostream>
+#include <string>
 
 template<typename F> struct unparens;
 template<typename T> struct unparens<void(T)> { typedef T type; };
@@ -64,6 +67,12 @@ STATIC_ASSERT_FORWARD_ITERATOR((
 STATIC_ASSERT_OUTPUT_ITERATOR(
     (boost::spirit::karma::ostream_iterator<char, char>),
     char);
+STATIC_ASSERT_FORWARD_ITERATOR((
+    boost::spirit::lex::lexertl::lexer<
+        boost::spirit::lex::lexertl::token<
+            std::string::iterator,
+            boost::mpl::vector<int>,
+            boost::mpl::false_>>::iterator_type));
 STATIC_ASSERT_FORWARD_ITERATOR((
     boost::spirit::istream_iterator));
 STATIC_ASSERT_FORWARD_ITERATOR((
