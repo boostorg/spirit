@@ -145,6 +145,7 @@ run regression_iterator.cpp ;
 run regression_optional_double.cpp ;
 run regression_real_0.cpp ;
 run regression_real_policy_sign.cpp ;
+run regression_real_policy_precision.cpp ;
 run regression_real_scientific.cpp ;
 run regression_semantic_action_attribute.cpp ;
 run regression_unicode_char.cpp : : : <pch>off ;
