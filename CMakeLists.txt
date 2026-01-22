@@ -34,7 +34,6 @@ target_link_libraries(boost_spirit
     Boost::proto
     Boost::range
     Boost::smart_ptr
-    Boost::static_assert
     Boost::thread
     Boost::throw_exception
     Boost::type_traits
