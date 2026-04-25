@@ -12,6 +12,7 @@
 #include <string>
 #include <cstring>
 #include <iostream>
+#include <vector>
 #include "test.hpp"
 
 namespace x3 = boost::spirit::x3;
@@ -90,6 +91,8 @@ main()
     using boost::spirit::x3::rule;
     using boost::spirit::x3::int_;
     using boost::spirit::x3::lit;
+    using boost::spirit::x3::lexeme;
+    using boost::spirit::x3::eol;
 
     { // show that ra = rb and ra %= rb works as expected
         rule<class a, int> ra;
@@ -144,11 +147,29 @@ main()
         auto r = rule<my_rule_class, char const*>()
             = '(' > int_ > ',' > int_ > ')';
 
+        got_it = 0;
+
         BOOST_TEST(test("(123,456)", r));
         BOOST_TEST(!test("(abc,def)", r));
         BOOST_TEST(!test("(123,456]", r));
         BOOST_TEST(!test("(123;456)", r));
         BOOST_TEST(!test("[123,456]", r));
+
+        BOOST_TEST(got_it == 1);
+    }
+
+    { // regression test for #833
+      // rules which return error_handler_result::fail should trigger iterator rollback
+
+        auto string_literal = rule<my_rule_class, std::string>()
+            = lexeme['"' > *~char_("\"\n\r") > '"'];
+        auto r = rule<class r_id, std::vector<std::string>>()
+            = *string_literal > eol;
+
+        got_it = 0;
+
+        BOOST_TEST(test("\"abc\"\n", r));
+        BOOST_TEST_THROWS(test("\"abc\n", r), x3::expectation_failure<char const*>);
 
         BOOST_TEST(got_it == 1);
     }
