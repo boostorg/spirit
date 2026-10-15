@@ -37,7 +37,7 @@ namespace boost { namespace spirit { namespace char_encoding
     ///////////////////////////////////////////////////////////////////////////
     // ASCII character classification table
     ///////////////////////////////////////////////////////////////////////////
-    const unsigned char ascii_char_types[] =
+    BOOST_INLINE_VARIABLE const unsigned char ascii_char_types[] =
     {
         /* NUL   0   0 */   BOOST_CC_CTRL,
         /* SOH   1   1 */   BOOST_CC_CTRL,

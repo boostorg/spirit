@@ -96,7 +96,7 @@ namespace boost { namespace spirit { namespace x3
         return get_case_compare_impl<Encoding>(x3::get<no_case_tag>(context));
     }
 
-    auto const no_case_compare_ = no_case_tag{};
+    BOOST_INLINE_VARIABLE auto const no_case_compare_ = no_case_tag{};
 
 }}}
 
